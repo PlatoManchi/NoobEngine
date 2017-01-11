@@ -3,4 +3,6 @@
 // standard includes
 #include <cstdint>
 #include <windows.h>
-#include <windowsx.h>
+
+// DirectX includes
+#include <d3d11.h>
