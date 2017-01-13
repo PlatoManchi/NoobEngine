@@ -1,5 +1,5 @@
-// include the basic windows header files and the Direct3D header files
 #include "pch.h"
+#include "Container/SList.h"
 
 // global declarations
 IDXGISwapChain *swapchain;             // the pointer to the swap chain interface
@@ -7,17 +7,18 @@ ID3D11Device *dev;                     // the pointer to our Direct3D device int
 ID3D11DeviceContext *devcon;           // the pointer to our Direct3D device context
 ID3D11RenderTargetView *backbuffer;    // the pointer to our back buffer
 
-									   // function prototypes
+
+// function prototypes
 void InitD3D(HWND hWnd);    // sets up and initializes Direct3D
 void RenderFrame(void);     // renders a single frame
 void CleanD3D(void);        // closes Direct3D and releases memory
 
-							// the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 // the entry point for any Windows program
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
 	UNREFERENCED_PARAMETER(lpCmdLine);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 
@@ -32,7 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wc.hInstance = hInstance;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wc.lpszClassName = L"WindowClass";
+	wc.lpszClassName = L"FIEAGameEngine";
 
 	RegisterClassEx(&wc);
 
@@ -40,8 +41,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, FALSE);
 
 	hWnd = CreateWindowEx(NULL,
-		L"WindowClass",
-		L"Our First Direct3D Program",
+		L"FIEAGameEngine",
+		L"DirectX Window",
 		WS_OVERLAPPEDWINDOW,
 		300,
 		300,
@@ -57,18 +58,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// set up and initialize Direct3D
 	InitD3D(hWnd);
 
-	// enter the main loop:
-
 	MSG msg;
 
-	while (TRUE) {
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+	// testing the library linking capability
+	FIEAGameEngine::Container::SList sampleList;
+	sampleList.GetData();
+
+	// Game loop
+	while (TRUE)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
 			if (msg.message == WM_QUIT)
 				break;
-		} else {
+		} else
+		{
 			// Run game code here
 			RenderFrame();
 		}
@@ -77,13 +84,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// clean up DirectX and COM
 	CleanD3D();
 
-	return msg.wParam;
+	return (int)msg.wParam;
 }
 
 
 // this is the main message handler for the program
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-	switch (message) {
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
 	case WM_DESTROY:
 	{
 		PostQuitMessage(0);
@@ -96,7 +105,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 
 // this function initializes and prepares Direct3D for use
-void InitD3D(HWND hWnd) {
+void InitD3D(HWND hWnd)
+{
 	// create a struct to hold information about the swap chain
 	DXGI_SWAP_CHAIN_DESC scd;
 
@@ -150,7 +160,8 @@ void InitD3D(HWND hWnd) {
 }
 
 // this is the function used to render a single frame
-void RenderFrame(void) {
+void RenderFrame(void)
+{
 	// clear the back buffer to a deep blue
 	float color[4] = { 0.0f, 0.2f, 0.4f, 1.0f };
 	devcon->ClearRenderTargetView(backbuffer, color);
@@ -162,7 +173,8 @@ void RenderFrame(void) {
 }
 
 // this is the function that cleans up Direct3D and COM
-void CleanD3D(void) {
+void CleanD3D(void)
+{
 	// close and release all existing COM objects
 	swapchain->Release();
 	backbuffer->Release();
