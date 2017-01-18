@@ -14,7 +14,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Container\SList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -22,5 +21,10 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Container\SList.inl">
+      <FileType>CppCode</FileType>
+    </None>
   </ItemGroup>
 </Project>

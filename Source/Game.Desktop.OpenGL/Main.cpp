@@ -32,8 +32,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	
 	// testing the library linking capability
-	FIEAGameEngine::Container::SList sampleList;
-	sampleList.GetData();
+	FIEAGameEngine::Container::SList<int32_t> sampleList;
+	//sampleList.GetData();
 
 	glViewport(0, 0, 800, 600);
 	while (!glfwWindowShouldClose(window))
