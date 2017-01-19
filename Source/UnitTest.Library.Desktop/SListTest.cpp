@@ -47,6 +47,8 @@ namespace UnitTestLibraryDesktop
 		TEST_METHOD_CLEANUP(Cleanup)
 		{
 			_CrtMemState endMemState, diffMemState;
+			endMemState;
+			diffMemState;
 			_CrtMemCheckpoint(&endMemState);
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
@@ -499,6 +501,7 @@ namespace UnitTestLibraryDesktop
 			//------------------------- int32_t----------------------------
 			// saving memory state
 			_CrtMemState clearTest_StartMemState;
+			clearTest_StartMemState;
 			_CrtMemCheckpoint(&clearTest_StartMemState);
 
 			FIEAGameEngine::Container::SList<int32_t> listInt1;
@@ -512,9 +515,11 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual((uint32_t)0, listInt1.Size());
 			
 			_CrtMemState clearTest_EndMemState;
+			clearTest_EndMemState;
 			_CrtMemCheckpoint(&clearTest_EndMemState);
 
 			_CrtMemState diffMemState;
+			diffMemState;
 			if (_CrtMemDifference(&diffMemState, &clearTest_StartMemState, &clearTest_EndMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
