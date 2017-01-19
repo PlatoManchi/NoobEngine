@@ -3,8 +3,19 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="SupportingClasses\Foo.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SupportingClasses\Foo.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SupportingClasses">
+      <UniqueIdentifier>{18587ba0-3739-4801-a2b5-36f814e172d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

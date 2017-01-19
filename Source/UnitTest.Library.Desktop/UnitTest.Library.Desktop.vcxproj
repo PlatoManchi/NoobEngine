@@ -189,6 +189,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SupportingClasses\Foo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -198,6 +199,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="SupportingClasses\Foo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library.Desktop\Library.Desktop.vcxproj">
