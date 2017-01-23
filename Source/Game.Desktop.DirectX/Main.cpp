@@ -61,7 +61,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	MSG msg;
 
 	// testing the library linking capability
-	FIEAGameEngine::Container::SList<int32_t> sampleList;
+	NoobEngine::Container::SList<int32_t> sampleList;
+	sampleList.PushBack(10);
 	
 	// Game loop
 	while (TRUE)

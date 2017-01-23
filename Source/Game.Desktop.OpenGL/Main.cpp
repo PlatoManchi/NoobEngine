@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Container/SList.h"
+#include <stdio.h>
 
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -32,9 +33,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	
 	// testing the library linking capability
-	FIEAGameEngine::Container::SList<int32_t> sampleList;
-	//sampleList.GetData();
+	NoobEngine::Container::SList<int32_t> sampleList;
+	sampleList.PushBack(10);
+	sampleList.PushBack(20);
+	sampleList.PushBack(30);
 
+	sampleList.Remove(10);
+
+	for (NoobEngine::Container::SList<int32_t>::Iterator itr = sampleList.begin(); itr != sampleList.end(); itr++)
+	{
+		char debug[256];
+		sprintf_s(debug, "ranged based for loop: %d\n", *itr);
+		OutputDebugString(debug);
+	}
+
+	for each(int32_t var in sampleList)
+	{
+		char debug[256];
+		sprintf_s(debug, "for each: %d\n", var);
+		OutputDebugString(debug);
+	}
+	
+	
 	glViewport(0, 0, 800, 600);
 	while (!glfwWindowShouldClose(window))
 	{

@@ -84,12 +84,12 @@
     <IntDir>$(ProjectDir)Obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)Bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)Obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)Bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)Obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -104,11 +104,14 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <Profile>false</Profile>
+      <AdditionalOptions>/OPT:NOLBR /OPT:NOREF %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
@@ -125,11 +128,14 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <Profile>false</Profile>
+      <AdditionalOptions>/OPT:NOLBR /OPT:NOREF %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
@@ -148,6 +154,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -156,6 +163,8 @@
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>false</Profile>
+      <AdditionalOptions>/OPT:NOLBR /OPT:NOREF %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
@@ -174,6 +183,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -182,6 +192,8 @@
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <Profile>false</Profile>
+      <AdditionalOptions>/OPT:NOLBR /OPT:NOREF %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
