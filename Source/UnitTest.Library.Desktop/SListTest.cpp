@@ -25,32 +25,32 @@ namespace Microsoft
 				return copyOfStr;
 			}
 
-			/*template<> std::wstring ToString<NoobEngine::Container::SList<int32_t>::Iterator>(typename const NoobEngine::Container::SList<int32_t>::Iterator& pParam)
+			template<> std::wstring ToString<NoobEngine::Container::SList<int32_t>::Iterator>(typename const NoobEngine::Container::SList<int32_t>::Iterator& )
 			{
 				std::wstringstream stringStream;
-				stringStream << "Int Iterator_" << *pParam;
+				stringStream << "Int Iterator_";
 				std::wstring copyOfStr = stringStream.str();
 
 				return copyOfStr;
 			}
 
-			template<> std::wstring ToString<NoobEngine::Container::SList<int32_t*>::Iterator>(typename const NoobEngine::Container::SList<int32_t*>::Iterator& pParam)
+			template<> std::wstring ToString<NoobEngine::Container::SList<int32_t*>::Iterator>(typename const NoobEngine::Container::SList<int32_t*>::Iterator& )
 			{
 				std::wstringstream stringStream;
-				stringStream << "Int* Iterator_"<< *pParam;
+				stringStream << "Int* Iterator_";
 				std::wstring copyOfStr = stringStream.str();
 
 				return copyOfStr;
 			}
 
-			template<> std::wstring ToString<NoobEngine::Container::SList<Foo>::Iterator>(typename const NoobEngine::Container::SList<Foo>::Iterator& pParam)
+			template<> std::wstring ToString<NoobEngine::Container::SList<Foo>::Iterator>(typename const NoobEngine::Container::SList<Foo>::Iterator& )
 			{
 				std::wstringstream stringStream;
-				stringStream << "Foo Iterator_"<<(*pParam).mID;
+				stringStream << "Foo Iterator_";
 				std::wstring copyOfStr = stringStream.str();
 
 				return copyOfStr;
-			}*/
+			}
 		}
 	}
 }
@@ -838,13 +838,25 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual((uint32_t)4, listInt1.Size());
 
 			int32_t int3 = 30;
-			Assert::IsTrue(listInt1.InsertAfter(int3, int2));
+			Assert::AreEqual(int3, *listInt1.InsertAfter(int3, int2));
 
 			Assert::AreEqual((uint32_t)5, listInt1.Size());
 			
 			int32_t int6 = 60;
-			Assert::IsFalse(listInt1.InsertAfter(int6, int6));
+			Assert::AreEqual(listInt1.end(), listInt1.InsertAfter(int6, int6));
 			Assert::AreEqual((uint32_t)5, listInt1.Size());
+
+			NoobEngine::Container::SList<int32_t>::Iterator list1IntItr = listInt1.Find(int3);
+			NoobEngine::Container::SList<int32_t> listInt2;
+			listInt2.PushBack(int1);
+			listInt2.PushBack(int2);
+			listInt2.PushBack(int3);
+			listInt2.PushBack(int4);
+
+			Assert::ExpectException<exception>([&]
+			{
+				listInt2.InsertAfter(int5, list1IntItr);
+			});
 
 			//-----------------------int32_t pointer----------------------
 			int32_t* intPtr1 = new int32_t(10);
@@ -858,16 +870,30 @@ namespace UnitTestLibraryDesktop
 			listIntPtr1.PushBack(intPtr4);
 			listIntPtr1.PushBack(intPtr5);
 
+			int32_t* intPtr3 = new int32_t(30);
+			int32_t* intPtr6 = new int32_t(60);
 			Assert::AreEqual((uint32_t)4, listIntPtr1.Size());
 
-			int32_t* intPtr3 = new int32_t(30);
-			Assert::IsTrue(listIntPtr1.InsertAfter(intPtr3, intPtr2));
+			
+			Assert::AreEqual(intPtr3, *listIntPtr1.InsertAfter(intPtr3, intPtr2));
 
 			Assert::AreEqual((uint32_t)5, listIntPtr1.Size());
 			
-			int32_t* intPtr6 = new int32_t(60);
-			Assert::IsFalse(listIntPtr1.InsertAfter(intPtr6, intPtr6));
+			
+			Assert::AreEqual(listIntPtr1.end(), listIntPtr1.InsertAfter(intPtr6, intPtr6));
 			Assert::AreEqual((uint32_t)5, listIntPtr1.Size());
+
+			NoobEngine::Container::SList<int32_t*>::Iterator list1IntPtrItr = listIntPtr1.Find(intPtr3);
+			NoobEngine::Container::SList<int32_t*> listIntPtr2;
+			listIntPtr2.PushBack(intPtr1);
+			listIntPtr2.PushBack(intPtr2);
+			listIntPtr2.PushBack(intPtr3);
+			listIntPtr2.PushBack(intPtr4);
+
+			Assert::ExpectException<exception>([&]
+			{
+				listIntPtr2.InsertAfter(intPtr5, list1IntPtrItr);
+			});
 
 			// freeing memory
 			delete(intPtr1);
@@ -891,13 +917,25 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual((uint32_t)4, listFooPtr1.Size());
 
 			Foo fooPtr3(30);
-			Assert::IsTrue(listFooPtr1.InsertAfter(fooPtr3, fooPtr2));
+			Assert::AreEqual(fooPtr3, *listFooPtr1.InsertAfter(fooPtr3, fooPtr2));
 
 			Assert::AreEqual((uint32_t)5, listFooPtr1.Size());
 			
 			Foo fooPtr6(60);
-			Assert::IsFalse(listFooPtr1.InsertAfter(fooPtr6, fooPtr6));
+			Assert::AreEqual(listFooPtr1.end(), listFooPtr1.InsertAfter(fooPtr6, fooPtr6));
 			Assert::AreEqual((uint32_t)5, listFooPtr1.Size());
+
+			NoobEngine::Container::SList<Foo>::Iterator list1FooItr = listFooPtr1.Find(fooPtr3);
+			NoobEngine::Container::SList<Foo> listFooPtr2;
+			listFooPtr2.PushBack(fooPtr1);
+			listFooPtr2.PushBack(fooPtr2);
+			listFooPtr2.PushBack(fooPtr3);
+			listFooPtr2.PushBack(fooPtr4);
+
+			Assert::ExpectException<exception>([&]
+			{
+				listFooPtr2.InsertAfter(fooPtr5, list1FooItr);
+			});
 		}
 		private:
 			static _CrtMemState sStartMemState;

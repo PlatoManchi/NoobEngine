@@ -46,14 +46,16 @@ namespace NoobEngine
 			/**
 				@brief Insert the data at front of the list.
 				@param The data that need to be pushed.
+				@return Begin iterator.
 			*/
-			void PushFront(const T& pData);
+			Iterator PushFront(const T& pData);
 
 			/**
 				@brief Append data at end of the list.
 				@param The data that need to be pushed.
+				@return End iterator.
 			*/
-			void PushBack(const T& pData);
+			Iterator PushBack(const T& pData);
 
 
 			/**
@@ -125,9 +127,18 @@ namespace NoobEngine
 				@details If the specified element is not found then the item will not be inserted.
 				@param pItemToInsert The item that needs to be inserted into the list.
 				@param pItemToBeInsertedAfter The item that pItemToInsert should be inserted after.
-				@return True if successfully inserted, false if failed.
+				@return Iterator that points to the current inserted value. If the value is not found then it return end iterator.
 			*/
-			bool InsertAfter(const T& pItemToInsert, const T& pItemToBeInsertedAfter);
+			Iterator InsertAfter(const T& pItemToInsert, const T& pItemToBeInsertedAfter);
+
+			/**
+				@brief Insert the given element after the specified iterator.
+				@details If the iterator doesn't belong to the current slist then throw exception. If the iterator is end it will throw exception.
+				@param pItemToInsert The item that needs to be inserted into the list.
+				@param pIteratorToBeInsertedAfter The item that pItemToInsert should be inserted after.
+				@return Iterator that points to the current inserted value.
+			*/
+			Iterator InsertAfter(const T& pItemToInsert, Iterator pIteratorToBeInsertedAfter);
 
 			/**
 				Iterator used to loop through the SList.
@@ -208,22 +219,6 @@ namespace NoobEngine
 				*/
 				Node* mNode;
 			};
-
-			/**
-				@brief Return the iterator that points to the first element in the list.
-				@details If the list is empty this will be same as the iterator pointing to the end of the list.
-				@return Reference to the iterator that points to the first element in the list.
-				@see end()
-			*/
-			Iterator begin();
-
-			/**
-				@brief Return the iterator that points to the last element in the list.
-				@details If the list is empty this will be same as the iterator pointing to the beginning of the list.
-				@return Reference to the iterator that points to the last element in the list.
-				@see begin()
-			*/
-			Iterator end();
 
 			/**
 				@brief Return the iterator that points to the first element in the list.

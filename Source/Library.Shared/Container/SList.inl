@@ -38,20 +38,18 @@ namespace NoobEngine
 				// clear all the previous elements held by the current list
 				Clear();
 
-				if (pList.mSize != 0)
+				for each(const T& element in pList)
 				{
-					for each(T element in pList)
-					{
-						PushBack(element);
-					}
+					PushBack(element);
 				}
+				
 			}
 
 			return *this;
 		}
 
 		template <typename T>
-		void SList<T>::PushFront(const T& pData)
+		typename SList<T>::Iterator SList<T>::PushFront(const T& pData)
 		{
 			Node* node = new Node(pData, mFrontNode);
 
@@ -63,10 +61,12 @@ namespace NoobEngine
 
 			mFrontNode = node;
 			mSize++;
+
+			return begin();
 		}
 
 		template <typename T>
-		void SList<T>::PushBack(const T& pData)
+		typename SList<T>::Iterator SList<T>::PushBack(const T& pData)
 		{
 			Node* node = new Node(pData, nullptr);
 			node->mData = pData;
@@ -83,6 +83,8 @@ namespace NoobEngine
 
 			mBackNode = node;
 			mSize++;
+
+			return end();
 		}
 
 		template <typename T>
@@ -182,7 +184,7 @@ namespace NoobEngine
 			}
 
 			// if the object is not found
-			return this->end();
+			return end();
 		}
 
 		template <typename T>
@@ -211,32 +213,40 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		bool SList<T>::InsertAfter(const T& pItemToInsert, const T& pItemToBeInsertedAfter)
+		typename SList<T>::Iterator SList<T>::InsertAfter(const T& pItemToInsert, const T& pItemToBeInsertedAfter)
 		{
 			typename SList<T>::Iterator itr = Find(pItemToBeInsertedAfter);
 			if (itr != end())
 			{
-				Node* nodeNextToTargetElement = itr.mNode->mNextNode;
-				Node* node = new Node(pItemToInsert, nodeNextToTargetElement);
-				itr.mNode->mNextNode = node;
-				mSize++;
-				return true;
+				return InsertAfter(pItemToInsert, itr);
 			}
-			return false;
-		}
-
-
-		template<typename T>
-		typename SList<T>::Iterator SList<T>::begin()
-		{
-			return SList<T>::Iterator(this, mFrontNode);
+			return end();
 		}
 
 		template<typename T>
-		typename SList<T>::Iterator SList<T>::end()
+		typename SList<T>::Iterator SList<T>::InsertAfter(const T & pItemToInsert, Iterator pIteratorToBeInsertedAfter)
 		{
-			return SList<T>::Iterator(this, nullptr);
+			if (pIteratorToBeInsertedAfter.mOwnerList == this)
+			{
+				if (pIteratorToBeInsertedAfter != end())
+				{
+					Node* nodeNextToTargetElement = pIteratorToBeInsertedAfter.mNode->mNextNode;
+					Node* node = new Node(pItemToInsert, nodeNextToTargetElement);
+					pIteratorToBeInsertedAfter.mNode->mNextNode = node;
+					mSize++;
+					return SList<T>::Iterator(this, node);
+				}
+				else
+				{
+					throw exception("Cannot insert after end.");
+				}
+			}
+			else
+			{
+				throw exception("Iterator doesn't belong to the list.");
+			}
 		}
+
 
 		template<typename T>
 		typename SList<T>::Iterator SList<T>::begin() const
