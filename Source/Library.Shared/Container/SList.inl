@@ -238,6 +238,7 @@ namespace NoobEngine
 				}
 				else
 				{
+					//TODO: consider doing push back
 					throw exception("Cannot insert after end.");
 				}
 			}
@@ -260,6 +261,7 @@ namespace NoobEngine
 			return SList<T>::Iterator(this, nullptr);
 		}
 
+#pragma region Iterator
 		// iterator class members implementation
 		template<typename T>
 		SList<T>::Iterator::Iterator(const SList<T>* pOwnerList, Node* pCurrentNode) : mOwnerList(pOwnerList), mNode(pCurrentNode)
@@ -305,7 +307,7 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		typename SList<T>::Iterator SList<T>::Iterator::operator ++(int)
+		typename SList<T>::Iterator SList<T>::Iterator::operator ++(int32_t)
 		{
 			SList::Iterator tmp(*this);
 			operator++();
@@ -333,5 +335,6 @@ namespace NoobEngine
 			// if mCurrentNode is null, that mean the iterator is the end iterator.
 			throw exception("Cannot dereference end iterator.");
 		}
+#pragma endregion
 	}
 }

@@ -69,13 +69,17 @@ namespace NoobEngine
 				@brief Return reference to the first element in the list.
 				@details Changing the value of reference will effect the actual value in the list. Throws exception with message "Calling Front on empty list." if called on empty list
 				@return Reference to the first element in the list.
+				@see Front()
+				@see Back()
 			*/
 			T& Front();
 
 			/**
-				@brief Return reference to the first element in the list.
+				@brief Return constant reference to the first element in the list.
 				@details Changing the value of reference will effect the actual value in the list. Throws exception with message "Calling Front on empty list." if called on empty list
-				@return Reference to the first element in the list.
+				@return Constant reference to the first element in the list.
+				@see Front()
+				@see Back()
 			*/
 			const T& Front() const;
 
@@ -83,13 +87,17 @@ namespace NoobEngine
 				@brief Return reference to the last element in the list.
 				@details Changing the value of reference will effect the actual value in the list. Throws exception with message "Calling Back on empty list." if called on empty list
 				@return Reference to the last element in the list.
+				@see Front()
+				@see Back()
 			*/
 			T& Back();
 
 			/**
-				@brief Return reference to the last element in the list.
+				@brief Return constant reference to the last element in the list.
 				@details Changing the value of reference will effect the actual value in the list. Throws exception with message "Calling Back on empty list." if called on empty list
-				@return Reference to the last element in the list.
+				@return Constant reference to the last element in the list.
+				@see Front()
+				@see Back()
 			*/
 			const T& Back() const;
 
@@ -155,21 +163,21 @@ namespace NoobEngine
 
 				/**
 					@brief Assign the rhs value lhs iterator.
-					@param rhs iterator to compare current iterator with.
+					@param pOther iterator to create copy of.
 					@return Iterator reference.
 				*/
 				Iterator& operator=(const Iterator& pOther);
 
 				/**
 					@brief Check if two iterators are equal.
-					@param rhs iterator to compare current iterator with.
+					@param pOther iterator to compare current iterator with.
 					@return boolean. true if equal. false if not equal.
 				*/
 				bool operator==(const Iterator& pOther) const;
 
 				/**
 					@brief Check if two iterators are not equal.
-					@param rhs iterator to compare current iterator with.
+					@param pOther iterator to compare current iterator with.
 					@return boolean. true if not equal. false if equal.
 				*/
 				bool operator!=(const Iterator& pOther) const;
@@ -186,7 +194,7 @@ namespace NoobEngine
 					@details If the iterator is pointing to the end of the list, invoking this operator will result in exception being thrown.
 					@return Reference to current iterator, the invoked iterator will points to next element in the list.
 				*/
-				Iterator operator++(int);
+				Iterator operator++(int32_t);
 
 				/**
 					@brief Dereference the iterator to return the data its storing.
@@ -205,7 +213,7 @@ namespace NoobEngine
 				/**
 					@brief Constructor for creating new iterator.
 					@param pOwnerList const pointer to the list that owns the iterator.
-					@param pCurrentNode const pointer to the node that the iterator is pointing to.
+					@param pCurrentNode Pointer to the node that the iterator is pointing to.
 				*/
 				Iterator(const SList<T>* pOwnerList, Node* pCurrentNode);
 
@@ -223,7 +231,7 @@ namespace NoobEngine
 			/**
 				@brief Return the iterator that points to the first element in the list.
 				@details If the list is empty this will be same as the iterator pointing to the end of the list.
-				@return Reference to the iterator that points to the first element in the list.
+				@return Iterator that points to the first element in the list.
 				@see end()
 			*/
 			Iterator begin() const;
@@ -231,7 +239,7 @@ namespace NoobEngine
 			/**
 				@brief Return the iterator that points to the last element in the list.
 				@details If the list is empty this will be same as the iterator pointing to the beginning of the list.
-				@return Reference to the iterator that points to the last element in the list.
+				@return Iterator that points to the last element in the list.
 				@see begin()
 			*/
 			Iterator end() const;
