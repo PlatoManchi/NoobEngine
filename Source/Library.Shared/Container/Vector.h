@@ -2,7 +2,7 @@
 
 #include "pch.h"
 #define _DEFAULT_INIT_CAPACITY_ 10
-#define _DEFAULT_INCEMENENT_STEP 5
+#define _DEFAULT_INCEMENENT_STEP_ 5
 
 namespace NoobEngine
 {
@@ -16,6 +16,16 @@ namespace NoobEngine
 		class Vector
 		{
 		public:
+			class ReserveFunction
+			{
+			public:
+				ReserveFunction() {};
+				virtual uint32_t operator() (uint32_t pSize, uint32_t pCapacity) {
+					pSize;
+					return pCapacity + _DEFAULT_INCEMENENT_STEP_;
+				}
+			};
+
 			class Iterator
 			{
 				friend class Vector;
@@ -50,6 +60,20 @@ namespace NoobEngine
 				bool operator!=(const Iterator& pOther) const;
 
 				/**
+					@brief Check if this iterator is pOther iterator is pointing to element that is on right side of element current iterator is pointing to.
+					@param pOther Iterator to compare with
+					@return Boolean. true if greater else false.
+				*/
+				bool operator>(const Iterator& pOther) const;
+
+				/**
+					@brief Check if this iterator is pOther iterator is pointing to element that is on left side of element current iterator is pointing to.
+					@param pOther Iterator to compare with
+					@return Boolean. true if lesser else false.
+				*/
+				bool operator<(const Iterator& pOther) const;
+
+				/**
 					@brief Pre-increment the iterator to point to next item in vector.
 					@details If the iterator is pointing to the end of the vector, invoking this operator will result in exception being thrown.
 					@return Reference to iterator that points to next element in the vector.
@@ -59,7 +83,7 @@ namespace NoobEngine
 
 				/**
 					@brief Post-increment the iterator to point to next item in vector.
-					@details If the iterator is pointing to the enf of the vector, invoking this operator will result in exception being thrown.
+					@details If the iterator is pointing to the end of the vector, invoking this operator will result in exception being thrown.
 					@return Reference to current iterator, the invoked iterator will points to next element in the vector.
 					@see operator++()
 				*/
@@ -116,7 +140,7 @@ namespace NoobEngine
 				@param pCapacity Initial capacity that the vector should contain.
 				@see Vector()
 			*/
-			Vector(const uint32_t pCapacity);
+			Vector(const uint32_t pCapacity, uint32_t pCapacityIncrementStep = _DEFAULT_INCEMENENT_STEP_);
 
 			/**
 				@brief Standard destructor.
@@ -202,7 +226,7 @@ namespace NoobEngine
 				@param pBegin Iterator that points to the starting point from which elements needs to be deleted.
 				@param pEnd Iterator that points to the ending point till which elements need to be deleted.
 			*/
-			void Remove(const Iterator& pBegin, const Iterator& pEnd);
+			void Remove(Iterator pBegin, Iterator pEnd);
 
 			/**
 				@brief Increases the capacity of the vector.
@@ -212,7 +236,14 @@ namespace NoobEngine
 			void Reserve(uint32_t pCapacity);
 
 			/**
-				@brief Delete all elements from he vector.
+				@brief Increases the capacity of the vector based on the helper function that is passed.
+				@details If pCapacity is less than current capacity, vector will be shrunk. If pCapacity is less than size, vector will be shrunk to fit current size of vector.
+				@param pReserveFunction The functor that will be called to get the capacity size.
+			*/
+			void Reserve(ReserveFunction& pReserveFunction);
+
+			/**
+				@brief Delete all elements from he vector. Makes size and capacity of the vector 0.
 			*/
 			void Clear();
 
@@ -235,6 +266,18 @@ namespace NoobEngine
 			uint32_t Capacity() const;
 
 			/**
+				@brief Get capacity increment step.
+				@return unsigned int that holds the step at which capacity will be incremented if needed.
+			*/
+			uint32_t GetCapacityIncrementStep() const;
+
+			/**
+				@brief Set capacity increment step.
+				@param pCapacityIncrementStep unsigned in to which capacity increment step should be set as.
+			*/
+			void SetCapacityIncrementStep(uint32_t pCapacityIncrementStep);
+
+			/**
 				@brief Return the iterator that points to the first element in the vector.
 				@details If the vector is empty this will be same as the iterator end().
 				@return Iterator that points to the first element in the vector.
@@ -249,6 +292,13 @@ namespace NoobEngine
 				@see begin()
 			*/
 			Iterator end() const;
+
+			/**
+				@brief Does a deep copy of all the list elements into new vector.
+				@param pOther Deep copy the rhs vector into lhs vector.
+				@return Reference to the vector.
+			*/
+			Vector& operator=(const Vector& pOther);
 
 			/**
 				@brief Index of operator that returns the reference of data that is stored at particular index.
@@ -283,6 +333,11 @@ namespace NoobEngine
 				Holds the capacity of the vector. Size will always be less than capacity.
 			*/
 			uint32_t mCapacity;
+
+			/**
+				Stores the step at which capacity is incremented.
+			*/
+			uint32_t mCapacityIncrementStep;
 		};
 	}
 }

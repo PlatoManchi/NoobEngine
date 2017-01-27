@@ -42,14 +42,26 @@ namespace NoobEngine
 		}
 
 		template<typename T>
+		bool Vector<T>::Iterator::operator > (typename const Vector<T>::Iterator& pOther) const
+		{
+			return mIndex > pOther.mIndex;
+		}
+
+		template<typename T>
+		bool Vector<T>::Iterator::operator < (typename const Vector<T>::Iterator& pOther) const
+		{
+			return !(*this > pOther);
+		}
+
+		template<typename T>
 		typename Vector<T>::Iterator& Vector<T>::Iterator::operator ++()
 		{
-			if (mIndex >= mOwnerVector->mSize)
+			if (mIndex <= mOwnerVector->mSize)
 			{
 				mIndex++;
 				return *this;
 			}
-			throw exception("Cannot increment iterator. Reached end of vector.");
+			throw std::exception("Cannot increment iterator. Reached end of vector.");
 		}
 
 		template<typename T>
@@ -65,10 +77,10 @@ namespace NoobEngine
 		{
 			if (mIndex >= 0 && mIndex < mOwnerVector->mSize)
 			{
-				return mOwnerVector[mIndex];
+				return mOwnerVector->mData[mIndex];
 			}
 
-			throw exception("Cannot dereference end iterator.");
+			throw std::exception("Cannot dereference end iterator.");
 		}
 
 		template<typename T>
@@ -79,111 +91,209 @@ namespace NoobEngine
 #pragma endregion
 
 #pragma region Vector
+#pragma region ConstructorsDestructor
 		template<typename T>
 		Vector<T>::Vector() : 
-			mData(nullptr), mSize(0), mCapacity(_DEFAULT_INIT_CAPACITY_)
+			mData(nullptr), mSize(0), mCapacity(0), mCapacityIncrementStep(_DEFAULT_INCEMENENT_STEP_)
 		{
-			Reserve(mCapacity);
+			Reserve(_DEFAULT_INIT_CAPACITY_);
 		}
 
 		template<typename T>
 		Vector<T>::Vector(const Vector& pOther) :
-			mData(nullptr), mSize(0), mCapacity(pOther.mSize)
+			Vector(pOther.mCapacity, pOther.mCapacityIncrementStep)
 		{
 			Reserve(mCapacity);
+			
+			for each (T element in pOther)
+			{
+				PushBack(element);
+			}
 		}
 
 		template<typename T>
-		Vector<T>::Vector(const uint32_t pCapacity) :
-			mData(nullptr), mSize(0), mCapacity(pCapacity)
+		Vector<T>::Vector(const uint32_t pCapacity, uint32_t pCapacityIncrementStep) :
+			mData(nullptr), mSize(0), mCapacity(0), mCapacityIncrementStep(pCapacityIncrementStep)
 		{
-			Reserve(mCapacity);
+			Reserve(pCapacity);
 		}
 
 		template<typename T>
 		Vector<T>::~Vector()
-		{}
+		{
+			Clear();
+		}
 
+#pragma endregion
 		template<typename T>
 		T& Vector<T>::Front()
 		{
-			return operator[0];
+			return operator[](0);
 		}
 
 		template<typename T>
 		const T& Vector<T>::Front() const
 		{
-			return operator[0];
+			return operator[](0);
 		}
 
 		template<typename T>
 		T & Vector<T>::Back()
 		{
-			return operator[mSize - 1];
+			return operator[](mSize - 1);
 		}
 
 		template<typename T>
-		const T & Vector<T>::Back() const
+		const T& Vector<T>::Back() const
 		{
-			return operator[mSize - 1];
+			return operator[](mSize - 1);
 		}
 
 		template<typename T>
 		T Vector<T>::PopBack()
 		{
-			return T();
+			if (mSize > 0)
+			{
+				T tmp = mData[mSize - 1];
+				mData[--mSize].~T();
+				return tmp;
+			}
+			throw std::exception("Cannot pop on empty vector");
 		}
 
 		template<typename T>
-		typename Vector<T>::Iterator Vector<T>::PushBack(const T & pData)
+		typename Vector<T>::Iterator Vector<T>::PushBack(const T& pData)
 		{
-			return Iterator();
+			if (mSize == mCapacity)
+			{
+				// if capacity is reached, allocate reserve more memory.
+				Reserve(mCapacity + mCapacityIncrementStep);
+			}
+			// using placement new to use the buffer created during Rserve().
+			// calling copy constructor on T to make sure that the ownership is true to this vector.
+			new (mData + mSize++)T(pData);
+			
+			return Iterator(this, mSize - 1);
 		}
 
 		template<typename T>
 		T& Vector<T>::At(uint32_t pIndex) const
 		{
-			return operator[pIndex];
+			return operator[](pIndex);
 		}
 
 		template<typename T>
 		typename Vector<T>::Iterator Vector<T>::Find(const T & pObject) const
 		{
-			return Iterator();
+			for (typename Vector<T>::Iterator itr = begin(); itr != end(); ++itr)
+			{
+				if (*itr == pObject)
+				{
+					return itr;
+				}
+			}
+			return end();
 		}
 
 		template<typename T>
 		void Vector<T>::Remove(const T& pObject)
-		{}
+		{
+			Iterator itr = Find(pObject);
+			if (itr != end())
+			{
+				++itr;
+				// shift all elements to left by once
+				for (; itr != end() ; ++itr)
+				{
+					// by using assignment in to left element instead of deleting and creating copy is avoiding allocations.
+					mData[itr.mIndex - 1] = *itr;
+				}
+
+				--mSize;
+
+				// delete the last element
+				(mData[mSize]).~T();
+			}
+		}
 
 		template<typename T>
-		void Vector<T>::Remove(const Iterator & pBegin, const Iterator & pEnd)
-		{}
+		void Vector<T>::Remove(Iterator pBegin, Iterator pEnd)
+		{
+			if (pBegin > pEnd)
+			{
+				// if the order of the iterators are in reverse swap them and call remove
+				Remove(pEnd, pBegin);
+			}
+
+			// calling remove from here can cause performance loss since remove has O(n) in worst case.
+			// deleting all elements at once and shifting can give a significant performance boost
+			uint32_t itemsToDelete = pEnd.mIndex - pBegin.mIndex;
+			
+			for (; pEnd != end(); ++pEnd)
+			{
+				*pBegin = *pEnd;
+				++pBegin;
+			}
+
+			// by end of previous loop the beginItr will be pointing to the position where excess remaining elements.
+			for (; pBegin != end(); ++pBegin)
+			{
+				(*pBegin).~T();
+			}
+
+			mSize = mSize - itemsToDelete;
+		}
 
 		template<typename T>
 		void Vector<T>::Reserve(uint32_t pCapacity)
 		{
 			if (mCapacity == pCapacity)
 			{
-				// if current capacity is same as wanted capacity then do nothing.
+				// if current capacity is same as required capacity then do nothing.
 				return;
 			}
 			if (pCapacity < mSize)
 			{
+				// if capacity is less than size then do shrink to fit
 				pCapacity = mSize;
 			}
 			T* mPrevData = mData;
 			mData = static_cast<T*>(malloc(sizeof(T) * pCapacity));
 
-			if (mSize != 0)
+			if (!mData)
 			{
-				
+				throw std::exception("Unable to create memory.");
 			}
+
+			if (mPrevData)
+			{
+				memcpy(mData, mPrevData, sizeof(T) * mSize);
+				free(mPrevData);
+			}
+
+			// if successfully allocated memory, make current capacity as pCapacity
+			mCapacity = pCapacity;
+		}
+
+		template<typename T>
+		void Vector<T>::Reserve(ReserveFunction& pReserveFunction)
+		{
+			Reserve(pReserveFunction(mSize, mCapacity));
 		}
 
 		template<typename T>
 		void Vector<T>::Clear()
-		{}
+		{
+			for each (T& element in *this)
+			{
+				(element).~T();
+			}
+			
+			mSize = 0;
+			mCapacity = 0;
+			free(mData);
+			mData = nullptr;
+		}
 
 		template<typename T>
 		bool Vector<T>::IsEmpty() const
@@ -204,6 +314,18 @@ namespace NoobEngine
 		}
 
 		template<typename T>
+		uint32_t Vector<T>::GetCapacityIncrementStep() const
+		{
+			return mCapacityIncrementStep;
+		}
+
+		template<typename T>
+		void Vector<T>::SetCapacityIncrementStep(uint32_t pCapacityIncrementStep)
+		{
+			mCapacityIncrementStep = pCapacityIncrementStep;
+		}
+
+		template<typename T>
 		typename Vector<T>::Iterator Vector<T>::begin() const
 		{
 			return Iterator(this, 0);
@@ -216,6 +338,22 @@ namespace NoobEngine
 		}
 
 		template<typename T>
+		Vector<T>& Vector<T>::operator=(const Vector<T> & pOther)
+		{
+			if (this != &pOther)
+			{
+				Clear();
+				Reserve(pOther.mCapacity);
+
+				for each (T element in pOther)
+				{
+					PushBack(element);
+				}
+			}
+			return *this;
+		}
+
+		template<typename T>
 		T & Vector<T>::operator[](uint32_t pIndex)
 		{
 			if (pIndex < mSize)
@@ -224,14 +362,21 @@ namespace NoobEngine
 			}
 			else
 			{
-				throw exception("IndexOutOfBounds");
+				throw std::exception("IndexOutOfBounds");
 			}
 		}
 
 		template<typename T>
 		const T & Vector<T>::operator[](uint32_t pIndex) const
 		{
-			return operator[pIndex];
+			if (pIndex < mSize)
+			{
+				return mData[pIndex];
+			}
+			else
+			{
+				throw std::exception("IndexOutOfBounds");
+			}
 		}
 #pragma endregion
 	}

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Container/SList.h"
+#include "Container/Vector.h"
 #include <stdio.h>
 
 // the WindowProc function prototype
@@ -39,6 +40,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	sampleList.PushBack(30);
 
 	sampleList.Remove(10);
+
+	NoobEngine::Container::Vector<int32_t> sampleVector;
+
 
 	for (NoobEngine::Container::SList<int32_t>::Iterator itr = sampleList.begin(); itr != sampleList.end(); itr++)
 	{
