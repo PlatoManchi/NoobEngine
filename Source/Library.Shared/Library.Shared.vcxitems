@@ -19,11 +19,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Container\Hashmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Container\Hashmap.inl" />
     <None Include="$(MSBuildThisFileDirectory)Container\SList.inl">
       <FileType>CppCode</FileType>
     </None>

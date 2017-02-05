@@ -56,6 +56,10 @@ namespace NoobEngine
 		template<typename T>
 		typename Vector<T>::Iterator& Vector<T>::Iterator::operator ++()
 		{
+			if (!mOwnerVector)
+			{
+				throw std::exception("Invalid iterator.");
+			}
 			if (mIndex <= mOwnerVector->mSize)
 			{
 				mIndex++;
@@ -154,8 +158,8 @@ namespace NoobEngine
 		{
 			if (mSize > 0)
 			{
-				T tmp = mData[mSize - 1];
-				mData[--mSize].~T();
+				T tmp = mData[--mSize];
+				mData[mSize].~T();
 				return tmp;
 			}
 			throw std::exception("Cannot pop on empty vector");
@@ -219,6 +223,10 @@ namespace NoobEngine
 		template<typename T>
 		void Vector<T>::Remove(Iterator pBegin, Iterator pEnd)
 		{
+			if (pBegin.mOwnerVector != this || pEnd.mOwnerVector != this)
+			{
+				throw std::exception("Invalid iterators.");
+			}
 			if (pBegin > pEnd)
 			{
 				// if the order of the iterators are in reverse swap them and call remove

@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+#include "../pch.h"
 namespace NoobEngine
 {
 	namespace Container
@@ -155,6 +155,11 @@ namespace NoobEngine
 			{
 				friend class SList;
 			public:
+				/**
+					@brief Default constructor
+				*/
+				Iterator();
+
 				/**
 					@brief Copy constructor for creating new iterator.
 					@param pIterator const reference to which a copy has to be created.

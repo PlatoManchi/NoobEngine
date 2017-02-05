@@ -1,6 +1,7 @@
 #pragma once
 
-#include "pch.h"
+#include "../pch.h"
+
 #define _DEFAULT_INIT_CAPACITY_ 10
 #define _DEFAULT_INCEMENENT_STEP_ 5
 
@@ -8,10 +9,11 @@ namespace NoobEngine
 {
 	namespace Container
 	{
+		
 		/**
 			The elements of a vector are stored contiguously. Vectors allow the user to denote an initial capacity for the container. Vectors also allow random access; that is, an element of a vector may be referenced in the same manner as elements of arrays (by array indices).
 		*/
-
+		
 		template <typename T>
 		class Vector
 		{
@@ -29,6 +31,7 @@ namespace NoobEngine
 			class Iterator
 			{
 				friend class Vector;
+				
 			public:
 				/**
 					@brief Copy constructor for creating new iterator using existing iterator.
@@ -104,13 +107,16 @@ namespace NoobEngine
 					@see operator*()
 				*/
 				const T& operator*() const;
-			private:
+
 				/**
 					@brief Constructor for creating new iterator.
 					@param pOwnerVector Constant pointer to the list that owns the iterator.
 					@param pIndex Index of the element this iterator is pointing to.
 				*/
 				Iterator(const Vector<T>* pOwnerVector, uint32_t pIndex);
+
+			private:
+
 				/**
 					Pointer to the owner vector to which this iterator belongs to.
 				*/

@@ -84,7 +84,7 @@ namespace NoobEngine
 			mBackNode = node;
 			mSize++;
 
-			return end();
+			return Iterator(this, node);
 		}
 
 		template <typename T>
@@ -102,7 +102,7 @@ namespace NoobEngine
 			mFrontNode = mFrontNode->mNextNode;
 			delete(frontNode);
 
-			mSize--;
+			--mSize;
 
 			return data;
 		}
@@ -265,6 +265,10 @@ namespace NoobEngine
 		// iterator class members implementation
 		template<typename T>
 		SList<T>::Iterator::Iterator(const SList<T>* pOwnerList, Node* pCurrentNode) : mOwnerList(pOwnerList), mNode(pCurrentNode)
+		{}
+
+		template<typename T>
+		SList<T>::Iterator::Iterator() : mOwnerList(nullptr), mNode(nullptr)
 		{}
 
 		template<typename T>

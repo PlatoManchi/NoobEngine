@@ -16,12 +16,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h">
       <Filter>Container</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Container\Hashmap.h">
+      <Filter>Container</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Container\SList.inl">
       <Filter>Container</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Container\Vector.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Container\Hashmap.inl">
       <Filter>Container</Filter>
     </None>
   </ItemGroup>

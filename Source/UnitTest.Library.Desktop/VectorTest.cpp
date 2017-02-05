@@ -383,46 +383,6 @@ namespace UnitTestLibraryDesktop
 		}
 	};
 
-	// declaring 
-	template <typename T>
-	void VectorTestFunctions<T>::TestDefaultConstructor();
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestCopyConstructor(T& pValue1);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestAssignmentOpertor(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestIsEmpty();
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestPushBack(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestPopBack(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestBeginEnd(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestReserveCapacity(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestClear(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestIndexOfOperator(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestFind(T& pValue1, T& pValue2, T& pValue3);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestRemove(T& pValue1, T& pValue2, T& pValue3, T& pValue4);
-
-	template <typename T>
-	void VectorTestFunctions<T>::TestReserveFunctor(T& pValue1, T& pValue2, T& pValue3);
-
 	TEST_CLASS(VectorTest)
 	{
 	public:

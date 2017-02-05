@@ -2,7 +2,7 @@
 #include "Container/SList.h"
 #include "Container/Vector.h"
 #include <stdio.h>
-
+#include "Container/Hashmap.h"
 // the WindowProc function prototype
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -34,31 +34,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	
 	// testing the library linking capability
-	NoobEngine::Container::SList<int32_t> sampleList;
-	sampleList.PushBack(10);
-	sampleList.PushBack(20);
-	sampleList.PushBack(30);
-
-	sampleList.Remove(10);
-
-	NoobEngine::Container::Vector<int32_t> sampleVector;
-
-
-	for (NoobEngine::Container::SList<int32_t>::Iterator itr = sampleList.begin(); itr != sampleList.end(); itr++)
-	{
-		char debug[256];
-		sprintf_s(debug, "ranged based for loop: %d\n", *itr);
-		OutputDebugString(debug);
-	}
-
-	for each(int32_t var in sampleList)
-	{
-		char debug[256];
-		sprintf_s(debug, "for each: %d\n", var);
-		OutputDebugString(debug);
-	}
+	NoobEngine::Container::Hashmap<uint32_t, uint32_t> map;
+	map.begin();
+	map.end();
 	
+	map[10U] = 100;
+	map[20U] = 200;
+
+	NoobEngine::Container::Hashmap<uint32_t, uint32_t>::Iterator itr = map.begin();
+
+	uint32_t tmp = (*itr).second;
+	++itr;
 	
+	tmp = (*itr).second;
+	tmp;
+	++itr;
+	
+
 	glViewport(0, 0, 800, 600);
 	while (!glfwWindowShouldClose(window))
 	{
