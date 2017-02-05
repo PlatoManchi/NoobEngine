@@ -256,7 +256,7 @@ namespace NoobEngine
 
 		uint32_t DefaultHashFunction<std::string>::operator()(std::string pParam)
 		{
-			uint32_t len = pParam.length();
+			size_t len = pParam.length();
 			uint32_t hash = 0;
 
 			uint32_t i;
@@ -270,7 +270,7 @@ namespace NoobEngine
 
 		uint32_t DefaultHashFunction<char*>::operator()(const char* pParam)
 		{
-			uint32_t len = strlen(pParam);
+			size_t len = strlen(pParam);
 			uint32_t hash = 0;
 
 			uint32_t i;
