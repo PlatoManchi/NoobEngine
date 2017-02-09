@@ -35,18 +35,19 @@ namespace NoobEngine
 		}
 
 		template<typename TKey, typename TValue, typename HashFunctor>
-		typename Hashmap<TKey, TValue, HashFunctor>::Iterator Hashmap<TKey, TValue, HashFunctor>::Find(const TKey & pKey) const
+		typename Hashmap<TKey, TValue, HashFunctor>::Iterator Hashmap<TKey, TValue, HashFunctor>::Find(const TKey& pKey) const
 		{
-			for (BucketType::Iterator bucketItr = mData.begin(); bucketItr != mData.end() ; ++bucketItr)
+			uint32_t hashIndex = mHashFunctor(pKey) % mData.Size();
+			const SList<std::pair<TKey, TValue>>& chainList = mData[hashIndex];
+
+			for (SList<std::pair<TKey, TValue>>::Iterator listItr = chainList.begin(); listItr != chainList.end(); ++listItr)
 			{
-				for (SList<std::pair<TKey, TValue>>::Iterator listItr = (*bucketItr).begin(); listItr != (*bucketItr).end(); ++listItr)
+				if ((*listItr).first == pKey)
 				{
-					if ((*listItr).first == pKey)
-					{
-						return Iterator(this, bucketItr, listItr);
-					}
+					return Iterator(this, BucketType::Iterator(&mData, hashIndex), listItr);
 				}
 			}
+			
 			return end();
 		}
 
@@ -237,7 +238,7 @@ namespace NoobEngine
 #pragma region DefaultHashFunctor
 		// using additive hashing
 		template <typename T>
-		uint32_t DefaultHashFunction<T>::operator()(T pParam)
+		uint32_t DefaultHashFunction<T>::operator()(T pParam) const
 		{
 			const uint32_t len = sizeof(pParam);
 			uint32_t hash = 0;
@@ -254,7 +255,7 @@ namespace NoobEngine
 			return hash;
 		}
 
-		uint32_t DefaultHashFunction<std::string>::operator()(std::string pParam)
+		uint32_t DefaultHashFunction<std::string>::operator()(std::string pParam) const
 		{
 			size_t len = pParam.length();
 			uint32_t hash = 0;
@@ -268,7 +269,22 @@ namespace NoobEngine
 			return hash;
 		}
 
-		uint32_t DefaultHashFunction<char*>::operator()(const char* pParam)
+
+		uint32_t DefaultHashFunction<char*>::operator()(const char* pParam) const
+		{
+			size_t len = strlen(pParam);
+			uint32_t hash = 0;
+
+			uint32_t i;
+			for (i = 0; i < len; i++)
+			{
+				hash += pParam[i];
+			}
+
+			return hash;
+		}
+
+		uint32_t DefaultHashFunction<char*>::operator()(char* pParam) const
 		{
 			size_t len = strlen(pParam);
 			uint32_t hash = 0;

@@ -13,7 +13,7 @@ namespace NoobEngine
 		{
 		public:
 			DefaultHashFunction() {}
-			uint32_t operator()(T pParam);
+			uint32_t operator()(T pParam) const;
 		};
 		
 		template <>
@@ -21,7 +21,8 @@ namespace NoobEngine
 		{
 		public:
 			DefaultHashFunction() {}
-			uint32_t operator()(const char* pParam);
+			uint32_t operator()(const char* pParam) const;
+			uint32_t operator()(char* pParam) const;
 		};
 
 		template <>
@@ -29,14 +30,14 @@ namespace NoobEngine
 		{
 		public:
 			DefaultHashFunction() {}
-			uint32_t operator()(std::string pParam);
+			uint32_t operator()(std::string pParam) const;
 		};
 
 		/**
 		Hash map is a data structure used to implement an associative array, a structure that can map keys to values. A hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.
 		*/
 		template <typename TKey, typename TValue, typename HashFunctor = DefaultHashFunction<TKey>>
-		class Hashmap
+		class Hashmap final
 		{
 			typedef Vector<SList<std::pair<TKey, TValue>>> BucketType;
 			/*class BucketType;
@@ -44,7 +45,7 @@ namespace NoobEngine
 			friend class BucketType;
 			friend class BucketType::Iterator;*/
 		public:
-			class Iterator
+			class Iterator final
 			{
 				friend class Hashmap;
 				

@@ -15,7 +15,7 @@ namespace NoobEngine
 		*/
 		
 		template <typename T>
-		class Vector
+		class Vector final
 		{
 		public:
 			class ReserveFunction
@@ -28,7 +28,7 @@ namespace NoobEngine
 				}
 			};
 
-			class Iterator
+			class Iterator final
 			{
 				friend class Vector;
 				

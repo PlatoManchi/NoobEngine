@@ -8,7 +8,7 @@ namespace NoobEngine
 			SList is dynamic sized container class that implements singly linked list.
 		*/
 		template <typename T>
-		class SList
+		class SList final
 		{
 			// forward declaring private nested classes 
 			class Node;
@@ -151,7 +151,7 @@ namespace NoobEngine
 			/**
 				Iterator used to loop through the SList.
 			*/
-			class Iterator
+			class Iterator final
 			{
 				friend class SList;
 			public:

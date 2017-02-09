@@ -8,6 +8,19 @@ using namespace NoobEngine::Container;
 using namespace SupportingClasses;
 
 
+namespace UnitTestLibraryDesktop
+{
+	class FooHashFunction
+	{
+	public:
+		FooHashFunction() {}
+		uint32_t operator()(Foo pParam) const
+		{
+			return 0U;
+		}
+	};
+}
+
 namespace Microsoft
 {
 	namespace VisualStudio
@@ -17,14 +30,25 @@ namespace Microsoft
 			// adding helper function to namespace for assert to compare two foo objects and pointers
 
 
-			template<> inline std::wstring ToString<Foo>(const Foo& t)
+			/*template<> std::wstring ToString<Foo>(const Foo& t)
 			{
 				std::wstringstream stringStream;
 				stringStream << "Foo_" << (t.mID);
 				std::wstring copyOfStr = stringStream.str();
 
 				return copyOfStr;
-			}
+			}*/
+			
+#pragma region FooHashFunctor
+			/*template<> std::wstring ToString<UnitTestLibraryDesktop::FooHashFunction>(const UnitTestLibraryDesktop::FooHashFunction&)
+			{
+				std::wstringstream stringStream;
+				stringStream << "FooHashFunction";
+				std::wstring copyOfStr = stringStream.str();
+
+				return copyOfStr;
+			}*/
+#pragma endregion
 #pragma region IteratorToString
 			template<> std::wstring ToString<Hashmap<int32_t, int32_t>::Iterator>(typename const Hashmap<int32_t, int32_t>::Iterator&)
 			{
@@ -142,7 +166,7 @@ namespace Microsoft
 
 namespace UnitTestLibraryDesktop
 {
-	template <typename TKey, typename TValue>
+	template <typename TKey, typename TValue, typename HashFunctor = DefaultHashFunction<TKey>>
 	class HashmapTestFunctions
 	{
 	public:
@@ -157,17 +181,19 @@ namespace UnitTestLibraryDesktop
 		static void TestHashmapCopyConstructor(std::pair<TKey, TValue> pValue1)
 		{
 			// setting stage for testing
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			uint32_t initialSize = 0;
 			Assert::AreEqual(initialSize, sampleMap.Size());
-			Assert::AreEqual(sampleMap.begin(), sampleMap.end());
+			Assert::IsTrue(sampleMap.begin() == sampleMap.end());
+			//Assert::AreEqual(sampleMap.begin(), sampleMap.end());
 
 			sampleMap.Insert(pValue1);
-			Assert::AreNotEqual(sampleMap.begin(), sampleMap.end());
+			//Assert::AreNotEqual(sampleMap.begin(), sampleMap.end());
+			Assert::IsFalse(sampleMap.begin() == sampleMap.end());
 			Assert::AreEqual(1U, sampleMap.Size());
 
 			// calling copy
-			Hashmap<TKey, TValue> sampleMap2(sampleMap);
+			Hashmap<TKey, TValue, HashFunctor> sampleMap2(sampleMap);
 			//testing for all members
 			Assert::AreEqual(sampleMap.Size(), sampleMap2.Size());
 
@@ -179,12 +205,12 @@ namespace UnitTestLibraryDesktop
 
 		static void TestHashmapAssignemntOperator(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap1;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap1;
 			sampleMap1.Insert(pValue1);
 			sampleMap1.Insert(pValue2);
 			sampleMap1.Insert(pValue3);
 
-			Hashmap<TKey, TValue> sampleMap2;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap2;
 			Assert::AreEqual(0U, sampleMap2.Size());
 			sampleMap2 = sampleMap1;
 
@@ -196,7 +222,7 @@ namespace UnitTestLibraryDesktop
 
 		static void TestHashmapInsert(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			Assert::AreEqual(0U, sampleMap.Size());
 
 			sampleMap.Insert(pValue1);
@@ -215,7 +241,7 @@ namespace UnitTestLibraryDesktop
 
 		static void TestHashmapFind(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			Assert::AreEqual(0U, sampleMap.Size());
 
 			sampleMap.Insert(pValue1);
@@ -223,10 +249,11 @@ namespace UnitTestLibraryDesktop
 
 			sampleMap.Insert(pValue2);
 			Assert::AreEqual(2U, sampleMap.Size());
-			Assert::AreEqual(sampleMap.end(), sampleMap.Find(pValue3.first));
-
-			typename Hashmap<TKey, TValue>::Iterator itr = sampleMap.Insert(pValue3);
-			Assert::AreEqual(itr, sampleMap.Find(pValue3.first));
+			Assert::IsTrue(sampleMap.end() == sampleMap.Find(pValue3.first));
+			
+			typename Hashmap<TKey, TValue, HashFunctor>::Iterator itr = sampleMap.Insert(pValue3);
+			Assert::IsTrue(itr == sampleMap.Find(pValue3.first));
+			
 			Assert::AreEqual(pValue1, *sampleMap.Find(pValue1.first));
 			Assert::AreEqual(pValue2, *sampleMap.Find(pValue2.first));
 			Assert::AreEqual(pValue3, *sampleMap.Find(pValue3.first));
@@ -234,7 +261,7 @@ namespace UnitTestLibraryDesktop
 
 		static void TestHashmapConstainsKey(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			Assert::AreEqual(0U, sampleMap.Size());
 
 			sampleMap.Insert(pValue1);
@@ -244,13 +271,13 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(2U, sampleMap.Size());
 			Assert::AreEqual(false, sampleMap.ContainsKey(pValue3.first));
 
-			typename Hashmap<TKey, TValue>::Iterator itr = sampleMap.Insert(pValue3);
+			typename Hashmap<TKey, TValue, HashFunctor>::Iterator itr = sampleMap.Insert(pValue3);
 			Assert::AreEqual(true, sampleMap.ContainsKey(pValue3.first));
 		}
 
 		static void TestHashmapRemove(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			Assert::AreEqual(0U, sampleMap.Size());
 
 			sampleMap.Insert(pValue1);
@@ -262,7 +289,7 @@ namespace UnitTestLibraryDesktop
 			sampleMap.Remove(pValue3.first);
 			Assert::AreEqual(2U, sampleMap.Size());
 
-			typename Hashmap<TKey, TValue>::Iterator itr = sampleMap.Insert(pValue3);
+			typename Hashmap<TKey, TValue, HashFunctor>::Iterator itr = sampleMap.Insert(pValue3);
 			Assert::AreEqual(true, sampleMap.ContainsKey(pValue3.first));
 			Assert::AreEqual(3U, sampleMap.Size());
 			sampleMap.Remove(pValue3.first);
@@ -271,9 +298,10 @@ namespace UnitTestLibraryDesktop
 
 		static void TestHashmapClear(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			Assert::AreEqual(0U, sampleMap.Size());
-			Assert::AreEqual(sampleMap.begin(), sampleMap.end());
+			Assert::IsTrue(sampleMap.begin() == sampleMap.end());
+			//Assert::AreEqual(sampleMap.begin(), sampleMap.end());
 
 
 			sampleMap[pValue1.first] = pValue1.second;
@@ -281,21 +309,24 @@ namespace UnitTestLibraryDesktop
 			sampleMap[pValue3.first] = pValue3.second;
 
 			Assert::AreEqual(3U, sampleMap.Size());
-			Assert::AreNotEqual(sampleMap.begin(), sampleMap.end());
+			Assert::IsFalse(sampleMap.begin() == sampleMap.end());
+			//Assert::AreNotEqual(sampleMap.begin(), sampleMap.end());
 
 			sampleMap.Clear();
 
 			Assert::AreEqual(0U, sampleMap.Size());
-			Hashmap<TKey, TValue>::Iterator beginItr = sampleMap.begin();
-			Hashmap<TKey, TValue>::Iterator endItr = sampleMap.end();
-			Assert::AreEqual(sampleMap.begin(), sampleMap.end());
+			Hashmap<TKey, TValue, HashFunctor>::Iterator beginItr = sampleMap.begin();
+			Hashmap<TKey, TValue, HashFunctor>::Iterator endItr = sampleMap.end();
+			Assert::IsTrue(sampleMap.begin() == sampleMap.end());
+			//Assert::AreEqual(sampleMap.begin(), sampleMap.end());
 		}
 
 		static void TestHashmapBracketOperator(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
 		{
-			Hashmap<TKey, TValue> sampleMap;
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
 			Assert::AreEqual(0U, sampleMap.Size());
-			Assert::AreEqual(sampleMap.begin(), sampleMap.end());
+			Assert::IsTrue(sampleMap.begin() == sampleMap.end());
+			//Assert::AreEqual(sampleMap.begin(), sampleMap.end());
 
 			sampleMap.Insert(pValue1);
 			sampleMap.Insert(pValue2);
@@ -310,14 +341,14 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(pValue2.second, sampleMap[pValue2.first]);
 			Assert::AreEqual(pValue3.second, sampleMap[pValue3.first]);
 
-			const Hashmap<TKey, TValue> sampleMap2 = sampleMap;
+			const Hashmap<TKey, TValue, HashFunctor> sampleMap2 = sampleMap;
 			Assert::AreEqual(pValue1.second, sampleMap2[pValue1.first]);
 			Assert::AreEqual(pValue2.second, sampleMap2[pValue2.first]);
 			Assert::AreEqual(pValue3.second, sampleMap2[pValue3.first]);
 		}
-
-
 	};
+
+
 
 	TEST_CLASS(HashmapTest)
 	{
@@ -347,7 +378,7 @@ namespace UnitTestLibraryDesktop
 			HashmapTestFunctions<int32_t*, int32_t>::TestHashmapConstructor();
 			HashmapTestFunctions<char*, int32_t>::TestHashmapConstructor();
 			HashmapTestFunctions<std::string, int32_t>::TestHashmapConstructor();
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapConstructor();
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapConstructor();
 			HashmapTestFunctions<Foo*, int32_t>::TestHashmapConstructor();
 		}
 
@@ -375,7 +406,7 @@ namespace UnitTestLibraryDesktop
 			// ---------------------- Foo, int32_t ---------------------------
 			Foo fooObj(10);
 			std::pair<Foo, int32_t> keyvaluePairFoo(fooObj, value);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapCopyConstructor(keyvaluePairFoo);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapCopyConstructor(keyvaluePairFoo);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr(&fooObj, value);
@@ -424,7 +455,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapAssignemntOperator(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapAssignemntOperator(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
@@ -475,7 +506,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapInsert(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapInsert(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
@@ -526,7 +557,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapFind(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapFind(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
@@ -577,7 +608,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapConstainsKey(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapConstainsKey(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
@@ -628,7 +659,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapRemove(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapRemove(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
@@ -679,7 +710,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapClear(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapClear(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
@@ -730,7 +761,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
 			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
 			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
-			HashmapTestFunctions<Foo, int32_t>::TestHashmapBracketOperator(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapBracketOperator(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
 
 			// ---------------------- Foo*, int32_t ---------------------------
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
