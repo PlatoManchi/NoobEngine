@@ -10,6 +10,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Runtime\Datum.cpp">
+      <Filter>Runtime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">
@@ -25,6 +28,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Runtime\Datum.h">
       <Filter>Runtime</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Runtime\RTTI.h">
+      <Filter>Runtime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Container\SList.inl">
@@ -35,6 +41,9 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Container\Hashmap.inl">
       <Filter>Container</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Runtime\Datum.inl">
+      <Filter>Runtime</Filter>
     </None>
   </ItemGroup>
 </Project>

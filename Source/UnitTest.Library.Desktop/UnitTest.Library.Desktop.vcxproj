@@ -204,6 +204,10 @@
     <ClInclude Include="SupportingClasses\Foo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DatumTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HashmapTest.cpp">
       <SubType>
       </SubType>
