@@ -294,7 +294,7 @@ namespace NoobEngine
 		}
 #pragma endregion
 #pragma region Set
-		void Datum::Set(int32_t pData, uint32_t pIndex)
+		void Datum::Set(const int32_t& pData, uint32_t pIndex)
 		{
 			if (mType != DatumType::INTEGER)
 			{
@@ -311,7 +311,7 @@ namespace NoobEngine
 			}
 		}
 
-		void Datum::Set(float pData, uint32_t pIndex)
+		void Datum::Set(const float& pData, uint32_t pIndex)
 		{
 			if (mType != DatumType::FLOAT)
 			{
@@ -328,7 +328,7 @@ namespace NoobEngine
 			}
 		}
 
-		void Datum::Set(std::string pData, uint32_t pIndex)
+		void Datum::Set(const std::string& pData, uint32_t pIndex)
 		{
 			if (mType != DatumType::STRING)
 			{
@@ -345,7 +345,7 @@ namespace NoobEngine
 			}
 		}
 
-		void Datum::Set(glm::vec4 pData, uint32_t pIndex)
+		void Datum::Set(const glm::vec4& pData, uint32_t pIndex)
 		{
 			if (mType != DatumType::VECTOR_4)
 			{
@@ -362,7 +362,7 @@ namespace NoobEngine
 			}
 		}
 
-		void Datum::Set(glm::mat4x4 pData, uint32_t pIndex)
+		void Datum::Set(const glm::mat4x4& pData, uint32_t pIndex)
 		{
 			if (mType != DatumType::MATRIX_4x4)
 			{
@@ -379,7 +379,7 @@ namespace NoobEngine
 			}
 		}
 
-		void Datum::Set(RTTI* pData, uint32_t pIndex)
+		void Datum::Set(RTTI* const& pData, uint32_t pIndex)
 		{
 			if (mType != DatumType::RTTI_TYPE)
 			{
@@ -397,7 +397,7 @@ namespace NoobEngine
 		}
 #pragma endregion
 #pragma region PushBack
-		void Datum::PushBack(int32_t pData)
+		void Datum::PushBack(const int32_t& pData)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -430,7 +430,7 @@ namespace NoobEngine
 			new (mData.mIntData + mSize++)int32_t(pData);
 		}
 
-		void Datum::PushBack(float pData)
+		void Datum::PushBack(const float& pData)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -463,7 +463,7 @@ namespace NoobEngine
 			new (mData.mFloatData + mSize++)float(pData);
 		}
 
-		void Datum::PushBack(std::string pData)
+		void Datum::PushBack(const std::string& pData)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -496,7 +496,7 @@ namespace NoobEngine
 			new (mData.mStrData + mSize++)std::string(pData);
 		}
 
-		void Datum::PushBack(glm::vec4 pData)
+		void Datum::PushBack(const glm::vec4& pData)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -529,7 +529,7 @@ namespace NoobEngine
 			new (mData.mVecData + mSize++)glm::vec4(pData);
 		}
 
-		void Datum::PushBack(glm::mat4x4 pData)
+		void Datum::PushBack(const glm::mat4x4& pData)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -562,7 +562,7 @@ namespace NoobEngine
 			new (mData.mMatData + mSize++)glm::mat4x4(pData);
 		}
 
-		void Datum::PushBack(const RTTI* pData)
+		void Datum::PushBack(RTTI* const& pData)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -1008,7 +1008,7 @@ namespace NoobEngine
 			return *this;
 		}
 
-		Datum& Datum::operator=(const RTTI* pOther)
+		Datum& Datum::operator=(RTTI* const& pOther)
 		{
 			if (mType != DatumType::RTTI_TYPE)
 			{

@@ -557,7 +557,7 @@ namespace UnitTestLibraryDesktop
 			DatumTestFunctions<glm::mat4x4>::TestToString(glm::mat4x4(1.f,2,3,4,5,6.789f,7,8,9,0.98f,1,2,3,4,5,6));
 		}
 
-		TEST_METHOD(datum_SetFromString)
+		TEST_METHOD(Datum_SetFromString)
 		{
 			DatumTestFunctions<int32_t>::TestSetFromString(DatumType::INTEGER, 10, "10", 20, "20");
 

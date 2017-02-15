@@ -113,7 +113,7 @@ namespace NoobEngine
 				@see PushBack()
 				@see Size()
 			*/
-			void Set(int32_t pData, uint32_t pIndex = 0);
+			void Set(const int32_t& pData, uint32_t pIndex = 0);
 
 			/**
 				@brief Assigns the appropriate index with the value passed.
@@ -123,7 +123,7 @@ namespace NoobEngine
 				@see PushBack()
 				@see Size()
 			*/
-			void Set(float pData, uint32_t pIndex = 0);
+			void Set(const float& pData, uint32_t pIndex = 0);
 
 			/**
 				@brief Assigns the appropriate index with the value passed.
@@ -133,7 +133,7 @@ namespace NoobEngine
 				@see PushBack()
 				@see Size()
 			*/
-			void Set(std::string pData, uint32_t pIndex = 0);
+			void Set(const std::string& pData, uint32_t pIndex = 0);
 
 			/**
 				@brief Assigns the appropriate index with the value passed.
@@ -143,7 +143,7 @@ namespace NoobEngine
 				@see PushBack()
 				@see Size()
 			*/
-			void Set(glm::vec4 pData, uint32_t pIndex = 0);
+			void Set(const glm::vec4& pData, uint32_t pIndex = 0);
 
 			/**
 				@brief Assigns the appropriate index with the value passed.
@@ -153,7 +153,7 @@ namespace NoobEngine
 				@see PushBack()
 				@see Size()
 			*/
-			void Set(glm::mat4x4 pData, uint32_t pIndex = 0);
+			void Set(const glm::mat4x4& pData, uint32_t pIndex = 0);
 
 			/**
 				@brief Assigns the appropriate index with the value passed.
@@ -163,49 +163,49 @@ namespace NoobEngine
 				@see PushBack()
 				@see Size()
 			*/
-			void Set(RTTI* pData, uint32_t pIndex = 0);
+			void Set(RTTI* const& pData, uint32_t pIndex = 0);
 
 			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
 			*/
-			void PushBack(int32_t pData);
+			void PushBack(const int32_t& pData);
 
 			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
 			*/
-			void PushBack(float pData);
+			void PushBack(const float& pData);
 
 			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
 			*/
-			void PushBack(std::string pData);
+			void PushBack(const std::string& pData);
 
 			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
 			*/
-			void PushBack(glm::vec4 pData);
+			void PushBack(const glm::vec4& pData);
 
 			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
 			*/
-			void PushBack(glm::mat4x4 pData);
+			void PushBack(const glm::mat4x4& pData);
 
 			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
 			*/
-			void PushBack(const RTTI* pData);
+			void PushBack(RTTI* const& pData);
 
 			/**
 				@brief Remove last element from the datum.
@@ -340,7 +340,7 @@ namespace NoobEngine
 
 			/**
 				@brief Set the value that is represented by pString at the index given
-				@details Default value of pIndex is 0.
+				@details Default value of pIndex is 0. The function manipulate and change pString, so it is taking a copy of pString instead of reference.
 				@param pString std::string that contains the stringified value of the data.
 				@param pIndex Unsigned int that holds the index at which this value should be inserted into.
 			*/
@@ -407,7 +407,7 @@ namespace NoobEngine
 				@param pOther RTTI* that needs to be copied.
 				@return Reference to datum
 			*/
-			Datum& operator=(const RTTI* pOther);
+			Datum& operator=(RTTI* const& pOther);
 
 			/**
 				@brief Check if two datums are equal are not.
