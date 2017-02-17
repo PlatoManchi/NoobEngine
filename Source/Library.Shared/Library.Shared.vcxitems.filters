@@ -13,6 +13,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Runtime\Datum.cpp">
       <Filter>Runtime</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Runtime\Scope.cpp">
+      <Filter>Runtime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">
@@ -29,6 +32,9 @@
       <Filter>Runtime</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Runtime\RTTI.h">
+      <Filter>Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Runtime\Scope.h">
       <Filter>Runtime</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,14 +4,17 @@
 #define GLM_FORCE_CXX98
 #include "../../External/glm/glm/vec4.hpp"
 #include "../../External/glm/glm/mat4x4.hpp"
+//#include "Scope.h"
 
 namespace NoobEngine
 {
 	namespace Runtime
 	{
+		class Scope;
+
 		enum class DatumType
 		{
-			INTEGER = 0, FLOAT = 1, STRING = 2, VECTOR_4 = 3, MATRIX_4x4 = 4, RTTI_TYPE = 5, UNASSIGNED
+			INTEGER = 0, FLOAT = 1, STRING = 2, VECTOR_4 = 3, MATRIX_4x4 = 4, RTTI_TYPE = 5, TABLE = 6, UNASSIGNED
 		};
 
 		class Datum final
@@ -330,13 +333,22 @@ namespace NoobEngine
 			RTTI*& Get<RTTI*>(uint32_t pIndex);
 
 			/**
-			@brief Returns the data stored in datum at the index.
-			@details The default value of pIndex is 0.
-			@param pIndex The index at which the data needs to be retrieved from.
-			@return Constant reference to RTTI* at pIndex
+				@brief Returns the data stored in datum at the index.
+				@details The default value of pIndex is 0.
+				@param pIndex The index at which the data needs to be retrieved from.
+				@return Constant reference to RTTI* at pIndex
 			*/
 			template<>
 			RTTI* const& Get<RTTI*>(uint32_t pIndex) const;
+
+			/**
+				@brief Returns the data stored in datum at the index.
+				@details The default value of pIndex is 0.
+				@param pIndex The index at which the data needs to be retrieved from.
+				@return Constant reference to Scope* at pIndex
+			*/
+			template<>
+			Scope* const& Get<Scope*>(uint32_t pIndex) const;
 
 			/**
 				@brief Set the value that is represented by pString at the index given
@@ -433,6 +445,7 @@ namespace NoobEngine
 				glm::vec4* mVecData;
 				glm::mat4x4* mMatData;
 				RTTI** mRTTIPtr;
+				Scope** mTablePtr;
 			};
 
 			/**

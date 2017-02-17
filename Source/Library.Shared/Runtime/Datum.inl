@@ -1,5 +1,4 @@
-#include "Datum.h"
-
+#pragma once
 namespace NoobEngine
 {
 	namespace Runtime

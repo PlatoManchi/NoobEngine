@@ -1052,7 +1052,7 @@ namespace NoobEngine
 						}
 					}
 				}
-				else if (mType == DatumType::RTTI_TYPE)
+				else if (mType == DatumType::RTTI_TYPE || mType == DatumType::TABLE)
 				{
 					for (uint32_t i = 0; i < mSize; i++)
 					{

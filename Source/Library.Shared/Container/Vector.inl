@@ -294,6 +294,7 @@ namespace NoobEngine
 		{
 			for each (T& element in *this)
 			{
+				element;
 				(element).~T();
 			}
 			

@@ -155,6 +155,13 @@ namespace NoobEngine
 
 			/**
 				@brief Inserts the given key value pair into the hash map. If the key already exists returns a iterator that points to the existing key value pair.
+				@param pKey The key of the value
+				@param pValue The value of the element
+			*/
+			Iterator Insert(const TKey& pKey, const TValue& pValue);
+
+			/**
+				@brief Inserts the given key value pair into the hash map. If the key already exists returns a iterator that points to the existing key value pair.
 				@param pKeyValuePair Reference to the key value pair that needs to be inserted into hash map.
 			*/
 			Iterator Insert(std::pair<TKey, TValue>& pKeyValuePair);
