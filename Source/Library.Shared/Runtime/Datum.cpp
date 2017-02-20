@@ -395,6 +395,23 @@ namespace NoobEngine
 				throw std::exception("Index out of bounds. Set<RTTI*>");
 			}
 		}
+
+		void Datum::Set(Scope* const& pData, uint32_t pIndex)
+		{
+			if (mType != DatumType::TABLE)
+			{
+				throw std::exception("DatumType doesn't match with the data.");
+			}
+
+			if (pIndex < mSize)
+			{
+				mData.mTablePtr[pIndex] = pData;
+			}
+			else
+			{
+				throw std::exception("Index out of bounds. Set<Scope*>");
+			}
+		}
 #pragma endregion
 #pragma region PushBack
 		void Datum::PushBack(const int32_t& pData)
@@ -593,6 +610,38 @@ namespace NoobEngine
 
 			new (mData.mRTTIPtr + mSize++)(RTTI*)(const_cast<RTTI*>(pData));
 		}
+
+		void Datum::PushBack(Scope* const& pData)
+		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::TABLE;
+			}
+			if (mType != DatumType::TABLE)
+			{
+				throw std::exception("DatumType doesn't match with the data.");
+			}
+
+			if (mIsExternalData)
+			{
+				throw std::exception("Cannot push on datum that holds external data.");
+			}
+
+			if (!mData.mVoidPtr)
+			{
+				// if this is the first element that is being pushed then allocate just enough memory to save one element.
+				mData.mTablePtr = static_cast<Scope**>(malloc(sizeof(Scope*) * mCapacity));
+			}
+
+			if (mSize == mCapacity)
+			{
+				// Increase the capacity
+				mCapacity += 5;
+				mData.mTablePtr = static_cast<Scope**>(realloc(mData.mTablePtr, sizeof(Scope*) * mCapacity));
+			}
+
+			new (mData.mTablePtr + mSize++)(Scope*)(const_cast<Scope*>(pData));
+		}
 #pragma endregion
 		void Datum::PopBack()
 		{
@@ -629,6 +678,47 @@ namespace NoobEngine
 			{
 				--mSize;
 			}
+		}
+
+		void Datum::RemoveSafeAt(uint32_t pIndex)
+		{
+			if(mType == DatumType::UNASSIGNED)
+			{
+				throw std::exception("Cannot remove from datum whos type is unassigned.");
+			}
+
+			if(pIndex >= mSize)
+			{
+				throw std::exception("Index out of bounds.");
+			}
+
+			switch(mType)
+			{
+			case DatumType::INTEGER:
+				memcpy(mData.mIntData + pIndex, mData.mIntData + (pIndex + 1), (mSize - pIndex) * sizeof(int32_t));
+				break;
+			case DatumType::FLOAT:
+				memcpy(mData.mFloatData + pIndex, mData.mFloatData + (pIndex + 1), (mSize - pIndex) * sizeof(float));
+				break;
+			case DatumType::STRING:
+				memcpy(mData.mStrData + pIndex, mData.mStrData + (pIndex + 1), (mSize - pIndex) * sizeof(std::string));
+				break;
+			case DatumType::VECTOR_4:
+				memcpy(mData.mVecData + pIndex, mData.mVecData + (pIndex + 1), (mSize - pIndex) * sizeof(glm::vec4));
+				break;
+			case DatumType::MATRIX_4x4:
+				memcpy(mData.mMatData + pIndex, mData.mMatData + (pIndex + 1), (mSize - pIndex) * sizeof(glm::mat4x4));
+				break;
+			case DatumType::RTTI_TYPE:
+				memcpy(mData.mRTTIPtr + pIndex, mData.mRTTIPtr + (pIndex + 1), (mSize - pIndex) * sizeof(RTTI*));
+				break;
+			case DatumType::TABLE:
+				memcpy(mData.mTablePtr + pIndex, mData.mTablePtr + (pIndex + 1), (mSize - pIndex) * sizeof(Scope*));
+				break;
+			default:
+				break;
+			}
+			--mSize;
 		}
 
 		void Datum::SetFromString(std::string pString, uint32_t pIndex)
@@ -907,6 +997,9 @@ namespace NoobEngine
 							break;
 						case DatumType::RTTI_TYPE:
 							PushBack(pOther.mData.mRTTIPtr[i]);
+							break;
+						case DatumType::TABLE:
+							PushBack(pOther.mData.mTablePtr[i]);
 							break;
 						}
 					}

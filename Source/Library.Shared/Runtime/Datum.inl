@@ -173,6 +173,32 @@ namespace NoobEngine
 			}
 		}
 
+		template <>
+		Scope*& Datum::Get<Scope*>(uint32_t pIndex)
+		{
+			if (pIndex < mSize)
+			{
+				return mData.mTablePtr[pIndex];
+			}
+			else
+			{
+				throw std::exception("Index out of bounds. Get<RTTI*>");
+			}
+		}
+
+		template <>
+		Scope* const& Datum::Get<Scope*>(uint32_t pIndex) const
+		{
+			if (pIndex < mSize)
+			{
+				return mData.mTablePtr[pIndex];
+			}
+			else
+			{
+				throw std::exception("Index out of bounds. Get<RTTI*>");
+			}
+		}
+
 		template<typename T>
 		void Datum::Destroy(T& pObject)
 		{

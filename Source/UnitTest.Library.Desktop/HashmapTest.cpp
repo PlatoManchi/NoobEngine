@@ -14,7 +14,7 @@ namespace UnitTestLibraryDesktop
 	{
 	public:
 		FooHashFunction() {}
-		uint32_t operator()(Foo pParam) const
+		inline uint32_t operator()(Foo pParam) const
 		{
 			return 0U;
 		}

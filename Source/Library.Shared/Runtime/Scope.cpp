@@ -7,6 +7,8 @@ namespace NoobEngine
 {
 	namespace Runtime
 	{
+		RTTI_DEFINITIONS(Scope)
+
 		Scope::Scope(uint32_t pSize) : mParent(nullptr), mData(Hashmap<std::string, Datum>(pSize))
 		{}
 
@@ -15,7 +17,7 @@ namespace NoobEngine
 
 		Scope::~Scope()
 		{
-			// TODO: implementation
+			Clear();
 			RTTI::~RTTI();
 		}
 
@@ -68,20 +70,20 @@ namespace NoobEngine
 
 		Scope& Scope::AppendScope(const std::string& pKey)
 		{
-			Datum* findInScope = Find(pKey);
-			if (findInScope)
-			{
-				if(findInScope->Type() != DatumType::TABLE)
-				{
-					std::exception("Datum type is not scope.");
-				}
-				//findInScope->PushBack()
-			}
+			Datum findInScope = Append(pKey);
+			
+			Scope* newScope = new Scope();
+			findInScope.PushBack(newScope);
+
+			return  *newScope;
 		}
 
-		void Scope::Adopt(Scope& pChildToAdopt, const std::string& pKey, uint32_t pIndex)
+		void Scope::Adopt(Scope& pChildToAdopt, const std::string& pKey)
 		{
+			pChildToAdopt.Orphan();
+			pChildToAdopt.mParent = this;
 
+			operator[](pKey).PushBack(&pChildToAdopt);
 		}
 
 		Scope* Scope::GetParent() const
@@ -146,7 +148,23 @@ namespace NoobEngine
 		{
 			if(this != &pOther)
 			{
-				// TODO: Implementation of equality operator
+				Clear();
+				for (std::pair<std::string, Datum>& element : pOther.mData)
+				{
+					if(element.second.Type() != DatumType::TABLE)
+					{
+						Append(element.first) = element.second;
+					}
+					else
+					{
+						for(uint32_t i = 0 ; i < element.second.Size() ; ++i)
+						{
+							Scope* tmpScope = new Scope(*element.second.Get<Scope*>(i));
+							tmpScope->mParent = this;
+							Append(element.first).PushBack(tmpScope);
+						}
+					}
+				}
 			}
 
 			return *this;
@@ -169,7 +187,6 @@ namespace NoobEngine
 
 		bool Scope::operator==(const Scope& pOther) const
 		{
-			// TODO: Implementation
 			if(this == &pOther)
 			{
 				return true;
@@ -180,7 +197,14 @@ namespace NoobEngine
 				return false;
 			}
 
-			//if()
+			for(uint32_t i = 0 ; i < mDataIndexing.Size() ; ++i)
+			{
+				if(mDataIndexing[i] != pOther.mDataIndexing[i])
+				{
+					return false;
+				}
+			}
+
 			return true;
 		}
 
@@ -188,5 +212,52 @@ namespace NoobEngine
 		{
 			return !(operator==(pOther));
 		}
+
+		void Scope::Clear()
+		{
+			for (std::pair<std::string, Datum>* element : mDataIndexing)
+			{
+				if(element->second.Type() == DatumType::TABLE)
+				{
+					uint32_t tableSize = element->second.Size();
+					for(uint32_t i = 0 ; i < tableSize ; ++i)
+					{
+						delete (element->second.Get<Scope*>(i));
+					}
+				}
+				element->second.~Datum();
+			}
+		}
+
+		void Scope::Orphan()
+		{
+			if(mParent)
+			{
+				// if scope has parent remove all this scope's footprints from parent
+				std::string name = FindName(*this);
+
+				for(std::pair<std::string, Datum> *element : mParent->mDataIndexing)
+				{
+					if(element->first == name)
+					{
+						// found the datum with name
+						Datum& parentDatum = element->second;
+						
+						for(uint32_t i =0 ; i < parentDatum.Size() ; ++i)
+						{
+							if(this == parentDatum.Get<Scope*>(i))
+							{
+								// found the scope in parent datum
+								parentDatum.RemoveSafeAt(i);
+								mParent = nullptr;
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+
+
 	}
 }

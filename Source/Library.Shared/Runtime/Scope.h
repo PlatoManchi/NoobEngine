@@ -13,7 +13,7 @@ namespace NoobEngine
 		
 		class Scope : public RTTI
 		{
-			
+			RTTI_DECLARATIONS(Scope, RTTI)
 		public:
 			/**
 			 * @brief Scope constructor that takes size as input.
@@ -75,7 +75,7 @@ namespace NoobEngine
 			 * @param pIndex If there are children at the key specified, this will be the index at which child will be adopted.
 			 * @see GetParent()
 			 */
-			void Adopt(Scope& pChildToAdopt, const std::string& pKey, uint32_t pIndex);
+			void Adopt(Scope& pChildToAdopt, const std::string& pKey);
 
 			/**
 			 * @brief Returns the pointer to parent.
@@ -158,6 +158,11 @@ namespace NoobEngine
 			 * @brief Clear all the data that the scope is holding
 			 */
 			void Clear();
+
+			/**
+			 * @brief Orphan this scope from its parents.
+			 */
+			void Orphan();
 		};
 	}
 }

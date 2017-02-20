@@ -21,8 +21,8 @@ namespace NoobEngine
 		{
 		public:
 			DefaultHashFunction() {}
-			uint32_t operator()(const char* pParam) const;
-			uint32_t operator()(char* pParam) const;
+			inline uint32_t operator()(const char* pParam) const;
+			inline uint32_t operator()(char* pParam) const;
 		};
 
 		template <>
@@ -30,7 +30,7 @@ namespace NoobEngine
 		{
 		public:
 			DefaultHashFunction() {}
-			uint32_t operator()(std::string pParam) const;
+			inline uint32_t operator()(std::string pParam) const;
 		};
 
 		/**

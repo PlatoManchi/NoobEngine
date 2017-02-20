@@ -54,8 +54,8 @@ namespace NoobEngine
 		template <typename TKey, typename TValue, typename HashFunctor>
 		typename Hashmap<TKey, TValue, HashFunctor>::Iterator Hashmap<TKey, TValue, HashFunctor>::Insert(const TKey& pKey, const TValue& pValue)
 		{
-
-			return Insert(std::pair<TKey, TValue>(pKey, pValue));
+			std::pair<TKey, TValue> tmpPair(pKey, pValue);
+			return Insert(tmpPair);
 		}
 
 		template<typename TKey, typename TValue, typename HashFunctor>

@@ -169,6 +169,16 @@ namespace NoobEngine
 			void Set(RTTI* const& pData, uint32_t pIndex = 0);
 
 			/**
+				@brief Assigns the appropriate index with the value passed.
+				@details The default value of index will be 0.
+				@param pData RTTI pointer that needs to stored.
+				@param pIndex The index at which the data needs to be inserted. Default value of index is 0. pIndex has to be in range of size.
+				@see PushBack()
+				@see Size()
+			*/
+			void Set(Scope* const& pData, uint32_t pIndex = 0);
+
+			/**
 				@brief Push the data at the end of the datum.
 				@details PushBack can increase the capacity of the datum if necessary.
 				@param pData Data that needs to be pushed.
@@ -209,6 +219,13 @@ namespace NoobEngine
 				@param pData Data that needs to be pushed.
 			*/
 			void PushBack(RTTI* const& pData);
+
+			/**
+				@brief Push the data at the end of the datum.
+				@details PushBack can increase the capacity of the datum if necessary.
+				@param pData Data that needs to be pushed.
+			*/
+			void PushBack(Scope* const& pData);
 
 			/**
 				@brief Remove last element from the datum.
@@ -345,10 +362,26 @@ namespace NoobEngine
 				@brief Returns the data stored in datum at the index.
 				@details The default value of pIndex is 0.
 				@param pIndex The index at which the data needs to be retrieved from.
+				@return Reference to RTTI* at pIndex
+			*/
+			template<>
+			Scope*& Get<Scope*>(uint32_t pIndex);
+
+			/**
+				@brief Returns the data stored in datum at the index.
+				@details The default value of pIndex is 0.
+				@param pIndex The index at which the data needs to be retrieved from.
 				@return Constant reference to Scope* at pIndex
 			*/
 			template<>
 			Scope* const& Get<Scope*>(uint32_t pIndex) const;
+
+			/**
+			 * @brief Remove the element at the index from the datum
+			 * @details The destructor will not be called on the elements.
+			 * @param pIndex Index at which element shoudl be removed
+			 */
+			void RemoveSafeAt(uint32_t pIndex);
 
 			/**
 				@brief Set the value that is represented by pString at the index given
