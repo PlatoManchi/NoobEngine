@@ -23,7 +23,7 @@ namespace NoobEngine
 			/**
 				@brief Default constructor.
 			*/
-			Datum();
+			Datum(uint32_t pInitCapacity = 1);
 
 			/**
 				@brief Copy constructor
@@ -455,16 +455,29 @@ namespace NoobEngine
 			Datum& operator=(RTTI* const& pOther);
 
 			/**
+				@brief Assign the pOther data into this datum.
+				@details This is a scalar assignment. All the elements in the datum will be cleared and the 0th element will be set to the value.
+				@param pOther RTTI* that needs to be copied.
+				@return Reference to datum
+			*/
+			Datum& operator=(Scope* const& pOther);
+
+			/**
 				@brief Check if two datums are equal are not.
 				@return boolean. true if equal or false.
 			*/
-			bool operator==(const Datum& pOther);
+			bool operator==(const Datum& pOther) const;
 
 			/**
 				@brief Check if two datums are not equal.
 				@return boolean. true if not equal or false.
 			*/
-			bool operator!=(const Datum& pOther);
+			bool operator!=(const Datum& pOther) const;
+
+			/**
+			 * @brief Returns the scope at index
+			 */
+			Scope*& operator[](uint32_t pIndex);
 		private:
 			/**
 				Union to hold the pointer to the location where datum data is stored.

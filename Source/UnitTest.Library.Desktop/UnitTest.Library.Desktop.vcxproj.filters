@@ -9,6 +9,7 @@
     <ClCompile Include="VectorTest.cpp" />
     <ClCompile Include="HashmapTest.cpp" />
     <ClCompile Include="DatumTest.cpp" />
+    <ClCompile Include="ScopeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

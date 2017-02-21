@@ -95,9 +95,14 @@ namespace NoobEngine
 			 * @brief Compare two scopes and return true if they are equal.
 			 * @details the RTTI* pointer will be casted to Scope*.
 			 * @param pOther RTTI* that needs to be compares. 
+			 * @return boolean that says if both objects are equal or not.
 			 */
 			virtual bool Equals(const RTTI* pOther) const override;
 
+			/**
+			 * @brief Return the stringified version of the object.
+			 * @return String.
+			 */
 			virtual std::string ToString() const override;
 
 			/**

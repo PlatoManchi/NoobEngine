@@ -182,7 +182,7 @@ namespace NoobEngine
 			}
 			else
 			{
-				throw std::exception("Index out of bounds. Get<RTTI*>");
+				throw std::exception("Index out of bounds. Get<Scope*>");
 			}
 		}
 
@@ -195,7 +195,7 @@ namespace NoobEngine
 			}
 			else
 			{
-				throw std::exception("Index out of bounds. Get<RTTI*>");
+				throw std::exception("Index out of bounds. Get<Scope*>");
 			}
 		}
 

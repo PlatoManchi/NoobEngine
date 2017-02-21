@@ -5,7 +5,7 @@ namespace NoobEngine
 {
 	namespace Runtime
 	{
-		Datum::Datum() : mSize(0), mCapacity(1)
+		Datum::Datum(uint32_t pInitCapacity) : mSize(0), mCapacity(pInitCapacity)
 		{
 			mType = DatumType::UNASSIGNED;
 			mIsExternalData = false;
@@ -18,11 +18,9 @@ namespace NoobEngine
 			mTypeSizeTable[3] = sizeof(glm::vec4);
 			mTypeSizeTable[4] = sizeof(glm::mat4x4);
 			mTypeSizeTable[5] = sizeof(RTTI*);
-
-			
 		}
 
-		Datum::Datum(const Datum& pOther) : mSize(0), mCapacity(1)
+		Datum::Datum(const Datum& pOther) : mSize(0), mCapacity(pOther.mCapacity)
 		{
 			mData.mVoidPtr = nullptr;
 			mType = pOther.mType;
@@ -40,12 +38,12 @@ namespace NoobEngine
 			{
 				// shallow copy
 				mData.mVoidPtr = pOther.mData.mVoidPtr;
-				mSize = mCapacity = pOther.mSize;
+				mSize = pOther.mSize;
 			}
 			else
 			{
 				// deep copy
-				mCapacity = pOther.mSize;
+				//mCapacity = pOther.mCapacity;
 				for (uint32_t i = 0; i < pOther.mSize; i++)
 				{
 					switch (mType)
@@ -67,6 +65,8 @@ namespace NoobEngine
 						break;
 					case NoobEngine::Runtime::DatumType::RTTI_TYPE:
 						PushBack(pOther.mData.mRTTIPtr[i]);
+						break;
+					default:
 						break;
 					}
 				}
@@ -139,6 +139,8 @@ namespace NoobEngine
 					break;
 				case DatumType::RTTI_TYPE:
 					mData.mRTTIPtr = static_cast<RTTI**>(realloc(mData.mFloatData, sizeof(RTTI*) * mCapacity));
+					break;
+				default:
 					break;
 				}
 			}
@@ -672,6 +674,8 @@ namespace NoobEngine
 				case NoobEngine::Runtime::DatumType::RTTI_TYPE:
 					Destroy(mData.mRTTIPtr[--mSize]);
 					break;
+				default:
+					break;
 				}
 			}
 			else
@@ -684,7 +688,7 @@ namespace NoobEngine
 		{
 			if(mType == DatumType::UNASSIGNED)
 			{
-				throw std::exception("Cannot remove from datum whos type is unassigned.");
+				throw std::exception("Cannot remove from datum who's type is unassigned.");
 			}
 
 			if(pIndex >= mSize)
@@ -894,6 +898,8 @@ namespace NoobEngine
 			}
 			case NoobEngine::Runtime::DatumType::RTTI_TYPE:
 				break;
+			default:
+				break;
 			}
 		}
 
@@ -945,6 +951,8 @@ namespace NoobEngine
 			}
 			case NoobEngine::Runtime::DatumType::RTTI_TYPE:
 				resultStr = Get<RTTI*>(pIndex)->ToString();
+				break;
+			default:
 				break;
 			}
 			
@@ -1001,6 +1009,8 @@ namespace NoobEngine
 						case DatumType::TABLE:
 							PushBack(pOther.mData.mTablePtr[i]);
 							break;
+						default:
+							break;
 						}
 					}
 				}
@@ -1013,7 +1023,7 @@ namespace NoobEngine
 
 		Datum& Datum::operator=(const int32_t& pOther)
 		{
-			if (mType != DatumType::INTEGER)
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::INTEGER)
 			{
 				throw std::exception("Datum type is not int type.");
 			}
@@ -1031,7 +1041,7 @@ namespace NoobEngine
 
 		Datum& Datum::operator=(const float & pOther)
 		{
-			if (mType != DatumType::FLOAT)
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::FLOAT)
 			{
 				throw std::exception("Datum type is not float type.");
 			}
@@ -1049,7 +1059,7 @@ namespace NoobEngine
 
 		Datum& Datum::operator=(const std::string & pOther)
 		{
-			if (mType != DatumType::STRING)
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::STRING)
 			{
 				throw std::exception("Datum type is not string type.");
 			}
@@ -1067,7 +1077,7 @@ namespace NoobEngine
 
 		Datum& Datum::operator=(const glm::vec4 & pOther)
 		{
-			if (mType != DatumType::VECTOR_4)
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::VECTOR_4)
 			{
 				throw std::exception("Datum type is not glm::vec4 type.");
 			}
@@ -1085,7 +1095,7 @@ namespace NoobEngine
 
 		Datum& Datum::operator=(const glm::mat4x4 & pOther)
 		{
-			if (mType != DatumType::MATRIX_4x4)
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::MATRIX_4x4)
 			{
 				throw std::exception("Datum type is not glm::mat4x4 type.");
 			}
@@ -1103,7 +1113,7 @@ namespace NoobEngine
 
 		Datum& Datum::operator=(RTTI* const& pOther)
 		{
-			if (mType != DatumType::RTTI_TYPE)
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::RTTI_TYPE)
 			{
 				throw std::exception("Datum type is not RTTI* type.");
 			}
@@ -1118,9 +1128,27 @@ namespace NoobEngine
 			}
 			return *this;
 		}
+
+		Datum& Datum::operator=(Scope* const& pOther)
+		{
+			if (mType != DatumType::UNASSIGNED && mType != DatumType::TABLE)
+			{
+				throw std::exception("Datum type is not Scope* type.");
+			}
+
+			if (mSize == 0)
+			{
+				PushBack(pOther);
+			}
+			else
+			{
+				Set(const_cast<Scope*>(pOther));
+			}
+			return *this;
+		}
 #pragma endregion
 #pragma region ComparisonOperator
-		bool Datum::operator==(const Datum& pOther)
+		bool Datum::operator==(const Datum& pOther) const
 		{
 			if (this == &pOther)
 			{
@@ -1166,9 +1194,14 @@ namespace NoobEngine
 			return true;
 		}
 
-		bool Datum::operator!=(const Datum& pOther)
+		bool Datum::operator!=(const Datum& pOther) const
 		{
 			return !(operator==(pOther));
+		}
+
+		Scope*& Datum::operator[](uint32_t pIndex)
+		{
+			return Get<Scope*>(pIndex);
 		}
 #pragma endregion
 	}

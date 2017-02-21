@@ -70,7 +70,7 @@ namespace NoobEngine
 			// if the key is not present in the hash map insert the key value pair
 			uint32_t bucketIndex = mHashFunctor(pKeyValuePair.first) % mData.Size();
 			typename SList<std::pair<TKey, TValue>>::Iterator elementItr = mData[bucketIndex].PushBack(pKeyValuePair);
- 			BucketType::Iterator it = BucketType::Iterator(&mData, bucketIndex);
+ 			typename BucketType::Iterator it = BucketType::Iterator(&mData, bucketIndex);
 
 			mSize++;
 
