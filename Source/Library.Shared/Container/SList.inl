@@ -23,6 +23,18 @@ namespace NoobEngine
 			}
 		}
 
+		template<typename T>
+		SList<T>::SList(const SList && pList)
+		{
+			mFrontNode = pList.mFrontNode;
+			mBackNode = pList.mBackNode;
+			mSize = pList.mSize;
+
+			pList.mFrontNode = nullptr;
+			pList.mBackNode = nullptr;
+			pList.mSize = 0;
+		}
+
 		template <typename T>
 		SList<T>::~SList()
 		{
@@ -44,6 +56,20 @@ namespace NoobEngine
 				}
 				
 			}
+
+			return *this;
+		}
+
+		template<typename T>
+		SList& SList<T>::operator=(const SList && pList)
+		{
+			mFrontNode = pList.mFrontNode;
+			mBackNode = pList.mBackNode;
+			mSize = pList.mSize;
+
+			pList.mFrontNode = nullptr;
+			pList.mBackNode = nullptr;
+			pList.mSize = 0;
 
 			return *this;
 		}

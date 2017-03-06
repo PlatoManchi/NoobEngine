@@ -29,7 +29,11 @@ namespace NoobEngine
 				@see SList()
 			*/
 			SList(const SList& pList);
-
+			
+			/**
+				@brief Move semantics. 
+			*/
+			SList(const SList&& pList);
 
 			/**
 				@brief Standard destructor.
@@ -42,6 +46,11 @@ namespace NoobEngine
 				@return Reference to the list.
 			*/
 			SList& operator=(const SList& pList);
+
+			/**
+				@brief Move semantics
+			*/
+			SList& operator=(const SList&& pList);
 
 			/**
 				@brief Insert the data at front of the list.
