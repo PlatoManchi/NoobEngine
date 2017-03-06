@@ -116,6 +116,19 @@ namespace NoobEngine
 		}
 
 		template<typename T>
+		Vector<T>::Vector(const Vector&& pOther)
+		{
+			mData = pOther.mData;
+			mSize = pOther.mSize;
+			mCapacity = pOther.mCapacity;
+			mCapacityIncrementStep = pOther.mCapacityIncrementStep;
+
+			pOther.mData = nullptr;
+			pOther.mSize = 0U;
+			pOther.mCapacity = 0U;
+		}
+
+		template<typename T>
 		Vector<T>::Vector(const uint32_t pCapacity, uint32_t pCapacityIncrementStep) :
 			mData(nullptr), mSize(0), mCapacity(0), mCapacityIncrementStep(pCapacityIncrementStep)
 		{
@@ -359,6 +372,21 @@ namespace NoobEngine
 					PushBack(element);
 				}
 			}
+			return *this;
+		}
+
+		template<typename T>
+		Vector & Vector<T>::operator=(const Vector && pOther)
+		{
+			mData = pOther.mData;
+			mSize = pOther.mSize;
+			mCapacity = pOther.mCapacity;
+			mCapacityIncrementStep = pOther.mCapacityIncrementStep;
+
+			pOther.mData = nullptr;
+			pOther.mSize = 0U;
+			pOther.mCapacity = 0U;
+
 			return *this;
 		}
 

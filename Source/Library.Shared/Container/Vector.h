@@ -142,6 +142,11 @@ namespace NoobEngine
 			Vector(const Vector& pOther);
 
 			/**
+				@brief Move semantics
+			*/
+			Vector(const Vector&& pOther);
+
+			/**
 				@brief Create a new vector with capacity passed as parameter.
 				@param pCapacity Initial capacity that the vector should contain.
 				@see Vector()
@@ -305,6 +310,11 @@ namespace NoobEngine
 				@return Reference to the vector.
 			*/
 			Vector& operator=(const Vector& pOther);
+
+			/**
+				@brief Move semantics
+			*/
+			Vector& operator=(const Vector&& pOther);
 
 			/**
 				@brief Index of operator that returns the reference of data that is stored at particular index.
