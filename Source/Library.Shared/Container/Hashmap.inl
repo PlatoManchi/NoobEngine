@@ -7,7 +7,7 @@ namespace NoobEngine
 #pragma region Hashmap
 		template <typename TKey, typename TValue, typename HashFunctor>
 		Hashmap<TKey, TValue, HashFunctor>::Hashmap(uint32_t pHashmapBucketSize /* = 11 */) :
-			mData(BucketType(pHashmapBucketSize)), mSize(0U)
+			mData(pHashmapBucketSize), mSize(0U)
 		{
 			if (pHashmapBucketSize == 0)
 			{
@@ -26,6 +26,16 @@ namespace NoobEngine
 			Hashmap(pOther.mData.Size())
 		{
 			operator=(pOther);
+		}
+
+		template<typename TKey, typename TValue, typename HashFunctor>
+		Hashmap<TKey, TValue, HashFunctor>::Hashmap(const Hashmap&& pOther)
+		{
+			mData = move(pOther.mData);
+			mSize = pOther.mSize;
+			mHashFunctor = pOther.mHashFunctor;
+
+			pOther.mSize = 0;
 		}
 
 		template <typename TKey, typename TValue, typename HashFunctor>
@@ -139,6 +149,18 @@ namespace NoobEngine
 		typename Hashmap<TKey, TValue, HashFunctor>::Iterator Hashmap<TKey, TValue, HashFunctor>::end() const
 		{
 			return Iterator(this, mData.end(), mData[mData.Size() - 1].end());
+		}
+
+		template<typename TKey, typename TValue, typename HashFunctor>
+		Hashmap & Hashmap<TKey, TValue, HashFunctor>::operator=(const Hashmap && pOther)
+		{
+			mData = move(pOther.mData);
+			mSize = pOther.mSize;
+			mHashFunctor = pOther.mHashFunctor;
+
+			pOther.mSize = 0;
+
+			return *this;
 		}
 
 		template <typename TKey, typename TValue, typename HashFunctor>

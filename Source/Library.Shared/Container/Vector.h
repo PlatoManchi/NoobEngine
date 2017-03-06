@@ -142,7 +142,8 @@ namespace NoobEngine
 			Vector(const Vector& pOther);
 
 			/**
-				@brief Move semantics
+				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
+				@param pOther Attribute from which to steal the data.
 			*/
 			Vector(const Vector&& pOther);
 
@@ -312,7 +313,8 @@ namespace NoobEngine
 			Vector& operator=(const Vector& pOther);
 
 			/**
-				@brief Move semantics
+				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
+				@param pOther Attribute from which to steal the data.
 			*/
 			Vector& operator=(const Vector&& pOther);
 
