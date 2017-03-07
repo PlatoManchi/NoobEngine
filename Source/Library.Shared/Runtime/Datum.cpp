@@ -189,6 +189,10 @@ namespace NoobEngine
 #pragma region SetStorage
 		void Datum::SetStorage(int32_t* pArrayData, uint32_t pSize)
 		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::INTEGER;
+			}
 			if (mType != DatumType::INTEGER)
 			{
 				throw std::exception("Unsupported type.");
@@ -207,6 +211,10 @@ namespace NoobEngine
 
 		void Datum::SetStorage(float* pArrayData, uint32_t pSize)
 		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::FLOAT;
+			}
 			if (mType != DatumType::FLOAT)
 			{
 				throw std::exception("Unsupported type.");
@@ -225,6 +233,10 @@ namespace NoobEngine
 
 		void Datum::SetStorage(std::string* pArrayData, uint32_t pSize)
 		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::STRING;
+			}
 			if (mType != DatumType::STRING)
 			{
 				throw std::exception("Unsupported type.");
@@ -243,6 +255,10 @@ namespace NoobEngine
 
 		void Datum::SetStorage(glm::vec4* pArrayData, uint32_t pSize)
 		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::VECTOR_4;
+			}
 			if (mType != DatumType::VECTOR_4)
 			{
 				throw std::exception("Unsupported type.");
@@ -261,6 +277,10 @@ namespace NoobEngine
 
 		void Datum::SetStorage(glm::mat4x4* pArrayData, uint32_t pSize)
 		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::MATRIX_4x4;
+			}
 			if (mType != DatumType::MATRIX_4x4)
 			{
 				throw std::exception("Unsupported type.");
@@ -279,6 +299,10 @@ namespace NoobEngine
 
 		void Datum::SetStorage(RTTI** pArrayData, uint32_t pSize)
 		{
+			if (mType == DatumType::UNASSIGNED)
+			{
+				mType = DatumType::RTTI_TYPE;
+			}
 			if (mType != DatumType::RTTI_TYPE)
 			{
 				throw std::exception("Unsupported type.");
