@@ -2,6 +2,7 @@
 #include "RTTI.h"
 #include "Datum.h"
 #include "Scope.h"
+#include "Container/Hashmap.h"
 
 namespace NoobEngine
 {
@@ -88,9 +89,27 @@ namespace NoobEngine
 			*/
 			uint32_t AuxiliaryBegin();
 		protected:
-			void AddPrescribedAttribute();
+			/**
+				@brief Add prescribed attribute
+				@param pKey The key to be used for the attribute
+				@return Reference to datum that is appended. If key already exists returns existing datum else creates new datum.
+			*/
+			Datum& AppendPrescribedAttribute(std::string pKey);
+
+			/**
+				@brief Populate all the initial prescribed and auxiliary attributes
+			*/
+			virtual void Populate() = 0;
 		private:
-			
+			/**
+				unsigned int that holds the count of prescribed attributes.
+			*/
+			uint32_t mPrescribedAttributeCount;
+
+			/**
+				Static hashmap that holds the prescribed attribute list of all the class that will extend Attribute
+			*/
+			static Container::Hashmap<uint64_t, Container::Vector<std::string>> sAttributeList;
 		};
 	}
 }
