@@ -381,6 +381,22 @@ namespace UnitTestLibraryDesktop
 			sampleVector.Reserve(awesomeFunctor);
 			Assert::AreEqual(capacityAfterAwesomeFunctor, sampleVector.Capacity());
 		}
+
+		static void TestMoveSemantics(T& pValue1, T& pValue2, T& pValue3)
+		{
+			Vector<T> sampleVector;
+			sampleVector.PushBack(pValue1);
+			sampleVector.PushBack(pValue2);
+			sampleVector.PushBack(pValue3);
+
+			Vector<T> sampleVector2 = move(sampleVector);
+
+			Assert::AreEqual(0U, sampleVector.Size());
+			Assert::AreEqual(3U, sampleVector.Size());
+
+			Assert::AreEqual(sampleVector.end(), sampleVector.Find(pValue1));
+			Assert::AreNotEqual(sampleVector2.end(), sampleVector2.Find(pValue1));
+		}
 	};
 
 	TEST_CLASS(VectorTest)
@@ -688,6 +704,15 @@ namespace UnitTestLibraryDesktop
 			Foo fooPtr2(20);
 			Foo fooPtr3(30);
 			VectorTestFunctions<Foo>::TestReserveFunctor(fooPtr1, fooPtr2, fooPtr3);
+		}
+
+		TEST_METHOD(Vector_MoveSemantics)
+		{
+			//------------------------- int32_t----------------------------
+			int32_t int1 = 10;
+			int32_t int2 = 20;
+			int32_t int3 = 30;
+			VectorTestFunctions<int32_t>::TestReserveFunctor(int1, int2, int3);
 		}
 	private:
 		static _CrtMemState sStartMemState;

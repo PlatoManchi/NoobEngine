@@ -116,7 +116,7 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		Vector<T>::Vector(const Vector&& pOther)
+		Vector<T>::Vector(Vector&& pOther)
 		{
 			mData = pOther.mData;
 			mSize = pOther.mSize;
@@ -360,7 +360,7 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		Vector<T>& Vector<T>::operator=(const Vector<T> & pOther)
+		Vector<T>& Vector<T>::operator=(const Vector<T>& pOther)
 		{
 			if (this != &pOther)
 			{
@@ -376,16 +376,21 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		Vector & Vector<T>::operator=(const Vector && pOther)
+		Vector<T>& Vector<T>::operator=(Vector<T>&& pOther)
 		{
-			mData = pOther.mData;
-			mSize = pOther.mSize;
-			mCapacity = pOther.mCapacity;
-			mCapacityIncrementStep = pOther.mCapacityIncrementStep;
+			if (this != &pOther)
+			{
+				Clear();
 
-			pOther.mData = nullptr;
-			pOther.mSize = 0U;
-			pOther.mCapacity = 0U;
+				mData = pOther.mData;
+				mSize = pOther.mSize;
+				mCapacity = pOther.mCapacity;
+				mCapacityIncrementStep = pOther.mCapacityIncrementStep;
+
+				pOther.mData = nullptr;
+				pOther.mSize = 0U;
+				pOther.mCapacity = 0U;
+			}
 
 			return *this;
 		}

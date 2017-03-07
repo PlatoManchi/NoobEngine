@@ -145,7 +145,7 @@ namespace NoobEngine
 				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
 				@param pOther Attribute from which to steal the data.
 			*/
-			Vector(const Vector&& pOther);
+			Vector(Vector&& pOther);
 
 			/**
 				@brief Create a new vector with capacity passed as parameter.
@@ -316,7 +316,7 @@ namespace NoobEngine
 				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
 				@param pOther Attribute from which to steal the data.
 			*/
-			Vector& operator=(const Vector&& pOther);
+			Vector& operator=(Vector&& pOther);
 
 			/**
 				@brief Index of operator that returns the reference of data that is stored at particular index.
