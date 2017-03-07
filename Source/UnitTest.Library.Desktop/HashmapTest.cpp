@@ -346,6 +346,19 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(pValue2.second, sampleMap2[pValue2.first]);
 			Assert::AreEqual(pValue3.second, sampleMap2[pValue3.first]);
 		}
+
+		static void TestHashmapMoveSemantics(std::pair<TKey, TValue>& pValue1, std::pair<TKey, TValue>& pValue2, std::pair<TKey, TValue>& pValue3)
+		{
+			Hashmap<TKey, TValue, HashFunctor> sampleMap;
+			Assert::AreEqual(0U, sampleMap.Size());
+			Assert::IsTrue(sampleMap.begin() == sampleMap.end());
+			
+			sampleMap.Insert(pValue1);
+			sampleMap.Insert(pValue2);
+			sampleMap.Insert(pValue3);
+
+			Hashmap<TKey, TValue, HashFunctor> sampleMap2 = move(sampleMap);
+		}
 	};
 
 
@@ -768,6 +781,57 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr2(&fooObj2, value2);
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr3(&fooObj3, value3);
 			HashmapTestFunctions<Foo*, int32_t>::TestHashmapBracketOperator(keyvaluePairFooPtr1, keyvaluePairFooPtr2, keyvaluePairFooPtr3);
+		}
+
+		TEST_METHOD(Hashmap_MoveSemantics)
+		{
+			// ---------------------- int32_t, int32_t ---------------------------
+			int32_t key1 = 10;
+			int32_t key2 = 20;
+			int32_t key3 = 30;
+			int32_t value1 = 100;
+			int32_t value2 = 200;
+			int32_t value3 = 1300;
+			std::pair<int32_t, int32_t> keyvaluePair1(key1, value1);
+			std::pair<int32_t, int32_t> keyvaluePair2(key2, value2);
+			std::pair<int32_t, int32_t> keyvaluePair3(key3, value3);
+			HashmapTestFunctions<int32_t, int32_t>::TestHashmapMoveSemantics(keyvaluePair1, keyvaluePair2, keyvaluePair3);
+
+			/*// ---------------------- int32_t*, int32_t ---------------------------
+			std::pair<int32_t*, int32_t> keyvaluePairIntPtr1(&key1, value1);
+			std::pair<int32_t*, int32_t> keyvaluePairIntPtr2(&key2, value2);
+			std::pair<int32_t*, int32_t> keyvaluePairIntPtr3(&key3, value3);
+			HashmapTestFunctions<int32_t*, int32_t>::TestHashmapMoveSemantics(keyvaluePairIntPtr1, keyvaluePairIntPtr2, keyvaluePairIntPtr3);
+
+			// ---------------------- char*, int32_t ---------------------------
+			char* str1 = "Alpha";
+			char* str2 = "Charlie";
+			char* str3 = "Delta";
+			std::pair<char*, int32_t> keyvaluePairCharPtr1(str1, value1);
+			std::pair<char*, int32_t> keyvaluePairCharPtr2(str2, value2);
+			std::pair<char*, int32_t> keyvaluePairCharPtr3(str3, value3);
+			HashmapTestFunctions<char*, int32_t>::TestHashmapMoveSemantics(keyvaluePairCharPtr1, keyvaluePairCharPtr2, keyvaluePairCharPtr3);
+
+			// ---------------------- std::String, int32_t ---------------------------
+			std::pair<std::string, int32_t> keyvaluePairString1(std::string(str1), value1);
+			std::pair<std::string, int32_t> keyvaluePairString2(std::string(str2), value2);
+			std::pair<std::string, int32_t> keyvaluePairString3(std::string(str3), value3);
+			HashmapTestFunctions<std::string, int32_t>::TestHashmapMoveSemantics(keyvaluePairString1, keyvaluePairString2, keyvaluePairString3);
+
+			// ---------------------- Foo, int32_t ---------------------------
+			Foo fooObj1(key1);
+			Foo fooObj2(key2);
+			Foo fooObj3(key3);
+			std::pair<Foo, int32_t> keyvaluePairFoo1(fooObj1, value1);
+			std::pair<Foo, int32_t> keyvaluePairFoo2(fooObj2, value2);
+			std::pair<Foo, int32_t> keyvaluePairFoo3(fooObj3, value3);
+			HashmapTestFunctions<Foo, int32_t, FooHashFunction>::TestHashmapMoveSemantics(keyvaluePairFoo1, keyvaluePairFoo2, keyvaluePairFoo3);
+
+			// ---------------------- Foo*, int32_t ---------------------------
+			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
+			std::pair<Foo*, int32_t> keyvaluePairFooPtr2(&fooObj2, value2);
+			std::pair<Foo*, int32_t> keyvaluePairFooPtr3(&fooObj3, value3);
+			HashmapTestFunctions<Foo*, int32_t>::TestHashmapMoveSemantics(keyvaluePairFooPtr1, keyvaluePairFooPtr2, keyvaluePairFooPtr3);*/
 		}
 	private:
 		static _CrtMemState sStartMemState;

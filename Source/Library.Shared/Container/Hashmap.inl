@@ -22,14 +22,14 @@ namespace NoobEngine
 		}
 
 		template<typename TKey, typename TValue, typename HashFunctor>
-		Hashmap<TKey, TValue, HashFunctor>::Hashmap(const Hashmap & pOther) :
+		Hashmap<TKey, TValue, HashFunctor>::Hashmap(const Hashmap& pOther) :
 			Hashmap(pOther.mData.Size())
 		{
 			operator=(pOther);
 		}
 
 		template<typename TKey, typename TValue, typename HashFunctor>
-		Hashmap<TKey, TValue, HashFunctor>::Hashmap(const Hashmap&& pOther)
+		Hashmap<TKey, TValue, HashFunctor>::Hashmap(Hashmap<TKey, TValue, HashFunctor>&& pOther)
 		{
 			mData = move(pOther.mData);
 			mSize = pOther.mSize;
@@ -152,11 +152,13 @@ namespace NoobEngine
 		}
 
 		template<typename TKey, typename TValue, typename HashFunctor>
-		Hashmap & Hashmap<TKey, TValue, HashFunctor>::operator=(const Hashmap && pOther)
+		Hashmap<TKey, TValue, HashFunctor>& Hashmap<TKey, TValue, HashFunctor>::operator=(Hashmap<TKey, TValue, HashFunctor>&& pOther)
 		{
+			Clear();
+
 			mData = move(pOther.mData);
 			mSize = pOther.mSize;
-			mHashFunctor = pOther.mHashFunctor;
+			//mHashFunctor = pOther.mHashFunctor;
 
 			pOther.mSize = 0;
 
