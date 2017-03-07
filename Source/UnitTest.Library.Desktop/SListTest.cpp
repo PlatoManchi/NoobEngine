@@ -937,6 +937,23 @@ namespace UnitTestLibraryDesktop
 				listFooPtr2.InsertAfter(fooPtr5, list1FooItr);
 			});
 		}
+
+		TEST_METHOD(SList_MoveSemantics)
+		{
+			NoobEngine::Container::SList<int32_t> listInt1;
+
+			int32_t int1 = 10;
+			int32_t int2 = 20;
+			int32_t int4 = 40;
+			int32_t int5 = 50;
+
+			listInt1.PushBack(int1);
+			listInt1.PushBack(int2);
+			listInt1.PushBack(int4);
+			listInt1.PushBack(int5);
+
+			NoobEngine::Container::SList<int32_t> listInt2 = move(listInt1);
+		}
 		private:
 			static _CrtMemState sStartMemState;
 	   };
