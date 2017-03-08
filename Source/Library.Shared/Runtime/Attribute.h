@@ -84,10 +84,97 @@ namespace NoobEngine
 			Datum& AppendAuxiliaryAttribute(std::string pKey);
 
 			/**
-				@brief Returns the position of the auxiliary attributes in the map
-				@return Unsigned int that holds the value of start of auxiliary attributes.
+				@brief Appends a nested scope to the current scope.
+				@details This will adopt the scope as a prescribed scope. Will throw exception if key already exists.
+				@param pKey string that holds value of key.
+				@param pValue Reference to scope that has to be adopted.
 			*/
-			uint32_t AuxiliaryBegin();
+			void AppendNestedScope(std::string pKey, Scope& pValue);
+
+			/**
+				@brief Add the attribute as internal attribute and initialize that value with the value sent.
+				@param pKey String that holds that value of key.
+				@param pInitialValue The initial value of the attribute.
+			*/
+			void AddInternalAttribute(std::string pKey, int32_t pInitialValue);
+
+			/**
+				@brief Add the attribute as internal attribute and initialize that value with the value sent.
+				@param pKey String that holds that value of key.
+				@param pInitialValue The initial value of the attribute.
+			*/
+			void AddInternalAttribute(std::string pKey, float pInitialValue);
+
+			/**
+				@brief Add the attribute as internal attribute and initialize that value with the value sent.
+				@param pKey String that holds that value of key.
+				@param pInitialValue The initial value of the attribute.
+			*/
+			void AddInternalAttribute(std::string pKey, std::string& pInitialValue);
+
+			/**
+				@brief Add the attribute as internal attribute and initialize that value with the value sent.
+				@param pKey String that holds that value of key.
+				@param pInitialValue The initial value of the attribute.
+			*/
+			void AddInternalAttribute(std::string pKey, glm::vec4& pInitialValue);
+
+			/**
+				@brief Add the attribute as internal attribute and initialize that value with the value sent.
+				@param pKey String that holds that value of key.
+				@param pInitialValue The initial value of the attribute.
+			*/
+			void AddInternalAttribute(std::string pKey, glm::mat4x4& pInitialValue);
+
+			/**
+				@brief Add the attribute as internal attribute and initialize that value with the value sent.
+				@param pKey String that holds that value of key.
+				@param pInitialValue The initial value of the attribute.
+			*/
+			void AddInternalAttribute(std::string pKey, RTTI* pInitialValue);
+
+			/**
+				@brief Add the attribute as external attribute.
+				@param pKey String that holds that value of key.
+				@param pValue The value to hold.
+			*/
+			void AddExternalAttribute(std::string pKey, int32_t* pValue, uint32_t pSize = 1);
+
+			/**
+				@brief Add the attribute as external attribute.
+				@param pKey String that holds that value of key.
+				@param pValue The value to hold.
+			*/
+			void AddExternalAttribute(std::string pKey, float* pValue, uint32_t pSize = 1);
+
+			/**
+				@brief Add the attribute as external attribute.
+				@param pKey String that holds that value of key.
+				@param pValue The value to hold.
+			*/
+			void AddExternalAttribute(std::string pKey, std::string* pValue, uint32_t pSize = 1);
+
+			/**
+				@brief Add the attribute as external attribute.
+				@param pKey String that holds that value of key.
+				@param pValue The value to hold.
+			*/
+			void AddExternalAttribute(std::string pKey, glm::vec4* pValue, uint32_t pSize = 1);
+
+			/**
+				@brief Add the attribute as external attribute.
+				@param pKey String that holds that value of key.
+				@param pValue The value to hold.
+			*/
+			void AddExternalAttribute(std::string pKey, glm::mat4x4* pValue, uint32_t pSize = 1);
+
+			/**
+				@brief Add the attribute as external attribute.
+				@param pKey String that holds that value of key.
+				@param pValue The value to hold.
+			*/
+			void AddExternalAttribute(std::string pKey, RTTI** pValue, uint32_t pSize = 1);
+
 		protected:
 			/**
 				@brief Add prescribed attribute
@@ -97,14 +184,13 @@ namespace NoobEngine
 			Datum& AppendPrescribedAttribute(std::string pKey);
 
 			/**
-				@brief Populate all the initial prescribed and auxiliary attributes
+				@brief Populate all the initial prescribed and auxiliary attributes.
+				@details This function has to be called in all child class constructors. Failing to do so will leads to unexpected behavior.
 			*/
 			virtual void Populate() = 0;
 		private:
-			/**
-				unsigned int that holds the count of prescribed attributes.
-			*/
-			uint32_t mPrescribedAttributeCount;
+			
+			static uint32_t mObjCount;
 
 			/**
 				Static hashmap that holds the prescribed attribute list of all the class that will extend Attribute
