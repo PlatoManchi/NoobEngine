@@ -31,8 +31,8 @@ namespace NoobEngine
 			Datum(const Datum& pOther);
 
 			/**
-				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
-				@param pOther Attribute from which to steal the data.
+				@brief Move semantics. Steals the data from passed Datum and nullify the passed Datum.
+				@param pOther Datum from which to steal the data.
 			*/
 			Datum(Datum&& pOther);
 
@@ -413,8 +413,8 @@ namespace NoobEngine
 			Datum& operator=(const Datum& pOther);
 
 			/**
-				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
-				@param pOther Attribute from which to steal the data.
+				@brief Move semantics. Steals the data from passed Datum and nullify the passed Datum.
+				@param pOther Datum from which to steal the data.
 			*/
 			Datum& operator=(Datum&& pOther);
 

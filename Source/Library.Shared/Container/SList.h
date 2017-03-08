@@ -31,8 +31,8 @@ namespace NoobEngine
 			SList(const SList& pList);
 			
 			/**
-				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
-				@param pList Attribute from which to steal the data.
+				@brief Move semantics. Steals the data from passed SList and nullify the passed SList.
+				@param pList SList from which to steal the data.
 			*/
 			SList(SList&& pList);
 
@@ -49,8 +49,8 @@ namespace NoobEngine
 			SList& operator=(const SList& pList);
 
 			/**
-				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
-				@param pList Attribute from which to steal the data.
+				@brief Move semantics. Steals the data from passed SList and nullify the passed SList.
+				@param pList SList from which to steal the data.
 			*/
 			SList& operator=(SList&& pList);
 

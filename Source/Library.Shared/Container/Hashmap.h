@@ -143,8 +143,8 @@ namespace NoobEngine
 			Hashmap(const Hashmap& pOther);
 
 			/**
-				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
-				@param pOther Attribute from which to steal the data.
+				@brief Move semantics. Steals the data from passed Hashmap and nullify the passed Hashmap.
+				@param pOther Hashmap from which to steal the data.
 			*/
 			Hashmap(Hashmap&& pOther);
 
@@ -213,8 +213,8 @@ namespace NoobEngine
 			Hashmap& operator=(const Hashmap& pOther) = default;
 
 			/**
-				@brief Move semantics. Steals the data from passed attribute and nullify the passed attribute.
-				@param pOther Attribute from which to steal the data.
+				@brief Move semantics. Steals the data from passed Hashmap and nullify the passed Hashmap.
+				@param pOther Hashmap from which to steal the data.
 			*/
 			Hashmap& operator=(Hashmap&& pOther);
 
