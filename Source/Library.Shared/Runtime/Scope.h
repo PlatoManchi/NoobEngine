@@ -29,6 +29,12 @@ namespace NoobEngine
 			Scope(const Scope& pOther);
 
 			/**
+				@brief Move semantics. Steals the data from passed Hashmap and nullify the passed Hashmap.
+				@param pOther Hashmap from which to steal the data.
+			*/
+			Scope(Scope&& pOther);
+
+			/**
 			 * @brief Destructor
 			 */
 			virtual ~Scope();
@@ -87,9 +93,11 @@ namespace NoobEngine
 			/**
 			 * @brief Searches and returns the key associated to the scope.
 			 * @param pScope The scope for which the key needs to be found.
+			 * @param pFoundInDatum The Datum in which pScope is present. If not found then the value will be nullptr
+			 * @param pFoundAt Index at which pScope is found in pFoundInDatum. If not found then value will be -1
 			 * @return String that holds the key of the scope.
 			 */
-			std::string FindName(const Scope& pScope);
+			std::string FindName(const Scope& pScope, Datum** pFoundInDatum = nullptr, int32_t* pFoundAt = nullptr);
 
 			/**
 			 * @brief Compare two scopes and return true if they are equal.
@@ -110,6 +118,12 @@ namespace NoobEngine
 			 * @param pOther The scope variable that needs to be copied.
 			 */
 			Scope& operator=(const Scope& pOther);
+
+			/**
+				@brief Move semantics. Steals the data from passed Scope and nullify the passed Scope.
+				@param pOther Scope from which to steal the data.
+			*/
+			Scope& operator=(Scope&& pOther);
 
 			/**
 			 * @brief Return the scope that key is pointing towards. If there is no scope it will create a default scope and return the scope.

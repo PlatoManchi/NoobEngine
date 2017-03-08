@@ -17,6 +17,41 @@ namespace NoobEngine
 			operator=(pOther);
 		}
 
+		Scope::Scope(Scope&& pOther) : 
+			RTTI(std::move(pOther))
+		{
+			mParent = pOther.mParent;
+			mData = std::move(pOther.mData);
+			mDataIndexing = std::move(pOther.mDataIndexing);
+
+			// update the parent of all child scopes to this
+			for (std::pair<std::string, Datum>& element : mData)
+			{
+				if (element.second.Type() == DatumType::TABLE)
+				{
+					for (uint32_t i = 0u; i < element.second.Size(); ++i)
+					{
+						element.second.Get<Scope*>(i)->mParent = this;
+					}
+				}
+			}
+
+			// if this scope has a parent then update the pointer to point to this scope instead of pOther
+			if (mParent)
+			{
+				Datum* foundDatum;
+				int32_t foundAt;
+				mParent->FindName(pOther, &foundDatum, &foundAt);
+
+				if (foundDatum)
+				{
+					foundDatum->Set(this, foundAt);
+				}
+			}
+
+			pOther.mParent = nullptr;
+		}
+
 		Scope::~Scope()
 		{
 			Clear();
@@ -102,8 +137,18 @@ namespace NoobEngine
 			return mParent;
 		}
 
-		std::string Scope::FindName(const Scope& pScope)
+		std::string Scope::FindName(const Scope& pScope, Datum** pFoundInDatum, int32_t* pFoundAt)
 		{
+			if (pFoundAt)
+			{
+				*pFoundAt = -1;
+			}
+
+			if (pFoundInDatum)
+			{
+				*pFoundInDatum = nullptr;
+			}
+
 			if(this != pScope.mParent)
 			{
 				// early out
@@ -120,6 +165,14 @@ namespace NoobEngine
 						Scope* tmp = element->second.Get<Scope*>(i);
 						if(*tmp == pScope)
 						{
+							if (pFoundInDatum)
+							{
+								*pFoundInDatum = const_cast<Datum*>(&element->second);
+							}
+							if (pFoundAt)
+							{
+								*pFoundAt = i;
+							}
 							return element->first;
 						}
 					}
@@ -178,6 +231,47 @@ namespace NoobEngine
 				}
 			}
 
+			return *this;
+		}
+
+		Scope& Scope::operator=(Scope&& pOther)
+		{
+			if (this != &pOther)
+			{
+				Clear();
+
+				mParent = pOther.mParent;
+				mData = std::move(pOther.mData);
+				mDataIndexing = std::move(pOther.mDataIndexing);
+
+				// update the parent of all child scopes to this
+				for (std::pair<std::string, Datum>& element : mData)
+				{
+					if (element.second.Type() == DatumType::TABLE)
+					{
+						for (uint32_t i = 0; i < element.second.Size(); ++i)
+						{
+							element.second.Get<Scope*>(i)->mParent = this;
+						}
+					}
+				}
+
+				// if this scope has a parent then update the pointer to point to this scope instead of pOther
+				if (mParent)
+				{
+					Datum* foundDatum;
+					int32_t foundAt;
+					mParent->FindName(pOther, &foundDatum, &foundAt);
+
+					if (foundDatum)
+					{
+						foundDatum->Set(this, foundAt);
+					}
+				}
+
+				pOther.mParent = nullptr;
+			}
+			
 			return *this;
 		}
 

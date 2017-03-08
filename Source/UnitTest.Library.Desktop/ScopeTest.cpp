@@ -395,9 +395,51 @@ namespace UnitTestLibraryDesktop
 
 			uint32_t index = 0u;
 			
-			Assert::AreEqual(std::string("Plato"), playerScope[index++].Get<std::string>(0));
-			Assert::AreEqual(100.0f, playerScope[index++].Get<float>(0));
+			Assert::AreEqual(std::string("Plato"), playerScope[index++].Get<std::string>());
+			Assert::AreEqual(100.0f, playerScope[index++].Get<float>());
 			Assert::ExpectException<std::exception>([&] { playerScope[index]; });
+
+			Assert::AreEqual(std::string("Plato"), playerScope["Name"].Get<std::string>());
+			Assert::AreEqual(100.0f, playerScope["Health"].Get<float>());
+		}
+
+		TEST_METHOD(MoveSemantics)
+		{
+			std::string parentKey1 = "Name";
+			std::string parentKey2 = "Health";
+			std::string parentKey3 = "Powers";
+
+			std::string powerKey1 = "Name";
+			std::string powerKey2 = "Damage";
+
+			Scope playerScope1;
+
+			playerScope1.Append(parentKey1) = "Plato";
+			playerScope1.Append(parentKey2) = 100.0f;
+
+			// adding power scope
+			playerScope1.AppendScope(parentKey3);
+			(*playerScope1.Find(parentKey3))[0]->Append(powerKey1) = "PyroAttack";
+			(*playerScope1.Find(parentKey3))[0]->Append(powerKey2) = 50.0f;
+
+			// adding another scope
+			playerScope1.AppendScope(parentKey3);
+			(*playerScope1.Find(parentKey3))[1]->Append(powerKey1) = "FreezeAttack";
+			(*playerScope1.Find(parentKey3))[1]->Append(powerKey2) = 50.0f;
+
+			Scope playerScope2 = std::move(playerScope1);
+
+			Assert::AreEqual(std::string("Plato"), playerScope2["Name"].Get<std::string>());
+			Assert::AreEqual(100.0f, playerScope2["Health"].Get<float>());
+			
+			Assert::AreEqual(std::string("PyroAttack"), (*playerScope2[parentKey3].Get<Scope*>())[powerKey1].Get<std::string>());
+			Assert::AreEqual(50.0f, (*playerScope2[parentKey3].Get<Scope*>())[powerKey2].Get<float>());
+
+			Assert::AreEqual(std::string("FreezeAttack"), (*playerScope2[parentKey3].Get<Scope*>(1))[powerKey1].Get<std::string>());
+			Assert::AreEqual(50.0f, (*playerScope2[parentKey3].Get<Scope*>(1))[powerKey2].Get<float>());
+
+			Assert::ExpectException<std::exception>([&] { playerScope1.Find(parentKey1); });
+			Assert::ExpectException<std::exception>([&] { playerScope1.Find(parentKey2); });
 		}
 
 	private:
