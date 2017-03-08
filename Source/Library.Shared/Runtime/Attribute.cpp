@@ -40,16 +40,16 @@ namespace NoobEngine
 			return *this;
 		}
 		
-		Attribute::Attribute(const Attribute&& pOther)
-		{
-			// TODO: implement move semantics
-			pOther;
-		}
+		Attribute::Attribute(const Attribute&& pOther) :
+			Scope(std::move(pOther))
+		{}
 
 		Attribute & Attribute::operator=(const Attribute&& pOther)
 		{
-			// TODO: insert return statement here
-			pOther;
+			if (this != &pOther)
+			{
+				Scope::operator=(std::move(pOther));
+			}
 			return *this;
 		}
 
