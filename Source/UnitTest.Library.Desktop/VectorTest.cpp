@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "Container/Vector.h"
 #include "SupportingClasses/Foo.h"
+#include <utility>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace NoobEngine::Container;
@@ -389,10 +390,10 @@ namespace UnitTestLibraryDesktop
 			sampleVector.PushBack(pValue2);
 			sampleVector.PushBack(pValue3);
 
-			Vector<T> sampleVector2 = move(sampleVector);
+			Vector<T> sampleVector2 = std::move(sampleVector);
 
 			Assert::AreEqual(0U, sampleVector.Size());
-			Assert::AreEqual(3U, sampleVector.Size());
+			Assert::AreEqual(3U, sampleVector2.Size());
 
 			Assert::AreEqual(sampleVector.end(), sampleVector.Find(pValue1));
 			Assert::AreNotEqual(sampleVector2.end(), sampleVector2.Find(pValue1));
@@ -712,7 +713,7 @@ namespace UnitTestLibraryDesktop
 			int32_t int1 = 10;
 			int32_t int2 = 20;
 			int32_t int3 = 30;
-			VectorTestFunctions<int32_t>::TestReserveFunctor(int1, int2, int3);
+			VectorTestFunctions<int32_t>::TestMoveSemantics(int1, int2, int3);
 		}
 	private:
 		static _CrtMemState sStartMemState;

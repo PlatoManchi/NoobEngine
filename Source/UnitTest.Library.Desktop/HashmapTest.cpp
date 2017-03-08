@@ -797,7 +797,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<int32_t, int32_t> keyvaluePair3(key3, value3);
 			HashmapTestFunctions<int32_t, int32_t>::TestHashmapMoveSemantics(keyvaluePair1, keyvaluePair2, keyvaluePair3);
 
-			/*// ---------------------- int32_t*, int32_t ---------------------------
+			// ---------------------- int32_t*, int32_t ---------------------------
 			std::pair<int32_t*, int32_t> keyvaluePairIntPtr1(&key1, value1);
 			std::pair<int32_t*, int32_t> keyvaluePairIntPtr2(&key2, value2);
 			std::pair<int32_t*, int32_t> keyvaluePairIntPtr3(&key3, value3);
@@ -831,7 +831,7 @@ namespace UnitTestLibraryDesktop
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr1(&fooObj1, value1);
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr2(&fooObj2, value2);
 			std::pair<Foo*, int32_t> keyvaluePairFooPtr3(&fooObj3, value3);
-			HashmapTestFunctions<Foo*, int32_t>::TestHashmapMoveSemantics(keyvaluePairFooPtr1, keyvaluePairFooPtr2, keyvaluePairFooPtr3);*/
+			HashmapTestFunctions<Foo*, int32_t>::TestHashmapMoveSemantics(keyvaluePairFooPtr1, keyvaluePairFooPtr2, keyvaluePairFooPtr3);
 		}
 	private:
 		static _CrtMemState sStartMemState;

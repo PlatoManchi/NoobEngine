@@ -952,7 +952,7 @@ namespace UnitTestLibraryDesktop
 			listInt1.PushBack(int4);
 			listInt1.PushBack(int5);
 
-			NoobEngine::Container::SList<int32_t> listInt2 = move(listInt1);
+			NoobEngine::Container::SList<int32_t> listInt2 = std::move(listInt1);
 		}
 		private:
 			static _CrtMemState sStartMemState;
