@@ -47,6 +47,11 @@ namespace NoobEngine
 		template<typename TKey, typename TValue, typename HashFunctor>
 		typename Hashmap<TKey, TValue, HashFunctor>::Iterator Hashmap<TKey, TValue, HashFunctor>::Find(const TKey& pKey) const
 		{
+			if (mData.Size() == 0)
+			{
+				return end();
+			}
+
 			uint32_t hashIndex = mHashFunctor(pKey) % mData.Size();
 			const SList<std::pair<TKey, TValue>>& chainList = mData[hashIndex];
 
