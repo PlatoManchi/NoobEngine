@@ -576,6 +576,17 @@ namespace UnitTestLibraryDesktop
 			glm::mat4x4 mat2(1, 2, 3, 4, 5.543f, 6, 7.45f, 8, 9, 0.844f, 1, 2.786f, 3.834f, 4, 5, 6);
 			DatumTestFunctions<glm::mat4x4>::TestSetFromString(DatumType::MATRIX_4x4, mat1, DatumTestFunctions<glm::mat4x4>::ToString(mat1), mat2, DatumTestFunctions<glm::mat4x4>::ToString(mat2));
 		}
+
+		TEST_METHOD(MoveSemantics)
+		{
+			int a = 10;
+			Datum d;
+			d.PushBack(a);
+
+			Datum d2 = std::move(d);
+			Assert::AreEqual(a, d2.Get<int>());
+		}
+
 	private:
 		static _CrtMemState sStartMemState;
 	};

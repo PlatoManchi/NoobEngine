@@ -73,6 +73,26 @@ namespace NoobEngine
 			}
 		}
 
+		Datum::Datum(Datum&& pOther)
+		{
+			for (uint32_t i = 0; i < 6; ++i)
+			{
+				mTypeSizeTable[i] = pOther.mTypeSizeTable[i];
+			}
+			
+			mType = pOther.mType;
+			mSize = pOther.mSize;
+			mCapacity = pOther.mCapacity;
+			mIsExternalData = pOther.mIsExternalData;
+			mData.mVoidPtr = pOther.mData.mVoidPtr;
+
+			pOther.mType = DatumType::UNASSIGNED;
+			pOther.mSize = 0;
+			pOther.mCapacity = 0;
+			pOther.mIsExternalData = true;
+			pOther.mData.mVoidPtr = nullptr;
+		}
+
 		Datum::~Datum()
 		{
 			Clear();
@@ -139,6 +159,9 @@ namespace NoobEngine
 					break;
 				case DatumType::RTTI_TYPE:
 					mData.mRTTIPtr = static_cast<RTTI**>(realloc(mData.mFloatData, sizeof(RTTI*) * mCapacity));
+					break;
+				case DatumType::TABLE:
+					mData.mTablePtr = static_cast<Scope**>(realloc(mData.mFloatData, sizeof(Scope*) * mCapacity));
 					break;
 				default:
 					break;
@@ -1042,6 +1065,32 @@ namespace NoobEngine
 				mIsExternalData = pOther.mIsExternalData;
 			}
 			
+			return *this;
+		}
+
+		Datum& Datum::operator=(Datum&& pOther)
+		{
+			if (this != &pOther)
+			{
+				Clear();
+				for (uint32_t i = 0; i < 6; ++i)
+				{
+					mTypeSizeTable[i] = pOther.mTypeSizeTable[i];
+				}
+
+				mType = pOther.mType;
+				mSize = pOther.mSize;
+				mCapacity = pOther.mCapacity;
+				mIsExternalData = pOther.mIsExternalData;
+				mData.mVoidPtr = pOther.mData.mVoidPtr;
+
+				pOther.mType = DatumType::UNASSIGNED;
+				pOther.mSize = 0;
+				pOther.mCapacity = 0;
+				pOther.mIsExternalData = true;
+				pOther.mData.mVoidPtr = nullptr;
+			}
+
 			return *this;
 		}
 
