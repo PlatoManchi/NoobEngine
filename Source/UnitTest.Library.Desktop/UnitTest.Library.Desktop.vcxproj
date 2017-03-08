@@ -202,8 +202,13 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SupportingClasses\Foo.h" />
+    <ClInclude Include="SupportingClasses\FooAttribute.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AttributeTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DatumTest.cpp">
       <SubType>
       </SubType>
@@ -224,6 +229,7 @@
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
     <ClCompile Include="SupportingClasses\Foo.cpp" />
+    <ClCompile Include="SupportingClasses\FooAttribute.cpp" />
     <ClCompile Include="VectorTest.cpp">
       <SubType>
       </SubType>

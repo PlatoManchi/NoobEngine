@@ -10,10 +10,17 @@
     <ClCompile Include="HashmapTest.cpp" />
     <ClCompile Include="DatumTest.cpp" />
     <ClCompile Include="ScopeTest.cpp" />
+    <ClCompile Include="AttributeTest.cpp" />
+    <ClCompile Include="SupportingClasses\FooAttribute.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SupportingClasses\Foo.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\FooAttribute.h">
       <Filter>SupportingClasses</Filter>
     </ClInclude>
   </ItemGroup>
