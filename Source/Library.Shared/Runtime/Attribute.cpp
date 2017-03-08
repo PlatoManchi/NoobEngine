@@ -42,13 +42,18 @@ namespace NoobEngine
 		
 		Attribute::Attribute(const Attribute&& pOther) :
 			Scope(std::move(pOther))
-		{}
+		{
+			// updating "this" prescribed attribute
+			AppendPrescribedAttribute("this") = static_cast<RTTI*>(this);
+		}
 
 		Attribute & Attribute::operator=(const Attribute&& pOther)
 		{
 			if (this != &pOther)
 			{
 				Scope::operator=(std::move(pOther));
+				// updating "this" prescribed attribute
+				AppendPrescribedAttribute("this") = static_cast<RTTI*>(this);
 			}
 			return *this;
 		}
@@ -62,7 +67,7 @@ namespace NoobEngine
 			}
 		}
 
-		bool Attribute::IsPrescribedAttribute(std::string pKey)
+		bool Attribute::IsPrescribedAttribute(std::string pKey) const
 		{
 			if (IsAttribute(pKey))
 			{
@@ -71,7 +76,7 @@ namespace NoobEngine
 			return false;
 		}
 
-		bool Attribute::IsAuxiliaryAttribute(std::string pKey)
+		bool Attribute::IsAuxiliaryAttribute(std::string pKey) const
 		{
 			if (IsAttribute(pKey))
 			{
@@ -80,7 +85,7 @@ namespace NoobEngine
 			return false;
 		}
 
-		bool Attribute::IsAttribute(std::string pKey)
+		bool Attribute::IsAttribute(std::string pKey) const
 		{
 			return (Find(pKey) != nullptr);
 		}

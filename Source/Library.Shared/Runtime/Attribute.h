@@ -55,7 +55,7 @@ namespace NoobEngine
 				@see IsAuxiliaryAttribute()
 				@see IsAttribute()
 			*/
-			bool IsPrescribedAttribute(std::string pKey);
+			bool IsPrescribedAttribute(std::string pKey) const;
 
 			/**
 				@brief Checks if the attribute is auxiliary and if yes then return true else false.
@@ -65,7 +65,7 @@ namespace NoobEngine
 				@see IsPrescribedAttribute()
 				@see IsAttribute()
 			*/
-			bool IsAuxiliaryAttribute(std::string pKey);
+			bool IsAuxiliaryAttribute(std::string pKey) const;
 
 			/**
 				@brief Checks if there is attribute with key and return true if present else false.
@@ -74,7 +74,7 @@ namespace NoobEngine
 				@see IsAuxiliaryAttribute()
 				@see IsPrescribedAttribute()
 			*/
-			bool IsAttribute(std::string pKey);
+			bool IsAttribute(std::string pKey) const;
 
 			/**
 				@brief Adds an auxiliary attribute to the attribute
