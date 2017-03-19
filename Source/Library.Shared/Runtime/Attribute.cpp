@@ -47,7 +47,7 @@ namespace NoobEngine
 			AppendPrescribedAttribute("this") = static_cast<RTTI*>(this);
 		}
 
-		Attribute & Attribute::operator=(const Attribute&& pOther)
+		Attribute& Attribute::operator=(const Attribute&& pOther)
 		{
 			if (this != &pOther)
 			{
