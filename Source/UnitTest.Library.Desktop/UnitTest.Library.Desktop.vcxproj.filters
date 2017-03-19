@@ -14,6 +14,7 @@
     <ClCompile Include="SupportingClasses\FooAttribute.cpp">
       <Filter>SupportingClasses</Filter>
     </ClCompile>
+    <ClCompile Include="XmlParseMasterTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
