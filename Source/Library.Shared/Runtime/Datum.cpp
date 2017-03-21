@@ -5,12 +5,9 @@ namespace NoobEngine
 {
 	namespace Runtime
 	{
-		Datum::Datum(uint32_t pInitCapacity) : mSize(0), mCapacity(pInitCapacity)
+		Datum::Datum(uint32_t pInitCapacity) : 
+			mSize(0), mCapacity(pInitCapacity), mType(DatumType::UNASSIGNED), mIsExternalData(false), mData()
 		{
-			mType = DatumType::UNASSIGNED;
-			mIsExternalData = false;
-			mData.mVoidPtr = nullptr;
-
 			// populating the size table
 			mTypeSizeTable[0] = sizeof(int32_t);
 			mTypeSizeTable[1] = sizeof(float);
@@ -20,12 +17,9 @@ namespace NoobEngine
 			mTypeSizeTable[5] = sizeof(RTTI*);
 		}
 
-		Datum::Datum(const Datum& pOther) : mSize(0), mCapacity(pOther.mCapacity)
+		Datum::Datum(const Datum& pOther) : 
+			mSize(0), mCapacity(pOther.mCapacity), mType(pOther.mType), mIsExternalData(pOther.mIsExternalData), mData()
 		{
-			mData.mVoidPtr = nullptr;
-			mType = pOther.mType;
-			mIsExternalData = pOther.mIsExternalData;
-
 			// populating the size table
 			mTypeSizeTable[0] = sizeof(int32_t);
 			mTypeSizeTable[1] = sizeof(float);
@@ -772,7 +766,7 @@ namespace NoobEngine
 			--mSize;
 		}
 
-		void Datum::SetFromString(std::string pString, uint32_t pIndex)
+		void Datum::SetFromString(const std::string& pString, uint32_t pIndex)
 		{
 			if (mType == DatumType::UNASSIGNED)
 			{
@@ -834,10 +828,11 @@ namespace NoobEngine
 			case NoobEngine::Runtime::DatumType::VECTOR_4:
 			{
 				//expected format {x, y, z, w}
-				pString.erase(0, 1); // removing first {
-				pString.pop_back(); // removing last }
+				std::string tmpS = pString;
+				tmpS.erase(0, 1); // removing first {
+				tmpS.pop_back(); // removing last }
 
-				char* vecStrPtr = const_cast<char*>(pString.c_str());
+				char* vecStrPtr = const_cast<char*>(tmpS.c_str());
 				char* vecArr;
 
 				glm::vec4 tmpVec;
@@ -1250,7 +1245,7 @@ namespace NoobEngine
 				{
 					for (uint32_t i = 0; i < mSize; i++)
 					{
-						if (!mData.mRTTIPtr[i]->Equals(pOther.mData.mRTTIPtr[i]))
+						if (mData.mRTTIPtr[i] && pOther.mData.mRTTIPtr[i] && !mData.mRTTIPtr[i]->Equals(pOther.mData.mRTTIPtr[i]))
 						{
 							return false;
 						}

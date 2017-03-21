@@ -105,8 +105,11 @@
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration)\;%(AdditionalDependencies)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration);%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Lib>
+    <PreLinkEvent>
+      <Command>xcopy "$(ProjectDir)..\..\External\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)Bin\$(Platform)\$(Configuration)" /y</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -127,8 +130,11 @@
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration)\;%(AdditionalDependencies)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration);%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Lib>
+    <PreLinkEvent>
+      <Command>xcopy "$(ProjectDir)..\..\External\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)Bin\$(Platform)\$(Configuration)" /y</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -153,8 +159,11 @@
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration)\;%(AdditionalDependencies)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration);%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Lib>
+    <PreLinkEvent>
+      <Command>xcopy "$(ProjectDir)..\..\External\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)Bin\$(Platform)\$(Configuration)" /y</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -179,8 +188,11 @@
       <AdditionalDependencies>Expat.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration)\;%(AdditionalDependencies)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\External\Expat\lib\$(Platform)\$(Configuration);%(AdditionalDependencies)</AdditionalLibraryDirectories>
     </Lib>
+    <PreLinkEvent>
+      <Command>xcopy "$(ProjectDir)..\..\External\Expat\lib\$(Platform)\$(Configuration)\Expat.pdb" "$(ProjectDir)Bin\$(Platform)\$(Configuration)" /y</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

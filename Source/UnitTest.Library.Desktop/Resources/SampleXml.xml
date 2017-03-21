@@ -1,0 +1,12 @@
+<Class>
+	<Student name="Alpha" id="1">
+		<Sem1 grade="A"/>
+		<Sem1 grade="B"/>
+		<Sem1 grade="TBD"/>
+	</Student>
+	<Student name="Beta" id="2">
+		<Sem1 grade="A+"/>
+		<Sem1 grade="A"/>
+		<Sem1 grade="TBD"/>
+	</Student>
+</Class>

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "XmlParseMaster.h"
+#include "Container/Hashmap.h"
 
 namespace NoobEngine
 {
@@ -9,14 +10,16 @@ namespace NoobEngine
 #pragma region SharedData
 		RTTI_DEFINITIONS(XmlParseMaster::SharedData)
 
-		XmlParseMaster::SharedData::SharedData()
+		XmlParseMaster::SharedData::SharedData():
+			mDepth(0)
 		{
 
 		}
 
 		XmlParseMaster::SharedData* XmlParseMaster::SharedData::Clone() const
 		{
-			return nullptr;
+			XmlParseMaster::SharedData* cloneSharedData = new XmlParseMaster::SharedData();
+			return cloneSharedData;
 		}
 
 		void XmlParseMaster::SharedData::SetXmlParseMaster(XmlParseMaster* const pXmlParseMaster)
@@ -45,7 +48,7 @@ namespace NoobEngine
 #pragma endregion
 #pragma region XmlParseMaster
 		XmlParseMaster::XmlParseMaster() : 
-			mParser(XML_ParserCreate(NULL)), mFilePath(nullptr), mSharedData(nullptr)
+			mParser(XML_ParserCreate(nullptr)), mFilePath(""), mSharedData(nullptr), mRecentHelper(nullptr), mIsClone(false)
 		{
 			XML_SetUserData(mParser, this);
 			XML_SetElementHandler(mParser, &XmlParseMaster::StartElementHandler, &XmlParseMaster::EndElementHandler);
@@ -55,27 +58,63 @@ namespace NoobEngine
 		XmlParseMaster::~XmlParseMaster()
 		{
 			XML_ParserFree(mParser);
+			if (mIsClone) 
+			{
+				delete mSharedData;
+				for (IXmlParseHelper* helper : mHelperList)
+				{
+					delete helper;
+				}
+			}
 		}
 
-		XmlParseMaster* XmlParseMaster::Clone()
+		XmlParseMaster* XmlParseMaster::Clone() const
 		{
-			return nullptr;
+			XmlParseMaster* cloneMaster = new XmlParseMaster();
+			
+			cloneMaster->SetSharedData( *(mSharedData->Clone()) );
+
+			for (IXmlParseHelper* helpers : mHelperList)
+			{
+				cloneMaster->AddHelper( *(helpers->Clone()) );
+			}
+
+			cloneMaster->mIsClone = true;
+			return cloneMaster;
 		}
 
-		void XmlParseMaster::AddHelper(IXmlParseHelper* const pIXmlParseHelper)
+		void XmlParseMaster::AddHelper(IXmlParseHelper& pIXmlParseHelper)
 		{
-			mHelperList.PushBack(pIXmlParseHelper);
+			if (mIsClone)
+			{
+				throw std::exception("Cannot add helper to cloned XmlParseMaster.");
+			}
+			mHelperList.PushBack(&pIXmlParseHelper);
 		}
 
-		void XmlParseMaster::RemoveHelper(IXmlParseHelper* const pIXmlParseHelper)
+		void XmlParseMaster::RemoveHelper(IXmlParseHelper& pIXmlParseHelper)
 		{
-			mHelperList.Remove(pIXmlParseHelper);
+			if (mIsClone)
+			{
+				throw std::exception("Cannot remove helper from cloned XmlParseMaster.");
+			}
+			mHelperList.Remove(&pIXmlParseHelper);
 		}
 
 		void XmlParseMaster::Parse(const char* pXmlString)
 		{
-			int size = strlen(pXmlString);
-			if (XML_Parse(mParser, pXmlString, size, true) == 0)
+			if (!pXmlString)
+			{
+				throw std::exception("pXmlString cannot be nullptr.");
+			}
+
+			for (IXmlParseHelper* helper : mHelperList)
+			{
+				helper->Initialize(this);
+			}
+
+			size_t size = strlen(pXmlString);
+			if (XML_Parse(mParser, pXmlString, static_cast<int>(size), true) == 0)
 			{
 				int code = XML_GetErrorCode(mParser);
 				const char *msg = (const char *)XML_ErrorString((XML_Error)code);
@@ -85,80 +124,131 @@ namespace NoobEngine
 
 		void XmlParseMaster::ParseFromFile(const char* pXmlFilePath)
 		{
+			if (!pXmlFilePath)
+			{
+				throw std::exception("pXmlFilePath cannot be nullptr.");
+			}
+
+			// opening file stream
 			std::ifstream fileStream(pXmlFilePath);
+			
+			if (!fileStream) {
+				fileStream.close();
+				// if the file path is invalid
+				std::string exceptionStr = "File path \"" + std::string(pXmlFilePath) + "\" is invalid.";
+				throw exception(exceptionStr.c_str());
+			}
+
+			// if valid file path and file
+			mFilePath = pXmlFilePath;
 			std::string fileContent;
 
 			// allocating the memory up front rather than relying string class's automatic reallocation
 			fileStream.seekg(0, std::ios::end);
-			fileContent.reserve(fileStream.tellg());
+			fileContent.reserve(static_cast<size_t>(fileStream.tellg()));
 			fileStream.seekg(0, std::ios::beg);
 
 			// reading file content
 			fileContent.assign( (std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>() );
 
+			// close file stream
+			fileStream.close();
+
 			Parse(fileContent.c_str());
 		}
 
-		const char* XmlParseMaster::GetFileName()
+		std::string XmlParseMaster::GetFileName() const
 		{
 			return mFilePath;
 		}
 
-		XmlParseMaster::SharedData* XmlParseMaster::GetSharedData()
+		XmlParseMaster::SharedData* XmlParseMaster::GetSharedData() const
 		{
 			return mSharedData;
 		}
 
-		void XmlParseMaster::SetSharedData(SharedData* const pSharedData)
+		void XmlParseMaster::SetSharedData(SharedData& pSharedData)
 		{
-			mSharedData = pSharedData;
+			mSharedData = &pSharedData;
 			mSharedData->SetXmlParseMaster(this);
 		}
 
 		void XmlParseMaster::StartElementHandler(void* pData, const XML_Char* pElement, const XML_Char** pAttributes)
 		{
 			XmlParseMaster* xmlParseMaster = reinterpret_cast<XmlParseMaster*>(pData);
-			// implementing the chain of responsibility
-			for (IXmlParseHelper* helper : xmlParseMaster->mHelperList)
+
+			// increment depth
+			if (xmlParseMaster->mSharedData)
 			{
-				if (helper->StartElementHandler(pData, pElement, pAttributes))
-				{
-					// if the helper process data then break
-					break;
-				}
+				xmlParseMaster->mSharedData->IncrementDepth();
 			}
 
-			xmlParseMaster->mSharedData->IncrementDepth();
+			if (xmlParseMaster->mHelperList.Size() != 0)
+			{
+				// converting the data into easy to access data types
+				std::string element = std::string(pElement);
+				NoobEngine::Container::Hashmap<std::string, std::string> attributeValuePair;
+
+				uint32_t index = 0;
+				while (pAttributes[index])
+				{
+					std::string name = std::string(pAttributes[index++]);
+					std::string value = std::string(pAttributes[index++]);
+
+					attributeValuePair[name] = value;
+				}
+
+				// implementing the chain of responsibility
+				for (IXmlParseHelper* helper : xmlParseMaster->mHelperList)
+				{
+					if (helper->StartElementHandler(element, attributeValuePair))
+					{
+						// if the helper process data then break
+						xmlParseMaster->mRecentHelper = helper;
+						break;
+					}
+				}
+			}
 		}
 
 		void XmlParseMaster::EndElementHandler(void* pData, const XML_Char* pElement)
 		{
 			XmlParseMaster* xmlParseMaster = reinterpret_cast<XmlParseMaster*>(pData);
-			// implementing the chain of responsibility
-			for (IXmlParseHelper* helper : xmlParseMaster->mHelperList)
+			if (xmlParseMaster->mHelperList.Size() != 0)
 			{
-				if (helper->EndElementHandler(pData, pElement))
+				std::string element(pElement);
+				// implementing the chain of responsibility
+				for (IXmlParseHelper* helper : xmlParseMaster->mHelperList)
 				{
-					// if the helper process data then break
-					break;
+					
+					if (helper->EndElementHandler(element))
+					{
+						// if the helper process data then break
+						break;
+					}
 				}
 			}
-
-			xmlParseMaster->mSharedData->DecrementDepth();
+			
+			// decrement the depth
+			if (xmlParseMaster->mSharedData)
+			{
+				xmlParseMaster->mSharedData->DecrementDepth();
+			}
 		}
 
-		void XmlParseMaster::CharDataHandler(void* pData, const XML_Char* pElement, int pLength)
+		void XmlParseMaster::CharDataHandler(void* pData, const XML_Char* pCharValue, int pLength)
 		{
 			XmlParseMaster* xmlParseMaster = reinterpret_cast<XmlParseMaster*>(pData);
-			// implementing the chain of responsibility
-			for (IXmlParseHelper* helper : xmlParseMaster->mHelperList)
+			
+			if (xmlParseMaster->mHelperList.Size() != 0)
 			{
-				if (helper->CharDataHandler(pData, pElement, pLength))
+				// converting to string
+				std::string stringValue(reinterpret_cast<const char*>(pCharValue), pLength);
+				if (xmlParseMaster->mRecentHelper)
 				{
-					// if the helper process data then break
-					break;
+					xmlParseMaster->mRecentHelper->CharDataHandler(stringValue);
 				}
-			}
+			}// end of if
 		}
 #pragma endregion
 	}

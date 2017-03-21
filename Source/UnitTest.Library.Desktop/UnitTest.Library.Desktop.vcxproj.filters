@@ -15,6 +15,9 @@
       <Filter>SupportingClasses</Filter>
     </ClCompile>
     <ClCompile Include="XmlParseMasterTest.cpp" />
+    <ClCompile Include="SupportingClasses\TestXmlParseHelper.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -24,10 +27,21 @@
     <ClInclude Include="SupportingClasses\FooAttribute.h">
       <Filter>SupportingClasses</Filter>
     </ClInclude>
+    <ClInclude Include="SupportingClasses\TestXmlParseHelper.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SupportingClasses">
       <UniqueIdentifier>{18587ba0-3739-4801-a2b5-36f814e172d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{96a06ff7-95f6-430c-8d47-ba8c7e78e844}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\SampleXml.xml">
+      <Filter>Resources</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

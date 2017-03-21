@@ -25,6 +25,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseMaster.cpp">
       <Filter>Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">

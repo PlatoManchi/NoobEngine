@@ -4,13 +4,12 @@
 #include "Container/SList.h"
 #include "IXmlParseHelper.h"
 #include "expat.h"
-//#include "expat_external.h"
 
 namespace NoobEngine
 {
 	namespace Parsers
 	{
-		
+		class IXmlParseHelper;
 
 		/**
 			Parse the xml file using Expat.
@@ -86,63 +85,71 @@ namespace NoobEngine
 			/**
 				@brief Default destructor
 			*/
-			~XmlParseMaster();
+			virtual ~XmlParseMaster();
 
 			/**
 				@brief Create a clone of current XmlParseMaster object and return the pointer for new XmlParseMaster that is cloned.
 				@return Pointer to XmlParseMaster that is a clone of this XmlParseMaster object.
 			*/
-			XmlParseMaster* Clone();
+			XmlParseMaster* Clone() const;
 
 			/**
 				@brief Add the helper into list of xml parse helpers.
-				@param pIXmlParseHelper Pointer to constant IXmlParseHelper object that needs to be added.
+				@param[in] pIXmlParseHelper Pointer to constant IXmlParseHelper object that needs to be added.
+				@exception std::exception If this XmlParseMaster is cloned then exception is thrown.
 			*/
-			void AddHelper(IXmlParseHelper* const pIXmlParseHelper);
+			void AddHelper(IXmlParseHelper& pIXmlParseHelper);
 
 			/**
 				@brief Remove the helper from the list of xml parse helpers.
-				@param pIXmlParseHelper Pointer to constant IXmlParseHelper object that needs to be removed.
+				@param[in] pIXmlParseHelper Pointer to constant IXmlParseHelper object that needs to be removed.
+				@exception std::exception If this XmlParseMaster is cloned then exception is thrown.
 			*/
-			void RemoveHelper(IXmlParseHelper* const pIXmlParseHelper);
+			void RemoveHelper(IXmlParseHelper& pIXmlParseHelper);
 
 			/**
 				@brief Parse the xml string using expat and call helpers as required.
 				@details Throw exception if the pointer is nullptr.
-				@param pXmlString Char pointer that has the xml data.
+				@param[in] pXmlString Char pointer that has the xml data.
+				@exception std::exception Invalid pXmlString
 			*/
 			void Parse(const char* pXmlString);
 
 			/**
 				@brief Read the data from xml file and parse the xml.
 				@details Throw exception if the pointer is nullptr.
-				@param pXmlFilePath Char pointer that has name of the file to parse.
+				@param[in] pXmlFilePath Char pointer that has name of the file to parse.
+				@exception std::exception Invalid filename.
 			*/
 			void ParseFromFile(const char* pXmlFilePath);
 
 			/**
 				@brief Returns the path for the file being parsed.
-				@return Char pointer that holds the path for file being parsed.
+				@return String that holds the path for file being parsed.
 			*/
-			const char* GetFileName();
+			std::string GetFileName() const;
 
 			/**
 				@brief Return the SharedData that this XmlParseMaster has.
 				@return Pointer to the SharedData.
 			*/
-			SharedData* GetSharedData();
+			SharedData* GetSharedData() const;
 
 			/**
 				@brief Set SharedData that his XmlParseMaster has.
-				@param pSharedData Pointer to SharedData.
+				@param[in] pSharedData Pointer to SharedData.
 			*/
-			void SetSharedData(SharedData* const pSharedData);
+			void SetSharedData(SharedData& pSharedData);
 
 		private:
 			/**
+				Holds if this XmlParseMaster is clone or not
+			*/
+			bool mIsClone;
+			/**
 				Holds the path to Xml file that is currently being parsed.
 			*/
-			char* mFilePath;
+			std::string mFilePath;
 
 			/**
 				Pointer to the SharedData that this XmlParseMaster has.
@@ -160,22 +167,32 @@ namespace NoobEngine
 			Container::SList<IXmlParseHelper*> mHelperList;
 
 			/**
+				Holds the helper that recently successfully server the request
+			*/
+			IXmlParseHelper* mRecentHelper;
+
+			/**
 				@brief Callback that expat will call to handle XML start element.
-				@param pData
-				@param pElement String that represents the element.
-				@param pAttributes Array of Attribute to value pairs
+				@param[in] pData The user data that is set in expat.
+				@param[in] pElement String that represents the element.
+				@param[in] pAttributes Array of Attribute to value pairs.
 			*/
 			static void StartElementHandler(void* pData, const XML_Char* pElement, const XML_Char** pAttributes);
 
 			/**
 				@brief Callback that expat will call to handle XML end element.
-				@param pData
-				@param pElement String that represents the element.
+				@param[in] pData The user data that is set in expat.
+				@param[in] pElement String that represents the element.
 			*/
 			static void EndElementHandler(void* pData, const XML_Char* pElement);
 
-
-			static void CharDataHandler(void* pData, const XML_Char* pElement, int pLength);
+			/**
+				@brief Callback that expat will call to handle characters in between tags.
+				@param[in] pData The user data that is set in expat.
+				@param[in] pCharValue The characters in between tags.
+				@param[in] pLength Number of characters.
+			*/
+			static void CharDataHandler(void* pData, const XML_Char* pCharValue, int pLength);
 		};
 	}
 }

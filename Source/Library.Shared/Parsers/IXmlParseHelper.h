@@ -1,20 +1,32 @@
 #pragma once
-#include "expat_external.h"
+#include "Container/Hashmap.h"
+#include "Parsers/XmlParseMaster.h"
 
 namespace NoobEngine
 {
 	namespace Parsers
 	{
+		// forward declaration
+		class XmlParseMaster;
+
 		class IXmlParseHelper
 		{
 		public:
-			virtual void Initialize();
-			virtual bool StartElementHandler(void* pData, const XML_Char* pElement, const XML_Char** pAttributes);
-			virtual bool EndElementHandler(void* pData, const XML_Char* pElement);
-			virtual bool CharDataHandler(void* pData, const XML_Char* pElement, int pLength);
-			virtual void Clone() = 0;
-		private:
+			IXmlParseHelper();
+			virtual ~IXmlParseHelper();
 
+			/**
+				Initialize this helper. This will get called just before each file is parsed.
+			*/
+			virtual void Initialize(XmlParseMaster* pXmlParseMaster);
+
+			virtual bool StartElementHandler(const std::string& pElement, const NoobEngine::Container::Hashmap<std::string, std::string>& pAttributes) = 0;
+			virtual bool EndElementHandler(const std::string& pElement) = 0;
+			virtual bool CharDataHandler(const std::string& pCharData) = 0;
+			virtual IXmlParseHelper* Clone() const = 0;
+
+		protected:
+			XmlParseMaster* mXmlParseMaster;
 		};
 	}
 }

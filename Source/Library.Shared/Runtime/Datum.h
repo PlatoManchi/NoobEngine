@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+
 #include "RTTI.h"
 #define GLM_FORCE_CXX98
 #include "../../External/glm/glm/vec4.hpp"
@@ -395,7 +395,7 @@ namespace NoobEngine
 				@param pString std::string that contains the stringified value of the data.
 				@param pIndex Unsigned int that holds the index at which this value should be inserted into.
 			*/
-			void SetFromString(std::string pString, uint32_t pIndex = 0);
+			void SetFromString(const std::string& pString, uint32_t pIndex = 0);
 
 			/**
 				@brief Returns stringified value of the data at index.
@@ -504,6 +504,8 @@ namespace NoobEngine
 				glm::mat4x4* mMatData;
 				RTTI** mRTTIPtr;
 				Scope** mTablePtr;
+
+				DatumValue() : mVoidPtr(nullptr) {}
 			};
 
 			/**
