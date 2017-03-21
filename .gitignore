@@ -12,6 +12,15 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+#Exceptions
+!External\glfw\lib\x64\Debug\glfw.pdb
+!External\glfw\lib\x86\Debug\glfw.pdb
+
+!External\Expat\lib\Win32\Debug\Expat.pdb
+!External\Expat\lib\Win32\Release\Expat.pdb
+!External\Expat\lib\x64\Debug\Expat.pdb
+!External\Expat\lib\x64\Release\Expat.pdb
+
 # Build results
 Build/[Dd]ebug/
 Build/[Dd]ebugPublic/
