@@ -9,7 +9,7 @@ namespace NoobEngine
 	{
 		RTTI_DEFINITIONS(Scope)
 
-		Scope::Scope(uint32_t pSize) : mParent(nullptr), mData(Hashmap<std::string, Datum>(pSize)), mDataIndexing(pSize)
+		Scope::Scope(uint32_t pSize) : mParent(nullptr), mData(pSize), mDataIndexing(pSize)
 		{}
 
 		Scope::Scope(const Scope& pOther) : Scope(pOther.mDataIndexing.Capacity())
