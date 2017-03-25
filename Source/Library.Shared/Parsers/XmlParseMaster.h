@@ -34,10 +34,15 @@ namespace NoobEngine
 				SharedData();
 
 				/**
+					@brief Default destructor
+				*/
+				virtual ~SharedData();
+
+				/**
 					@brief Create a clone of current shared data object and return the pointer for shared data.
 					@return Pointer to SharedData that is a clone of this SharedData object.
 				*/
-				SharedData* Clone() const;
+				virtual SharedData* Clone() const;
 
 				/**
 					@brief Sets the XmlParseMaster that this SharedData belongs to.
@@ -111,7 +116,7 @@ namespace NoobEngine
 				@brief Parse the xml string using expat and call helpers as required.
 				@details Throw exception if the pointer is nullptr.
 				@param[in] pXmlString Char pointer that has the xml data.
-				@exception std::exception Invalid pXmlString
+				@exception std::exception If pXmlString is not a valid formed XML.
 			*/
 			void Parse(const char* pXmlString);
 
@@ -138,6 +143,7 @@ namespace NoobEngine
 			/**
 				@brief Set SharedData that his XmlParseMaster has.
 				@param[in] pSharedData Pointer to SharedData.
+				@exception std::exception If this XmlParsemaster is clone then throws exception.
 			*/
 			void SetSharedData(SharedData& pSharedData);
 
@@ -193,6 +199,12 @@ namespace NoobEngine
 				@param[in] pLength Number of characters.
 			*/
 			static void CharDataHandler(void* pData, const XML_Char* pCharValue, int pLength);
+
+			/**
+				@brief Reset the expat states.
+			*/
+			void Reset();
+
 		};
 	}
 }

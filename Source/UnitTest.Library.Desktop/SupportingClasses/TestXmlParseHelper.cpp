@@ -73,7 +73,7 @@ namespace SupportingClasses
 	NoobEngine::Parsers::IXmlParseHelper* TestXmlParseHelper::Clone() const
 	{
 		TestXmlParseHelper* cloneHelper = new TestXmlParseHelper();
-
+		
 		return cloneHelper;
 	}
 }

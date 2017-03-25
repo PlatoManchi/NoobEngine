@@ -828,26 +828,10 @@ namespace NoobEngine
 			case NoobEngine::Runtime::DatumType::VECTOR_4:
 			{
 				//expected format {x, y, z, w}
-				std::string tmpS = pString;
-				tmpS.erase(0, 1); // removing first {
-				tmpS.pop_back(); // removing last }
-
-				char* vecStrPtr = const_cast<char*>(tmpS.c_str());
-				char* vecArr;
-
 				glm::vec4 tmpVec;
-
-				vecArr = strtok(vecStrPtr, ", ");
-				tmpVec.x = std::stof(vecArr);
-
-				vecArr = strtok(nullptr, ", ");
-				tmpVec.y = std::stof(vecArr);
-
-				vecArr = strtok(nullptr, ", ");
-				tmpVec.z = std::stof(vecArr);
-
-				vecArr = strtok(nullptr, ", ");
-				tmpVec.w = std::stof(vecArr);
+				sscanf(pString.c_str(),
+					"{%f, %f, %f, %f}",
+					&tmpVec.x, &tmpVec.y, &tmpVec.z, &tmpVec.w);
 
 				if (pIndex == mSize)
 				{
@@ -865,66 +849,15 @@ namespace NoobEngine
 			case NoobEngine::Runtime::DatumType::MATRIX_4x4:
 			{
 				// expected format 
-				//c0r0, c0r1, c0r2, c0r3
-				//c1r0, c1r1, c1r2, c1r3
-				//c2r0, c2r1, c2r2, c2r3
-				//c3r0, c3r1, c3r2, c3r3
-				std::string tmpS = pString;
-				char* matStrPtr = const_cast<char*>(tmpS.c_str());
-				char* matArr;
-
+				// {c0r0, c0r1, c0r2, c0r3}, {c1r0, c1r1, c1r2, c1r3}, {c2r0, c2r1, c2r2, c2r3}, {c3r0, c3r1, c3r2, c3r3}
 				glm::mat4x4 tmpMat;
-				// c0r0
-				matArr = strtok(matStrPtr, ", \n");
-				tmpMat[0].x = std::stof(matArr);
-				// c0r1
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[0].y = std::stof(matArr);
-				// c0r2
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[0].z = std::stof(matArr);
-				// c0r3
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[0].w = std::stof(matArr);
+				sscanf(pString.c_str(), 
+					"{{%f, %f, %f, %f}, {%f, %f, %f, %f}, {%f, %f, %f, %f}, {%f, %f, %f, %f}}",
+					&tmpMat[0].x, &tmpMat[0].y, &tmpMat[0].z, &tmpMat[0].w, 
+					&tmpMat[1].x, &tmpMat[1].y, &tmpMat[1].z, &tmpMat[1].w,
+					&tmpMat[2].x, &tmpMat[2].y, &tmpMat[2].z, &tmpMat[2].w, 
+					&tmpMat[3].x, &tmpMat[3].y, &tmpMat[3].z, &tmpMat[3].w);
 
-				// c1r0
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[1].x = std::stof(matArr);
-				// c1r1
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[1].y = std::stof(matArr);
-				// c1r2
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[1].z = std::stof(matArr);
-				// c1r3
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[1].w = std::stof(matArr);
-
-				// c2r0
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[2].x = std::stof(matArr);
-				// c2r1
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[2].y = std::stof(matArr);
-				// c2r2
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[2].z = std::stof(matArr);
-				// c2r3
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[2].w = std::stof(matArr);
-
-				// c3r0
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[3].x = std::stof(matArr);
-				// c3r1
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[3].y = std::stof(matArr);
-				// c3r2
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[3].z = std::stof(matArr);
-				// c3r3
-				matArr = strtok(nullptr, ", \n");
-				tmpMat[3].w = std::stof(matArr);
 
 				if (pIndex == mSize)
 				{
@@ -983,11 +916,12 @@ namespace NoobEngine
 			case NoobEngine::Runtime::DatumType::MATRIX_4x4:
 			{
 				glm::mat4x4 tmpMat = Get<glm::mat4x4>(pIndex);
-				stringStream
-					<< tmpMat[0].x << ", " << tmpMat[0].y << ", " << tmpMat[0].z << ", " << tmpMat[0].w << std::endl
-					<< tmpMat[1].x << ", " << tmpMat[1].y << ", " << tmpMat[1].z << ", " << tmpMat[1].w << std::endl
-					<< tmpMat[2].x << ", " << tmpMat[2].y << ", " << tmpMat[2].z << ", " << tmpMat[2].w << std::endl
-					<< tmpMat[3].x << ", " << tmpMat[3].y << ", " << tmpMat[3].z << ", " << tmpMat[3].w;
+				stringStream << "{"
+					<< "{" << tmpMat[0].x << ", " << tmpMat[0].y << ", " << tmpMat[0].z << ", " << tmpMat[0].w << "}, "
+					<< "{" << tmpMat[1].x << ", " << tmpMat[1].y << ", " << tmpMat[1].z << ", " << tmpMat[1].w << "}, "
+					<< "{" << tmpMat[2].x << ", " << tmpMat[2].y << ", " << tmpMat[2].z << ", " << tmpMat[2].w << "}, "
+					<< "{" << tmpMat[3].x << ", " << tmpMat[3].y << ", " << tmpMat[3].z << ", " << tmpMat[3].w << "}"
+					<< "}";
 				resultStr = stringStream.str();
 
 				break;

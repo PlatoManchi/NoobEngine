@@ -379,11 +379,11 @@ namespace UnitTestLibraryDesktop
 		static std::string ToString(glm::mat4x4 pValue)
 		{
 			std::ostringstream stringStream;
-			stringStream
-				<< pValue[0].x << ", " << pValue[0].y << ", " << pValue[0].z << ", " << pValue[0].w << std::endl
-				<< pValue[1].x << ", " << pValue[1].y << ", " << pValue[1].z << ", " << pValue[1].w << std::endl
-				<< pValue[2].x << ", " << pValue[2].y << ", " << pValue[2].z << ", " << pValue[2].w << std::endl
-				<< pValue[3].x << ", " << pValue[3].y << ", " << pValue[3].z << ", " << pValue[3].w;
+			stringStream 
+				<< "{{" << pValue[0].x << ", " << pValue[0].y << ", " << pValue[0].z << ", " << pValue[0].w << "}, "
+				<< "{" << pValue[1].x << ", " << pValue[1].y << ", " << pValue[1].z << ", " << pValue[1].w << "}, "
+				<< "{" << pValue[2].x << ", " << pValue[2].y << ", " << pValue[2].z << ", " << pValue[2].w << "}, "
+				<< "{" << pValue[3].x << ", " << pValue[3].y << ", " << pValue[3].z << ", " << pValue[3].w << "}}";
 			return stringStream.str();
 		}
 #pragma endregion

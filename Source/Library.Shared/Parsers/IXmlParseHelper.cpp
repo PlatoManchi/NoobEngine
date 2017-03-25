@@ -16,5 +16,11 @@ namespace NoobEngine
 		{
 			mXmlParseMaster = pXmlParseMaster;
 		}
+
+		bool IXmlParseHelper::CharDataHandler(const std::string& pCharData)
+		{
+			pCharData;
+			return true;
+		}
 	}
 }

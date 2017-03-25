@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "XmlParseMaster.h"
 #include "Container/Hashmap.h"
+#include "Utils/Utils.h"
 
 namespace NoobEngine
 {
@@ -14,6 +15,10 @@ namespace NoobEngine
 			mDepth(0)
 		{
 
+		}
+
+		XmlParseMaster::SharedData::~SharedData()
+		{
 		}
 
 		XmlParseMaster::SharedData* XmlParseMaster::SharedData::Clone() const
@@ -38,7 +43,10 @@ namespace NoobEngine
 
 		void XmlParseMaster::SharedData::DecrementDepth()
 		{
-			--mDepth;
+			if (mDepth > 0)
+			{
+				--mDepth;
+			}
 		}
 
 		uint32_t XmlParseMaster::SharedData::Depth() const
@@ -89,7 +97,11 @@ namespace NoobEngine
 			{
 				throw std::exception("Cannot add helper to cloned XmlParseMaster.");
 			}
-			mHelperList.PushBack(&pIXmlParseHelper);
+
+			if (mHelperList.Find(&pIXmlParseHelper) == mHelperList.end())
+			{
+				mHelperList.PushBack(&pIXmlParseHelper);
+			}
 		}
 
 		void XmlParseMaster::RemoveHelper(IXmlParseHelper& pIXmlParseHelper)
@@ -108,6 +120,9 @@ namespace NoobEngine
 				throw std::exception("pXmlString cannot be nullptr.");
 			}
 
+			// reset expat
+			Reset();
+
 			for (IXmlParseHelper* helper : mHelperList)
 			{
 				helper->Initialize(this);
@@ -116,9 +131,11 @@ namespace NoobEngine
 			size_t size = strlen(pXmlString);
 			if (XML_Parse(mParser, pXmlString, static_cast<int>(size), true) == 0)
 			{
+				std::stringstream errorMsg;
 				int code = XML_GetErrorCode(mParser);
 				const char *msg = (const char *)XML_ErrorString((XML_Error)code);
-				fprintf(stderr, "Parsing error code %d message %s\n", code, msg);
+				errorMsg << "Parsing error code '" << code << "' message '" << msg << "'" << NULL;
+				throw std::exception(errorMsg.str().c_str());
 			}
 		}
 
@@ -169,6 +186,10 @@ namespace NoobEngine
 
 		void XmlParseMaster::SetSharedData(SharedData& pSharedData)
 		{
+			if (mIsClone)
+			{
+				throw exception("Cannot change the shared data of clone XmlParseMaster.");
+			}
 			mSharedData = &pSharedData;
 			mSharedData->SetXmlParseMaster(this);
 		}
@@ -186,13 +207,13 @@ namespace NoobEngine
 			if (xmlParseMaster->mHelperList.Size() != 0)
 			{
 				// converting the data into easy to access data types
-				std::string element = std::string(pElement);
+				std::string element = Utils::ToLower(pElement);
 				NoobEngine::Container::Hashmap<std::string, std::string> attributeValuePair;
 
 				uint32_t index = 0;
 				while (pAttributes[index])
 				{
-					std::string name = std::string(pAttributes[index++]);
+					std::string name = Utils::ToLower(std::string(pAttributes[index++]));
 					std::string value = std::string(pAttributes[index++]);
 
 					attributeValuePair[name] = value;
@@ -216,7 +237,7 @@ namespace NoobEngine
 			XmlParseMaster* xmlParseMaster = reinterpret_cast<XmlParseMaster*>(pData);
 			if (xmlParseMaster->mHelperList.Size() != 0)
 			{
-				std::string element(pElement);
+				std::string element = Utils::ToLower(pElement);
 				// implementing the chain of responsibility
 				for (IXmlParseHelper* helper : xmlParseMaster->mHelperList)
 				{
@@ -250,6 +271,16 @@ namespace NoobEngine
 				}
 			}// end of if
 		}
+
+		void XmlParseMaster::Reset()
+		{
+			XML_ParserReset(mParser, nullptr);
+			XML_SetUserData(mParser, this);
+			XML_SetElementHandler(mParser, &XmlParseMaster::StartElementHandler, &XmlParseMaster::EndElementHandler);
+			XML_SetCharacterDataHandler(mParser, &XmlParseMaster::CharDataHandler);
+		}
+
+		
 #pragma endregion
 	}
 }

@@ -14,7 +14,6 @@ namespace UnitTestLibraryDesktop
 	TEST_CLASS(XmlParseMasterTest)
 	{
 	public:
-	public:
 		TEST_METHOD_INITIALIZE(Initialize)
 		{
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF);
@@ -60,11 +59,8 @@ namespace UnitTestLibraryDesktop
 			Assert::ExpectException<std::exception>([&] {parser.Parse(nullptr); });
 
 			// parsing invalid xml
-			parser.Parse(xmlInvalid);
+			Assert::ExpectException<std::exception>([&] {parser.Parse(xmlInvalid); });
 
-			Assert::AreNotEqual(helper.mStartElementCount, helper.mEndElementCount);
-
-			
 		}
 
 		TEST_METHOD(ParseValidXML)

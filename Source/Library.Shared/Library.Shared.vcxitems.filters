@@ -10,6 +10,9 @@
     <Filter Include="Parsers">
       <UniqueIdentifier>{da632c59-0b3c-4954-aea0-c02f7f83205d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{bfd7e6aa-16a2-4326-936f-a1fff1416838}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
@@ -26,6 +29,18 @@
       <Filter>Parsers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperTable.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils\Utils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlSharedData.cpp">
       <Filter>Parsers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,6 +71,18 @@
       <Filter>Parsers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseMaster.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperTable.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\Utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlSharedData.h">
       <Filter>Parsers</Filter>
     </ClInclude>
   </ItemGroup>

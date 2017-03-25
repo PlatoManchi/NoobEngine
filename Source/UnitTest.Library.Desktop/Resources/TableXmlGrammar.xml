@@ -1,0 +1,57 @@
+<Root>
+	<construction>
+		<sprite>
+			<string name="Name" value="Default"/>
+			<float name="Health" value="100.0"/>
+			<vec name="Pos" value="{0, 0, 0, 0}"/>
+		</sprite>
+	</construction>
+	
+	<string key="Name" value = "Plato"/> 
+	<int key="Life" value = "3"/> 
+	<float key="Health" value = "100.0"/>
+	<vec4 key="Pos" value="{0, 0, 0, 0}"/>
+	<mat4x4 key="Transform" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"/>
+	
+	<int key="ArrayInt" value ="1" type="array"/>
+	<int key="ArrayInt" value ="2" type="array"/>
+	<int key="ArrayInt" value ="3" type="array"/>
+	
+	<float key="ArrayFloat" value ="1" type="array"/>
+	<float key="ArrayFloat" value ="2" type="array"/>
+	<float key="ArrayFloat" value ="3" type="array"/>
+	
+	<string key="ArrayString" value = "Plato" type="array"/>
+	<string key="ArrayString" value = "NPC1" type="array"/>
+	<string key="ArrayString" value = "NPC2" type="array"/>
+	
+	<vec4 key="ArrayVec4" value="{0, 0, 0, 0}" type="array"/>
+	<vec4 key="ArrayVec4" value="{1, 2, 3, 4}" type="array"/>
+	<vec4 key="ArrayVec4" value="{5, 6, 7, 8}" type="array"/>
+	
+	<mat4x4 key="ArrayMat4x4" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}" type = "array"/>
+	<mat4x4 key="ArrayMat4x4" value="{{0, 0, 0, 0}, {1, 2, 3, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}}" type = "array"/>
+	<mat4x4 key="ArrayMat4x4" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 2, 3, 4}, {0, 0, 0, 0}}" type = "array"/>
+	
+	<table key="Player">
+		<string key="Name" value="Plato"/>
+		<int key="LifeCount" value="3"/>
+		<float key="Health" value="200"/>
+	</table>
+	
+	
+	<table key="Player2" ref="sprite">
+		<string name="Name" value = "Plato"/> 
+		<int name="LifeCount" value="3"/>
+		<float name="Health" value="200.0f"/>
+	</table>
+	
+	<table key="NPC1" ref="sprite">
+		<string name="Name" value = "NPC1"/> 
+	</table>
+	
+	<table key="NPC2" ref="sprite">
+		<string name="Name" value = "NPC2"/> 
+	</table>
+	
+</Root>
