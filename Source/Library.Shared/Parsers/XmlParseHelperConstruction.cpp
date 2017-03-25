@@ -32,6 +32,7 @@ namespace NoobEngine
 
 		bool XmlParseHelperConstruction::StartElementHandler(const std::string & pElement, const NoobEngine::Container::Hashmap<std::string, std::string>& pAttributes)
 		{
+			pAttributes;
 			XmlSharedData* sharedData = reinterpret_cast<XmlSharedData*>(mXmlParseMaster->GetSharedData());
 
 			if (Utils::StrNCaseCmp(pElement, "construction"))

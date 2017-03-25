@@ -66,12 +66,13 @@ namespace NoobEngine
 
 		bool XmlParseHelperTable::StartElementHandler(const std::string& pElement, const NoobEngine::Container::Hashmap<std::string, std::string>& pAttributes)
 		{
+			XmlTableParser* sharedData = reinterpret_cast<XmlTableParser*>(mXmlParseMaster->GetSharedData());
+
 			if (Utils::StrNCaseCmp(pElement, "construction"))
 			{
 				sharedData->mIsConstructionPhase = true;
 			}
 
-			XmlTableParser* sharedData = reinterpret_cast<XmlTableParser*>(mXmlParseMaster->GetSharedData());
 			// checking if the first element is root
 			if (mXmlParseMaster->GetSharedData()->Depth() == 1)
 			{
@@ -209,6 +210,8 @@ namespace NoobEngine
 
 		bool XmlParseHelperTable::EndElementHandler(const std::string& pElement)
 		{
+			XmlTableParser* sharedData = reinterpret_cast<XmlTableParser*>(mXmlParseMaster->GetSharedData());
+
 			if (Utils::StrNCaseCmp(pElement, "construction"))
 			{
 				sharedData->mIsConstructionPhase = false;
@@ -222,7 +225,6 @@ namespace NoobEngine
 
 			if (pElement == "table")
 			{
-				XmlTableParser* sharedData = reinterpret_cast<XmlTableParser*>(mXmlParseMaster->GetSharedData());
 				sharedData->mCurrentRoot = sharedData->mCurrentRoot->GetParent();
 
 				return true;
