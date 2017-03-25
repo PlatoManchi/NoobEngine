@@ -53,6 +53,11 @@ namespace NoobEngine
 
 			protected:
 				/**
+					If the xml has valid root
+				*/
+				bool mHasValidRoot;
+
+				/**
 					Scope that points to the root node.
 				*/
 				Runtime::Scope* mRoot;
@@ -77,6 +82,11 @@ namespace NoobEngine
 					If the parsing is in construction phase or not
 				*/
 				bool mIsConstructionPhase;
+
+				/**
+					If the table is using existing prototype
+				*/
+				bool mIsPrototypeTable;
 			};
 
 			/**

@@ -37,6 +37,12 @@ namespace NoobEngine
 				@param[in] pElement String that holds the element.
 			*/
 			virtual bool EndElementHandler(const std::string& pElement) override;
+
+			/**
+				@brief Create a clone of XmlParseHelper and return the pointer to the clone.
+				@return IXmlParseHelper pointer that points to the new cloned parse helper.
+			*/
+			virtual IXmlParseHelper* Clone() const override;
 		};
 	}
 }

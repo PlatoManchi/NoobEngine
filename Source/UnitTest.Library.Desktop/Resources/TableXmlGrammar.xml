@@ -1,9 +1,9 @@
 <Root>
 	<construction>
 		<sprite>
-			<string name="Name" value="Default"/>
-			<float name="Health" value="100.0"/>
-			<vec name="Pos" value="{0, 0, 0, 0}"/>
+			<string key="Name" value="Default"/>
+			<float key="Health" value="100.0"/>
+			<vec4 key="Pos" value="{0, 0, 0, 0}"/>
 		</sprite>
 	</construction>
 	
@@ -41,17 +41,17 @@
 	
 	
 	<table key="Player2" ref="sprite">
-		<string name="Name" value = "Plato"/> 
-		<int name="LifeCount" value="3"/>
-		<float name="Health" value="200.0f"/>
+		<string key="Name" value = "Plato"/> 
+		<int key="LifeCount" value="3"/>
+		<float key="Health" value="200.0f"/>
 	</table>
 	
 	<table key="NPC1" ref="sprite">
-		<string name="Name" value = "NPC1"/> 
+		<string key="Name" value = "NPC1"/> 
 	</table>
 	
 	<table key="NPC2" ref="sprite">
-		<string name="Name" value = "NPC2"/> 
+		<string key="Name" value = "NPC2"/> 
 	</table>
 	
 </Root>

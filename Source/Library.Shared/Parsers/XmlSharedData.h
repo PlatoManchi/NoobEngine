@@ -32,6 +32,11 @@ namespace NoobEngine
 				All the prototype scopes that are made in construction will be in this 
 			*/
 			Container::Hashmap<std::string, Runtime::Scope*> mPrototypeScopes;
+
+			/**
+				Current prototype that is being processed.
+			*/
+			std::string mCurrentPrototype;
 		};
 	}
 }

@@ -2,7 +2,8 @@
 #include "CppUnitTest.h"
 #include "Parsers/XmlParseMaster.h"
 #include "Parsers/XmlParseHelperTable.h"
-
+#include "Parsers/XmlParseHelperConstruction.h"
+#include "Parsers/XmlSharedData.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -131,7 +132,7 @@ namespace UnitTestLibraryDesktop
 			const char* xmlGrammar = "Resources/TableXmlGrammar.xml";
 
 			// things needed for parser
-			NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser sharedData;
+			NoobEngine::Parsers::XmlSharedData sharedData;
 			NoobEngine::Parsers::XmlParseHelperTable helper;
 
 			// parser
@@ -246,14 +247,41 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(3, playerScope["LifeCount"].Get<int>());
 			Assert::AreEqual(200.0f, playerScope["Health"].Get<float>());
 
-			NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser* ptr1 = cloneParser->GetSharedData()->As<NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser>();
-			NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser* ptr2 = parser.GetSharedData()->As<NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser>();
-			ptr1;
-			ptr2;
-			
 			delete &(parser.GetSharedData()->As<NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser>()->GetRootNode());
 			delete &(cloneParser->GetSharedData()->As<NoobEngine::Parsers::XmlParseHelperTable::XmlTableParser>()->GetRootNode());
 			delete cloneParser;
+		}
+
+		TEST_METHOD(ConstructionTest)
+		{
+			const char* xmlGrammar = "Resources/TableXmlGrammar.xml";
+
+			// things needed for parser
+			NoobEngine::Parsers::XmlSharedData sharedData;
+			NoobEngine::Parsers::XmlParseHelperTable helper;
+			NoobEngine::Parsers::XmlParseHelperConstruction helperConstruction;
+			// parser
+			NoobEngine::Parsers::XmlParseMaster parser;
+			parser.SetSharedData(sharedData);
+			parser.AddHelper(helperConstruction);
+			parser.AddHelper(helper);
+
+			parser.ParseFromFile(xmlGrammar);
+
+			NoobEngine::Runtime::Scope& playerScope = *(sharedData.GetRootNode()["Player2"].Get<NoobEngine::Runtime::Scope*>());
+
+			Assert::AreEqual(std::string("Plato"), playerScope["Name"].Get<std::string>());
+			Assert::AreEqual(3, playerScope["LifeCount"].Get<int>());
+			Assert::AreEqual(200.0f, playerScope["Health"].Get<float>());
+			Assert::IsTrue(glm::vec4(0, 0, 0, 0) == playerScope["Pos"].Get<glm::vec4>());
+
+			NoobEngine::Runtime::Scope& npc1Scope = *(sharedData.GetRootNode()["NPC1"].Get<NoobEngine::Runtime::Scope*>());
+
+			Assert::AreEqual(std::string("NPC1"), npc1Scope["Name"].Get<std::string>());
+			Assert::AreEqual(100.0f, npc1Scope["Health"].Get<float>());
+			Assert::IsTrue(glm::vec4(0, 0, 0, 0) == npc1Scope["Pos"].Get<glm::vec4>());
+
+			Assert::ExpectException<std::exception>([&] {npc1Scope["LifeCount"].Get<int>(); });
 		}
 	private:
 		static _CrtMemState sStartMemState;

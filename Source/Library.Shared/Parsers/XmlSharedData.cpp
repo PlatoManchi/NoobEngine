@@ -6,11 +6,17 @@ namespace NoobEngine
 	namespace Parsers
 	{
 		XmlSharedData::XmlSharedData() : 
-			XmlParseHelperTable::XmlTableParser()
+			XmlParseHelperTable::XmlTableParser(), mCurrentPrototype("")
 		{ }
 
 		XmlSharedData::~XmlSharedData()
-		{ }
+		{
+			// deleting all prototypes
+			for (std::pair<std::string, Runtime::Scope*> element : mPrototypeScopes)
+			{
+				delete element.second;
+			}
+		}
 
 		XmlParseMaster::SharedData* XmlSharedData::Clone() const
 		{

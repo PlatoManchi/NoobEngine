@@ -8,7 +8,7 @@ namespace NoobEngine
 	{
 #pragma region XmlParseHelperTable::XmlTableParser
 		XmlParseHelperTable::XmlTableParser::XmlTableParser() :
-			XmlParseMaster::SharedData(), mRoot(nullptr), mCurrentRoot(nullptr), mCurrentTag(""), mIsConstructionPhase(false)
+			XmlParseMaster::SharedData(), mHasValidRoot(false), mRoot(nullptr), mCurrentRoot(nullptr), mCurrentTag(""), mIsConstructionPhase(false), mArrayIndex(0), mIsPrototypeTable(false)
 		{
 		}
 
@@ -77,7 +77,7 @@ namespace NoobEngine
 			if (mXmlParseMaster->GetSharedData()->Depth() == 1)
 			{
 				mHasValidRoot = Utils::StrNCaseCmp(pElement.c_str(), "root");
-
+				sharedData->mHasValidRoot = mHasValidRoot;
 				// create the scope only if the root is valid
 				if (mHasValidRoot && !sharedData->mRoot)
 				{
@@ -196,10 +196,12 @@ namespace NoobEngine
 				}
 
 				// table will have only name as key
-				if (Utils::StrNCaseCmp(pElement, "table") && pAttributes.ContainsKey("key"))
+				sharedData->mIsPrototypeTable = true;
+				if (Utils::StrNCaseCmp(pElement, "table") && pAttributes.ContainsKey("key") && !pAttributes.ContainsKey("ref"))
 				{
 					Runtime::Scope& childTable = sharedData->GetCurrentNode().AppendScope(pAttributes["key"]);
 					sharedData->mCurrentRoot = &childTable;
+					sharedData->mIsPrototypeTable = false;
 
 					return true;
 				}
@@ -223,7 +225,7 @@ namespace NoobEngine
 				return false;
 			}
 
-			if (pElement == "table")
+			if (pElement == "table" && !sharedData->mIsPrototypeTable)
 			{
 				sharedData->mCurrentRoot = sharedData->mCurrentRoot->GetParent();
 
