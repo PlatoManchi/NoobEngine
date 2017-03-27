@@ -21,9 +21,9 @@
 	<float key="ArrayFloat" value ="2" type="array"/>
 	<float key="ArrayFloat" value ="3" type="array"/>
 	
-	<string key="ArrayString" value = "Plato" type="array"/>
-	<string key="ArrayString" value = "NPC1" type="array"/>
-	<string key="ArrayString" value = "NPC2" type="array"/>
+	<string key="ArrayString" value = "String1" type="array"/>
+	<string key="ArrayString" value = "String2" type="array"/>
+	<string key="ArrayString" value = "String3" type="array"/>
 	
 	<vec4 key="ArrayVec4" value="{0, 0, 0, 0}" type="array"/>
 	<vec4 key="ArrayVec4" value="{1, 2, 3, 4}" type="array"/>

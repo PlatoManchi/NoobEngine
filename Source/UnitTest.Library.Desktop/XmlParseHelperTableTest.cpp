@@ -48,9 +48,9 @@ namespace UnitTestLibraryDesktop
 
 			Assert::AreEqual(std::string("Plato"), sharedData.GetRootNode()["Name"].Get<std::string>());
 
-			Assert::AreEqual(std::string("Plato"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(0));
-			Assert::AreEqual(std::string("NPC1"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(1));
-			Assert::AreEqual(std::string("NPC2"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(2));
+			Assert::AreEqual(std::string("String1"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(0));
+			Assert::AreEqual(std::string("String2"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(1));
+			Assert::AreEqual(std::string("String3"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(2));
 
 			delete &sharedData.GetRootNode();
 		}
@@ -208,9 +208,9 @@ namespace UnitTestLibraryDesktop
 			// string
 			Assert::AreEqual(std::string("Plato"), sharedData2.GetRootNode()["Name"].Get<std::string>());
 
-			Assert::AreEqual(std::string("Plato"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(0));
-			Assert::AreEqual(std::string("NPC1"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(1));
-			Assert::AreEqual(std::string("NPC2"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(2));
+			Assert::AreEqual(std::string("String1"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(0));
+			Assert::AreEqual(std::string("String2"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(1));
+			Assert::AreEqual(std::string("String3"), sharedData.GetRootNode()["ArrayString"].Get<std::string>(2));
 			
 			// int
 			Assert::AreEqual(3, sharedData.GetRootNode()["Life"].Get<int>());

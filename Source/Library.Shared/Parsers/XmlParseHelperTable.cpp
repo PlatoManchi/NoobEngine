@@ -102,7 +102,7 @@ namespace NoobEngine
 			}
 
 			// if the root is valid then process the data
-			if (mHasValidRoot)
+			if (mHasValidRoot && !sharedData->mIsPrototypeTable)
 			{
 				// test if the grammar is proper
 				if (pAttributes.ContainsKey("key") && pAttributes.ContainsKey("value"))
@@ -156,7 +156,7 @@ namespace NoobEngine
 							sharedData->mArrayIndex = 0;
 							sharedData->GetCurrentNode()[pAttributes["key"]] = pAttributes["value"];
 						}
-						
+
 						return true;
 					}
 
@@ -194,16 +194,20 @@ namespace NoobEngine
 						return true;
 					}
 				}
-
+				
 				// table will have only name as key
-				sharedData->mIsPrototypeTable = true;
-				if (Utils::StrNCaseCmp(pElement, "table") && pAttributes.ContainsKey("key") && !pAttributes.ContainsKey("ref"))
+				if (Utils::StrNCaseCmp(pElement, "table") && pAttributes.ContainsKey("key"))
 				{
-					Runtime::Scope& childTable = sharedData->GetCurrentNode().AppendScope(pAttributes["key"]);
-					sharedData->mCurrentRoot = &childTable;
-					sharedData->mIsPrototypeTable = false;
-
-					return true;
+					sharedData->mIsPrototypeTable = pAttributes.ContainsKey("ref");
+					if (!sharedData->mIsPrototypeTable)
+					{
+						Runtime::Scope& childTable = sharedData->GetCurrentNode().AppendScope(pAttributes["key"]);
+						sharedData->mCurrentRoot = &childTable;
+						
+						return true;
+					}
+					
+					return false;
 				}
 			}
 
