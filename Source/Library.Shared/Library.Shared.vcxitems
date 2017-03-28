@@ -31,6 +31,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Hashmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Generic\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperTable.h" />
@@ -49,6 +50,7 @@
       <FileType>CppCode</FileType>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Container\Vector.inl" />
+    <None Include="$(MSBuildThisFileDirectory)Generic\Factory.inl" />
     <None Include="$(MSBuildThisFileDirectory)Runtime\Datum.inl" />
   </ItemGroup>
 </Project>

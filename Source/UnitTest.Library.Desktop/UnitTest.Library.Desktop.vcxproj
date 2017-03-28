@@ -233,6 +233,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SupportingClasses\IProduct.h" />
+    <ClInclude Include="SupportingClasses\NonRTTIProduct.h" />
+    <ClInclude Include="SupportingClasses\ProductBar.h" />
+    <ClInclude Include="SupportingClasses\ProductFoo.h" />
+    <ClInclude Include="SupportingClasses\FactoryFooFactoryT.h" />
     <ClInclude Include="SupportingClasses\Foo.h" />
     <ClInclude Include="SupportingClasses\FooAttribute.h" />
     <ClInclude Include="SupportingClasses\TestXmlParseHelper.h" />
@@ -243,6 +248,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DatumTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="FactoryTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -261,6 +270,9 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="SupportingClasses\NonRTTIProduct.cpp" />
+    <ClCompile Include="SupportingClasses\ProductFoo.cpp" />
+    <ClCompile Include="SupportingClasses\FactoryFooFactoryT.cpp" />
     <ClCompile Include="SupportingClasses\Foo.cpp" />
     <ClCompile Include="SupportingClasses\FooAttribute.cpp" />
     <ClCompile Include="SupportingClasses\TestXmlParseHelper.cpp" />

@@ -13,6 +13,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{bfd7e6aa-16a2-4326-936f-a1fff1416838}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generic">
+      <UniqueIdentifier>{9315fa90-c234-4cc1-becb-eafae6aa9413}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
@@ -85,6 +88,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlSharedData.h">
       <Filter>Parsers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Generic\Factory.h">
+      <Filter>Generic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Container\SList.inl">
@@ -98,6 +104,9 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Runtime\Datum.inl">
       <Filter>Runtime</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Generic\Factory.inl">
+      <Filter>Generic</Filter>
     </None>
   </ItemGroup>
 </Project>

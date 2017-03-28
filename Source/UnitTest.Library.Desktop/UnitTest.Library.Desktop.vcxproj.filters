@@ -19,6 +19,16 @@
       <Filter>SupportingClasses</Filter>
     </ClCompile>
     <ClCompile Include="XmlParseHelperTableTest.cpp" />
+    <ClCompile Include="FactoryTest.cpp" />
+    <ClCompile Include="SupportingClasses\FactoryFooFactoryT.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportingClasses\ProductFoo.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportingClasses\NonRTTIProduct.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -29,6 +39,21 @@
       <Filter>SupportingClasses</Filter>
     </ClInclude>
     <ClInclude Include="SupportingClasses\TestXmlParseHelper.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\FactoryFooFactoryT.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\ProductFoo.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\ProductBar.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\IProduct.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\NonRTTIProduct.h">
       <Filter>SupportingClasses</Filter>
     </ClInclude>
   </ItemGroup>
