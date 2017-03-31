@@ -55,7 +55,7 @@ namespace NoobEngine
 				@see IsAuxiliaryAttribute()
 				@see IsAttribute()
 			*/
-			bool IsPrescribedAttribute(std::string pKey) const;
+			bool IsPrescribedAttribute(const std::string& pKey) const;
 
 			/**
 				@brief Checks if the attribute is auxiliary and if yes then return true else false.
@@ -65,7 +65,7 @@ namespace NoobEngine
 				@see IsPrescribedAttribute()
 				@see IsAttribute()
 			*/
-			bool IsAuxiliaryAttribute(std::string pKey) const;
+			bool IsAuxiliaryAttribute(const std::string& pKey) const;
 
 			/**
 				@brief Checks if there is attribute with key and return true if present else false.
@@ -74,14 +74,14 @@ namespace NoobEngine
 				@see IsAuxiliaryAttribute()
 				@see IsPrescribedAttribute()
 			*/
-			bool IsAttribute(std::string pKey) const;
+			bool IsAttribute(const std::string& pKey) const;
 
 			/**
 				@brief Adds an auxiliary attribute to the attribute
 				@param pKey The key to be used for the attribute
 				@return Reference to datum that is appended
 			*/
-			Datum& AppendAuxiliaryAttribute(std::string pKey);
+			Datum& AppendAuxiliaryAttribute(const std::string& pKey);
 
 			/**
 				@brief Appends a nested scope to the current scope.
@@ -89,91 +89,91 @@ namespace NoobEngine
 				@param pKey string that holds value of key.
 				@param pValue Reference to scope that has to be adopted.
 			*/
-			void AppendNestedScope(std::string pKey, Scope& pValue);
+			void AppendNestedScope(const std::string& pKey, Scope& pValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
 			*/
-			void AddInternalAttribute(std::string pKey, int32_t pInitialValue);
+			void AddInternalAttribute(const std::string& pKey, int32_t pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
 			*/
-			void AddInternalAttribute(std::string pKey, float pInitialValue);
+			void AddInternalAttribute(const std::string& pKey, float pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
 			*/
-			void AddInternalAttribute(std::string pKey, std::string& pInitialValue);
+			void AddInternalAttribute(const std::string& pKey, std::string& pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
 			*/
-			void AddInternalAttribute(std::string pKey, glm::vec4& pInitialValue);
+			void AddInternalAttribute(const std::string& pKey, glm::vec4& pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
 			*/
-			void AddInternalAttribute(std::string pKey, glm::mat4x4& pInitialValue);
+			void AddInternalAttribute(const std::string& pKey, glm::mat4x4& pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
 			*/
-			void AddInternalAttribute(std::string pKey, RTTI* pInitialValue);
+			void AddInternalAttribute(const std::string& pKey, RTTI* pInitialValue);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
 			*/
-			void AddExternalAttribute(std::string pKey, int32_t* pValue, uint32_t pSize = 1);
+			void AddExternalAttribute(const std::string& pKey, int32_t* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
 			*/
-			void AddExternalAttribute(std::string pKey, float* pValue, uint32_t pSize = 1);
+			void AddExternalAttribute(const std::string& pKey, float* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
 			*/
-			void AddExternalAttribute(std::string pKey, std::string* pValue, uint32_t pSize = 1);
+			void AddExternalAttribute(const std::string& pKey, std::string* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
 			*/
-			void AddExternalAttribute(std::string pKey, glm::vec4* pValue, uint32_t pSize = 1);
+			void AddExternalAttribute(const std::string& pKey, glm::vec4* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
 			*/
-			void AddExternalAttribute(std::string pKey, glm::mat4x4* pValue, uint32_t pSize = 1);
+			void AddExternalAttribute(const std::string& pKey, glm::mat4x4* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
 			*/
-			void AddExternalAttribute(std::string pKey, RTTI** pValue, uint32_t pSize = 1);
+			void AddExternalAttribute(const std::string& pKey, RTTI** pValue, uint32_t pSize = 1);
 
 		protected:
 			/**
@@ -181,7 +181,7 @@ namespace NoobEngine
 				@param pKey The key to be used for the attribute
 				@return Reference to datum that is appended. If key already exists returns existing datum else creates new datum.
 			*/
-			Datum& AppendPrescribedAttribute(std::string pKey);
+			Datum& AppendPrescribedAttribute(const std::string& pKey);
 
 			/**
 				@brief Populate all the initial prescribed and auxiliary attributes.

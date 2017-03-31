@@ -24,12 +24,9 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		SList<T>::SList(SList&& pList)
+		SList<T>::SList(SList&& pList) :
+			mFrontNode(pList.mFrontNode), mBackNode(pList.mBackNode), mSize(pList.mSize)
 		{
-			mFrontNode = pList.mFrontNode;
-			mBackNode = pList.mBackNode;
-			mSize = pList.mSize;
-
 			pList.mFrontNode = nullptr;
 			pList.mBackNode = nullptr;
 			pList.mSize = 0;

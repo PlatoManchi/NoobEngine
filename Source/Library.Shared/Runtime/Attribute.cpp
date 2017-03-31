@@ -67,16 +67,16 @@ namespace NoobEngine
 			}
 		}
 
-		bool Attribute::IsPrescribedAttribute(std::string pKey) const
+		bool Attribute::IsPrescribedAttribute(const std::string& pKey) const
 		{
 			if (IsAttribute(pKey))
 			{
-				return (sAttributeList[TypeIdClass()].Find(pKey) != sAttributeList[TypeIdClass()].end());
+				return (sAttributeList[this->TypeIdInstance()].Find(pKey) != sAttributeList[this->TypeIdInstance()].end());
 			}
 			return false;
 		}
 
-		bool Attribute::IsAuxiliaryAttribute(std::string pKey) const
+		bool Attribute::IsAuxiliaryAttribute(const std::string& pKey) const
 		{
 			if (IsAttribute(pKey))
 			{
@@ -85,12 +85,12 @@ namespace NoobEngine
 			return false;
 		}
 
-		bool Attribute::IsAttribute(std::string pKey) const
+		bool Attribute::IsAttribute(const std::string& pKey) const
 		{
 			return (Find(pKey) != nullptr);
 		}
 
-		Datum& Attribute::AppendAuxiliaryAttribute(std::string pKey)
+		Datum& Attribute::AppendAuxiliaryAttribute(const std::string& pKey)
 		{
 			if (IsPrescribedAttribute(pKey))
 			{
@@ -101,89 +101,85 @@ namespace NoobEngine
 			return Append(pKey);
 		}
 
-		void Attribute::AppendNestedScope(std::string pKey, Scope& pValue)
+		void Attribute::AppendNestedScope(const std::string& pKey, Scope& pValue)
 		{
-			if (IsAttribute(pKey))
-			{
-				throw std::exception("Key already exists.");
-			}
-
 			Adopt(pValue, pKey);
-			sAttributeList[TypeIdClass()].PushBack(pKey);
+			sAttributeList[this->TypeIdInstance()].PushBack(pKey);
 		}
 #pragma region AddInternalAttribute
-		void Attribute::AddInternalAttribute(std::string pKey, int32_t pInitialValue)
+		void Attribute::AddInternalAttribute(const std::string& pKey, int32_t pInitialValue)
 		{
 			AppendAuxiliaryAttribute(pKey) = pInitialValue;
 		}
 
-		void Attribute::AddInternalAttribute(std::string pKey, float pInitialValue)
+		void Attribute::AddInternalAttribute(const std::string& pKey, float pInitialValue)
 		{
 			AppendAuxiliaryAttribute(pKey) = pInitialValue;
 		}
 
-		void Attribute::AddInternalAttribute(std::string pKey, std::string& pInitialValue)
+		void Attribute::AddInternalAttribute(const std::string& pKey, std::string& pInitialValue)
 		{
 			AppendAuxiliaryAttribute(pKey) = pInitialValue;
 		}
 
-		void Attribute::AddInternalAttribute(std::string pKey, glm::vec4& pInitialValue)
+		void Attribute::AddInternalAttribute(const std::string& pKey, glm::vec4& pInitialValue)
 		{
 			AppendAuxiliaryAttribute(pKey) = pInitialValue;
 		}
 
-		void Attribute::AddInternalAttribute(std::string pKey, glm::mat4x4& pInitialValue)
+		void Attribute::AddInternalAttribute(const std::string& pKey, glm::mat4x4& pInitialValue)
 		{
 			AppendAuxiliaryAttribute(pKey) = pInitialValue;
 		}
 
-		void Attribute::AddInternalAttribute(std::string pKey, RTTI* pInitialValue)
+		void Attribute::AddInternalAttribute(const std::string& pKey, RTTI* pInitialValue)
 		{
 			AppendAuxiliaryAttribute(pKey) = pInitialValue;
 		}
 #pragma endregion
 #pragma region AddExternalAttribute
-		void Attribute::AddExternalAttribute(std::string pKey, int32_t * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, int32_t * pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(std::string pKey, float * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, float * pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(std::string pKey, std::string * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, std::string * pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(std::string pKey, glm::vec4 * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, glm::vec4 * pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(std::string pKey, glm::mat4x4 * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, glm::mat4x4 * pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(std::string pKey, RTTI ** pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, RTTI ** pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 #pragma endregion
-		Datum& Attribute::AppendPrescribedAttribute(std::string pKey)
+		Datum& Attribute::AppendPrescribedAttribute(const std::string& pKey)
 		{
 			if (IsAuxiliaryAttribute(pKey))
 			{
 				throw std::exception("Cannot append prescribed attribute with auxiliary key.");
 			}
 
-			if (sAttributeList[TypeIdClass()].Find(pKey) == sAttributeList[TypeIdClass()].end())
+			Container::Vector<std::string>& attributeList = sAttributeList[this->TypeIdInstance()];
+			if (attributeList.Find(pKey) == attributeList.end())
 			{
 				// populate the prescribed attribute names
-				sAttributeList[TypeIdClass()].PushBack(pKey);
+				attributeList.PushBack(pKey);
 			}
 
 			// append a datum with key to scope and return the datum

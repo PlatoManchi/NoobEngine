@@ -116,13 +116,9 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		Vector<T>::Vector(Vector&& pOther)
+		Vector<T>::Vector(Vector&& pOther) :
+			mData(pOther.mData), mSize(pOther.mSize), mCapacity(pOther.mCapacity), mCapacityIncrementStep(pOther.mCapacityIncrementStep)
 		{
-			mData = pOther.mData;
-			mSize = pOther.mSize;
-			mCapacity = pOther.mCapacity;
-			mCapacityIncrementStep = pOther.mCapacityIncrementStep;
-
 			pOther.mData = nullptr;
 			pOther.mSize = 0U;
 			pOther.mCapacity = 0U;
