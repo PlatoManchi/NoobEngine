@@ -210,7 +210,7 @@ namespace UnitTestLibraryDesktop
 
 			fAttrib1.AppendNestedScope("scope", *s);
 
-			Assert::ExpectException<std::exception>([&] { fAttrib1.AppendNestedScope("scope", *s); });
+			
 		}
 
 		TEST_METHOD(AddInternalAttribute)
