@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Runtime/Attribute.h"
+#include "WorldState.h"
 
 namespace NoobEngine
 {
@@ -10,8 +11,7 @@ namespace NoobEngine
 			Forward declaring sector
 		*/
 		class Sector;
-		class GameState;
-
+		
 		class Entity : public Runtime::Attribute
 		{
 		public:
@@ -29,7 +29,7 @@ namespace NoobEngine
 				@brief Returns the name of the entity.
 				@return String that represents the name of the entity.
 			*/
-			std::string Name();
+			std::string Name() const;
 
 			/**
 				@brief Set the name of the entity.
@@ -41,21 +41,29 @@ namespace NoobEngine
 				@brief Get the sector that this entity belongs to or attached to.
 				@return Reference to the sector that this entity belongs to.
 			*/
-			Sector& GetSector();
+			Sector& GetSector() const;
 
 			/**
 				@brief Adopt the entity into this sector.
 				@param[in] Reference to the sector to adopt this entity into.
 			*/
-			void SetSector(Sector& pSector);
+			void SetSector(const Sector& pSector);
 
 			/**
 				@brief Called every frame.
-				@param[in] pGameState Reference to the game state of current game.
+				@param[in] pWorldState Reference to the world state of current game.
 			*/
-			void Update(GameState& pGameState);
+			void Update(WorldState& pWorldState);
 		private:
+			/**
+				Name of the entity
+			*/
 			std::string mName;
+
+			/**
+				The parent sector that this entity belongs to.
+			*/
+			Sector* mParent;
 		};
 	}
 }

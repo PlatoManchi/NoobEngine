@@ -8,7 +8,7 @@ namespace NoobEngine
 {
 	namespace Runtime
 	{
-		class Attribute : public Scope
+		class Attribute abstract : public Scope
 		{
 			RTTI_DECLARATIONS(Attribute, Scope)
 		public:
@@ -187,7 +187,7 @@ namespace NoobEngine
 				@brief Populate all the initial prescribed and auxiliary attributes.
 				@details This function has to be called in all child class constructors. Failing to do so will leads to unexpected behavior.
 			*/
-			virtual void Populate() = 0;
+			void Populate() {};
 		private:
 			
 			static uint32_t mObjCount;

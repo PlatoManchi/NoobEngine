@@ -16,6 +16,9 @@
     <Filter Include="Generic">
       <UniqueIdentifier>{9315fa90-c234-4cc1-becb-eafae6aa9413}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GamePlay">
+      <UniqueIdentifier>{be78f18b-98dd-44e8-a456-37bdf66b0151}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
@@ -45,6 +48,18 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlSharedData.cpp">
       <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Entity.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Sector.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\World.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.cpp">
+      <Filter>GamePlay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +105,18 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Generic\Factory.h">
       <Filter>Generic</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Entity.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Sector.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\World.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.h">
+      <Filter>GamePlay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,10 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Entity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Sector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\World.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperTable.cpp" />
@@ -31,6 +35,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Hashmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Entity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Sector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\World.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Generic\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.h" />

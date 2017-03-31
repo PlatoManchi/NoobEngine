@@ -19,7 +19,7 @@ namespace SupportingClasses
 		FooAttribute& operator=(const FooAttribute& pOther);
 
 	protected:
-		virtual void Populate() override;
+		void Populate();
 	private:
 		
 
