@@ -16,7 +16,7 @@ namespace NoobEngine
 		/**
 			Copy semantics for sector is removed.
 		*/
-		class Sector : public Runtime::Attribute
+		class Sector final : public Runtime::Attribute
 		{
 			RTTI_DECLARATIONS(Sector, Attribute)
 		public:

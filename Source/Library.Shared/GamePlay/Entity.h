@@ -68,7 +68,7 @@ namespace NoobEngine
 				@brief Called every frame.
 				@param[in] pWorldState Reference to the world state of current game.
 			*/
-			void Update(WorldState& pWorldState);
+			virtual void Update(WorldState& pWorldState);
 
 			/**
 				@brief Populate all the prescribed attributes.

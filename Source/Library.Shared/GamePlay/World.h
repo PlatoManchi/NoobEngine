@@ -15,7 +15,7 @@ namespace NoobEngine
 		/**
 			Copy semantics for World class is deleted.
 		*/
-		class World : public Runtime::Attribute
+		class World final : public Runtime::Attribute
 		{
 			RTTI_DECLARATIONS(World, Attribute)
 		public:
