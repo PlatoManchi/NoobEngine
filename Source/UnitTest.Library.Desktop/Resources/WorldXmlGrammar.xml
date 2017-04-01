@@ -1,0 +1,18 @@
+<world name="HelloWorld">
+	
+	<sector name="Sector1">
+	
+		<entity name="Player">
+			<string key="Name" value = "Plato"/> 
+			<int key="Life" value = "3"/> 
+			<float key="Health" value = "100.0"/>
+			<vec4 key="Pos" value="{0, 0, 0, 0}"/>
+			<mat4x4 key="Transform" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"/>
+		</entity>
+		
+		<entity name="FooEntitySample" class="FooEntity">
+		</entity>
+		
+	</sector>
+	
+</world>
