@@ -15,7 +15,13 @@ namespace NoobEngine
 		
 		class Sector : public Runtime::Attribute
 		{
+			RTTI_DECLARATIONS(Sector, Attribute)
 		public:
+			/**
+				Holds the key where all the sectors are stored.
+			*/
+			static const char* sEntitiesKey;
+
 			/**
 				@brief Default constructor.
 			*/
@@ -42,7 +48,7 @@ namespace NoobEngine
 				@brief Give all the entities inside this sector;
 				@return Reference to datum that stores the contained entities in the sector.
 			*/
-			Runtime::Datum& Entities() const;
+			Runtime::Datum& Entities();
 
 			/**
 				@brief Create an entity of type and child it to this sector.
@@ -56,13 +62,13 @@ namespace NoobEngine
 				@brief Get the world that this sector is adopted to.
 				@return Reference to world.
 			*/
-			World& GetWorld() const;
+			World& GetParentWorld() const;
 
 			/**
 				@brief Set the world for this sector.
 				@param[in] Reference to the world this sector has to be adopted into.
 			*/
-			void SetWorld(const World& pWorld);
+			void SetParentWorld(World& pWorld);
 
 			/**
 				@brief Called every frame.
@@ -78,7 +84,9 @@ namespace NoobEngine
 			/**
 				Holds the pointer to parent world.
 			*/
-			World* mWorld;
+			World* mParent;
+
+			
 		};
 	}
 }

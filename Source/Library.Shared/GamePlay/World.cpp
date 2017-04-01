@@ -1,11 +1,17 @@
 #include "pch.h"
 #include "World.h"
+#include "Sector.h"
 
 namespace NoobEngine
 {
 	namespace GamePlay
 	{
-		World::World()
+		RTTI_DEFINITIONS(GamePlay::World)
+
+		const char* World::sSectorsKey = "Sectors";
+
+		World::World() :
+			Attribute(), mName("DefaultWorld")
 		{
 		}
 
@@ -23,14 +29,19 @@ namespace NoobEngine
 			mName = pName;
 		}
 
-		Runtime::Datum& World::Sectors() const
+		Runtime::Datum& World::Sectors()
 		{
-			// TODO: insert return statement here
+			return Append(sSectorsKey);
 		}
 
 		Sector& World::CreateSector(const std::string& pSectorName)
 		{
-			// TODO: insert return statement here
+			Sector* newSector = new Sector();
+			newSector->SetName(pSectorName);
+
+			Adopt(*newSector, sSectorsKey);
+
+			return *newSector;
 		}
 
 		void World::Update(WorldState& pWorldState)

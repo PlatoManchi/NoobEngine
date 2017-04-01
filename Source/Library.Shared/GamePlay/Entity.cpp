@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "Entity.h"
+#include "Sector.h"
 
 namespace NoobEngine
 {
 	namespace GamePlay
 	{
+		RTTI_DEFINITIONS(GamePlay::Entity)
+
 		Entity::Entity() :
 			Attribute()
 		{
@@ -24,16 +27,16 @@ namespace NoobEngine
 			mName = pName;
 		}
 
-		Sector & Entity::GetSector() const
+		Sector & Entity::GetParentSector() const
 		{
 			return *mParent;
 		}
 
-		void Entity::SetSector(const Sector& pSector)
+		void Entity::SetParentSector(Sector& pSector)
 		{
 			if (mParent != &pSector)
 			{
-				// TODO: Adopt this entity into pSector
+				pSector.Adopt(*this, Sector::sEntitiesKey);
 			}
 		}
 
@@ -41,7 +44,5 @@ namespace NoobEngine
 		{
 			pGameState;
 		}
-
-
 	}
 }

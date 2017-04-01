@@ -14,7 +14,13 @@ namespace NoobEngine
 
 		class World : public Runtime::Attribute
 		{
+			RTTI_DECLARATIONS(World, Attribute)
 		public:
+			/**
+				Holds the key where all the sectors are stored.
+			*/
+			static const char* sSectorsKey;
+
 			/**
 				@brief Default constructor.
 			*/
@@ -41,7 +47,7 @@ namespace NoobEngine
 				@brief Give all the sectors inside this world;
 				@return Reference to datum that stores the contained sectors in the world.
 			*/
-			Runtime::Datum& Sectors() const;
+			Runtime::Datum& Sectors();
 
 			/**
 				@brief Create an sector of type and child it to this world.

@@ -2,6 +2,7 @@
 
 #include "Runtime/Attribute.h"
 #include "WorldState.h"
+#include "Generic/Factory.h"
 
 namespace NoobEngine
 {
@@ -14,6 +15,7 @@ namespace NoobEngine
 		
 		class Entity : public Runtime::Attribute
 		{
+			RTTI_DECLARATIONS(Entity, Attribute)
 		public:
 			/**
 				@brief Default constructor
@@ -41,13 +43,13 @@ namespace NoobEngine
 				@brief Get the sector that this entity belongs to or attached to.
 				@return Reference to the sector that this entity belongs to.
 			*/
-			Sector& GetSector() const;
+			Sector& GetParentSector() const;
 
 			/**
 				@brief Adopt the entity into this sector.
 				@param[in] Reference to the sector to adopt this entity into.
 			*/
-			void SetSector(const Sector& pSector);
+			void SetParentSector(Sector& pSector);
 
 			/**
 				@brief Called every frame.
@@ -65,5 +67,9 @@ namespace NoobEngine
 			*/
 			Sector* mParent;
 		};
+#define ConcreteEntityFactory(ConcreteType)		\
+		ConcreteFactory(Entity, ConcreteType)	
+
+		ConcreteEntityFactory(Entity)
 	}
 }
