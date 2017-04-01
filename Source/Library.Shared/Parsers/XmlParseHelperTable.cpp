@@ -7,6 +7,8 @@ namespace NoobEngine
 	namespace Parsers
 	{
 #pragma region XmlParseHelperTable::XmlTableParser
+		RTTI_DEFINITIONS(XmlParseHelperTable::XmlTableParser)
+
 		XmlParseHelperTable::XmlTableParser::XmlTableParser() :
 			XmlParseMaster::SharedData(), mHasValidRoot(false), mRoot(nullptr), mCurrentRoot(nullptr), mCurrentTag(""), mIsConstructionPhase(false), mArrayIndex(0), mIsPrototypeTable(false)
 		{

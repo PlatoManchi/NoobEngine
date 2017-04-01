@@ -9,6 +9,8 @@ namespace NoobEngine
 	{
 		class XmlSharedData : public XmlParseHelperTable::XmlTableParser
 		{
+			RTTI_DECLARATIONS(XmlSharedData, XmlParseHelperTable::XmlTableParser)
+
 			friend class XmlParseHelperConstruction;
 		public:
 			/**
@@ -25,7 +27,7 @@ namespace NoobEngine
 				@brief Create a clone of current XmlSharedData object and return the pointer as shared data.
 				@return Pointer to SharedData that is a clone of this SharedData object.
 			*/
-			SharedData* Clone() const override;
+			virtual SharedData* Clone() const override;
 
 		protected:
 			/**

@@ -20,6 +20,8 @@ namespace NoobEngine
 			*/
 			class XmlTableParser : public XmlParseMaster::SharedData
 			{
+				RTTI_DECLARATIONS(XmlTableParser, XmlParseMaster::SharedData)
+
 				friend class XmlParseHelperTable;
 
 			public:

@@ -5,6 +5,8 @@ namespace NoobEngine
 {
 	namespace Parsers
 	{
+		RTTI_DEFINITIONS(XmlSharedData)
+
 		XmlSharedData::XmlSharedData() : 
 			XmlParseHelperTable::XmlTableParser(), mCurrentPrototype("")
 		{ }
