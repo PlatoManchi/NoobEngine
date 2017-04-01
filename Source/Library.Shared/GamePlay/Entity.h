@@ -28,7 +28,7 @@ namespace NoobEngine
 			/**
 				@brief Default destructor
 			*/
-			~Entity();
+			virtual ~Entity();
 
 			/**
 				Removing copy semantics for Entity.
@@ -74,6 +74,11 @@ namespace NoobEngine
 				@brief Populate all the prescribed attributes.
 			*/
 			void Populate();
+
+			virtual std::string ToString() const override
+			{
+				return "Entity";
+			}
 
 		private:
 			/**

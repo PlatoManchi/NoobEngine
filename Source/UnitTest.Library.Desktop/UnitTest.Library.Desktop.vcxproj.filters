@@ -29,6 +29,10 @@
     <ClCompile Include="SupportingClasses\NonRTTIProduct.cpp">
       <Filter>SupportingClasses</Filter>
     </ClCompile>
+    <ClCompile Include="EntityTest.cpp" />
+    <ClCompile Include="SupportingClasses\FooEntity.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -54,6 +58,9 @@
       <Filter>SupportingClasses</Filter>
     </ClInclude>
     <ClInclude Include="SupportingClasses\NonRTTIProduct.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\FooEntity.h">
       <Filter>SupportingClasses</Filter>
     </ClInclude>
   </ItemGroup>

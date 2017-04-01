@@ -71,6 +71,8 @@ namespace NoobEngine
 		{
 			if (IsAttribute(pKey))
 			{
+				uint64_t id = this->TypeIdInstance();
+				id;
 				return (sAttributeList[this->TypeIdInstance()].Find(pKey) != sAttributeList[this->TypeIdInstance()].end());
 			}
 			return false;
@@ -138,32 +140,32 @@ namespace NoobEngine
 		}
 #pragma endregion
 #pragma region AddExternalAttribute
-		void Attribute::AddExternalAttribute(const std::string& pKey, int32_t * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, int32_t* pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, float * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, float* pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, std::string * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, std::string* pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, glm::vec4 * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, glm::vec4* pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, glm::mat4x4 * pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, glm::mat4x4* pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, RTTI ** pValue, uint32_t pSize)
+		void Attribute::AddExternalAttribute(const std::string& pKey, RTTI** pValue, uint32_t pSize)
 		{
 			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
 		}
@@ -184,6 +186,32 @@ namespace NoobEngine
 
 			// append a datum with key to scope and return the datum
 			return Append(pKey);
+		}
+
+		void Attribute::Populate()
+		{
+			uint64_t thisClassIdInstance = this->TypeIdInstance();
+			Container::Vector<std::string>& currentClassAttributeList = sAttributeList[thisClassIdInstance];
+			for (std::pair<uint64_t, Container::Vector<std::string>>& element : sAttributeList)
+			{
+				if (element.first != thisClassIdInstance)
+				{
+					// check if the class that is being iterated is base of current class.
+					if (this->Is(element.first))
+					{
+						// if searching class is a base class of current class
+						// copy all prescribed attributes into current class attribute list
+						Container::Vector<std::string>& baseClassAttributeList = sAttributeList[element.first];
+						for (std::string& attribName : baseClassAttributeList)
+						{
+							if (currentClassAttributeList.Find(attribName) == currentClassAttributeList.end())
+							{
+								currentClassAttributeList.PushBack(attribName);
+							}
+						}
+					}
+				}
+			}
 		}
 
 	}

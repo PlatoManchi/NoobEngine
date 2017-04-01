@@ -41,7 +41,7 @@ namespace NoobEngine
 			Entity* newEntity = Generic::Factory<Entity>::Create(pEntityType);
 			newEntity->SetName(pEntityName);
 
-			Adopt(*newEntity, sEntitiesKey);
+			newEntity->SetParentSector(*this);
 
 			return *newEntity;
 		}
@@ -56,6 +56,7 @@ namespace NoobEngine
 			if (mParent != &pWorld)
 			{
 				pWorld.Adopt(*this, World::sSectorsKey);
+				mParent = &pWorld;
 			}
 		}
 
@@ -69,6 +70,7 @@ namespace NoobEngine
 			Attribute::Populate();
 
 			AppendPrescribedAttribute("Name").SetStorage(&mName, 1);
+			AppendPrescribedAttribute(sEntitiesKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
 }

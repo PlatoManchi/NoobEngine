@@ -38,6 +38,7 @@ namespace NoobEngine
 			if (mParent != &pSector)
 			{
 				pSector.Adopt(*this, Sector::sEntitiesKey);
+				mParent = &pSector;
 			}
 		}
 

@@ -233,6 +233,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SupportingClasses\FooEntity.h" />
     <ClInclude Include="SupportingClasses\IProduct.h" />
     <ClInclude Include="SupportingClasses\NonRTTIProduct.h" />
     <ClInclude Include="SupportingClasses\ProductBar.h" />
@@ -248,6 +249,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DatumTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EntityTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -270,6 +275,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="SupportingClasses\FooEntity.cpp" />
     <ClCompile Include="SupportingClasses\NonRTTIProduct.cpp" />
     <ClCompile Include="SupportingClasses\ProductFoo.cpp" />
     <ClCompile Include="SupportingClasses\FactoryFooFactoryT.cpp" />

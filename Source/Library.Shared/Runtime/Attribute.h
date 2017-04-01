@@ -187,7 +187,7 @@ namespace NoobEngine
 				@brief Populate all the initial prescribed and auxiliary attributes.
 				@details This function has to be called in all child class constructors. Failing to do so will leads to unexpected behavior.
 			*/
-			void Populate() {};
+			void Populate();
 		private:
 			
 			static uint32_t mObjCount;

@@ -11,7 +11,7 @@ namespace NoobEngine
 		const char* World::sSectorsKey = "Sectors";
 
 		World::World() :
-			Attribute(), mName("DefaultWorld")
+			Attribute(), mName("")
 		{
 			Populate();
 		}
@@ -40,7 +40,7 @@ namespace NoobEngine
 			Sector* newSector = new Sector();
 			newSector->SetName(pSectorName);
 
-			Adopt(*newSector, sSectorsKey);
+			newSector->SetParentWorld(*this);
 
 			return *newSector;
 		}
@@ -55,6 +55,7 @@ namespace NoobEngine
 			Attribute::Populate();
 
 			AppendPrescribedAttribute("Name").SetStorage(&mName, 1);
+			AppendPrescribedAttribute(sSectorsKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
 }
