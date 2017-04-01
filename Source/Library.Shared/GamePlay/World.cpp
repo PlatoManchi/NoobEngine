@@ -54,7 +54,7 @@ namespace NoobEngine
 		{
 			Attribute::Populate();
 
-			AppendPrescribedAttribute("Name").SetStorage(&mName, 1);
+			AppendPrescribedAttribute("name").SetStorage(&mName, 1);
 			AppendPrescribedAttribute(sSectorsKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
