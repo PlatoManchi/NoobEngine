@@ -13,6 +13,7 @@ namespace NoobEngine
 		World::World() :
 			Attribute(), mName("DefaultWorld")
 		{
+			Populate();
 		}
 
 		World::~World()
@@ -47,6 +48,13 @@ namespace NoobEngine
 		void World::Update(WorldState& pWorldState)
 		{
 			pWorldState;
+		}
+
+		void World::Populate()
+		{
+			Attribute::Populate();
+
+			AppendPrescribedAttribute("Name").SetStorage(&mName, 1);
 		}
 	}
 }

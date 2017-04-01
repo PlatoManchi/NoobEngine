@@ -193,7 +193,7 @@ namespace NoobEngine
 			static uint32_t mObjCount;
 
 			/**
-				Static hashmap that holds the prescribed attribute list of all the class that will extend Attribute
+				Static HashMap that holds the prescribed attribute list of all the class that will extend Attribute
 			*/
 			static Container::Hashmap<uint64_t, Container::Vector<std::string>> sAttributeList;
 		};

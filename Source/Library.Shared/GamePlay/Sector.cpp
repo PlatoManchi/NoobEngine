@@ -12,8 +12,9 @@ namespace NoobEngine
 		const char* Sector::sEntitiesKey = "Entities";
 
 		Sector::Sector() :
-			Attribute()
+			Attribute(), mParent(nullptr), mName("")
 		{
+			Populate();
 		}
 
 		Sector::~Sector()
@@ -61,6 +62,13 @@ namespace NoobEngine
 		void Sector::Update(WorldState& pWorldState)
 		{
 			pWorldState;
+		}
+
+		void Sector::Populate()
+		{
+			Attribute::Populate();
+
+			AppendPrescribedAttribute("Name").SetStorage(&mName, 1);
 		}
 	}
 }

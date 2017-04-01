@@ -13,6 +13,9 @@ namespace NoobEngine
 		class Entity;
 		class World;
 		
+		/**
+			Copy semantics for sector is removed.
+		*/
 		class Sector : public Runtime::Attribute
 		{
 			RTTI_DECLARATIONS(Sector, Attribute)
@@ -31,6 +34,16 @@ namespace NoobEngine
 				@brief Default destructor.
 			*/
 			~Sector();
+
+			/**
+				Removing copy semantics for Sector.
+			*/
+			Sector(const Sector& pOther) = delete;
+
+			/**
+				Removing copy semantics for Sector.
+			*/
+			Sector& operator=(const Sector& pOther) = delete;
 
 			/**
 				@brief Returns the name of this sector.
@@ -75,6 +88,11 @@ namespace NoobEngine
 				@param[in] pWorldState Reference to the world state of current game.
 			*/
 			void Update(WorldState& pWorldState);
+
+			/**
+				@brief Populate all the prescribed attributes of sector.
+			*/
+			void Populate();
 		private:
 			/**
 				Holds the name of this sector.

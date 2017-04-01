@@ -9,8 +9,9 @@ namespace NoobEngine
 		RTTI_DEFINITIONS(GamePlay::Entity)
 
 		Entity::Entity() :
-			Attribute()
+			Attribute(), mParent(nullptr), mName("")
 		{
+			Populate();
 		}
 
 		Entity::~Entity()
@@ -27,7 +28,7 @@ namespace NoobEngine
 			mName = pName;
 		}
 
-		Sector & Entity::GetParentSector() const
+		Sector& Entity::GetParentSector() const
 		{
 			return *mParent;
 		}
@@ -43,6 +44,13 @@ namespace NoobEngine
 		void Entity::Update(WorldState& pGameState)
 		{
 			pGameState;
+		}
+
+		void Entity::Populate()
+		{
+			Attribute::Populate();
+
+			AppendPrescribedAttribute("Name").SetStorage(&mName, 1);
 		}
 	}
 }
