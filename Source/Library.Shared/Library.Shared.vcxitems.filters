@@ -67,6 +67,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\WorldParseHelper.cpp">
       <Filter>Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">
@@ -129,6 +135,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\WorldParseHelper.h">
       <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.h">
+      <Filter>GamePlay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

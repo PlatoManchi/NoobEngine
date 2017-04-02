@@ -63,7 +63,15 @@ namespace NoobEngine
 
 		void Sector::Update(WorldState& pWorldState)
 		{
-			pWorldState;
+			Runtime::Datum& entitiesList = Entities();
+
+			for (uint32_t i = 0; i < entitiesList.Size(); i++)
+			{
+				Entity* entity = reinterpret_cast<Entity*>(entitiesList.Get<Scope*>(i));
+				pWorldState.mCurrentEntity = entity;
+
+				entity->Update(pWorldState);
+			}
 		}
 
 		void Sector::Populate()

@@ -48,7 +48,21 @@ namespace NoobEngine
 
 		void World::Update(WorldState& pWorldState)
 		{
-			pWorldState;
+			Runtime::Datum& sectorsList = Sectors();
+			pWorldState.mCurrentWorld = this;
+			pWorldState.mCurrentSector = nullptr;
+			pWorldState.mCurrentEntity = nullptr;
+			pWorldState.mCurrentAction = nullptr;
+
+			pWorldState.Update();
+
+			for (uint32_t i = 0; i < sectorsList.Size(); i++)
+			{
+				Sector* sector = reinterpret_cast<Sector*>(sectorsList.Get<Scope*>(i));
+				pWorldState.mCurrentSector = sector;
+
+				sector->Update(pWorldState);
+			}
 		}
 
 		void World::Populate()

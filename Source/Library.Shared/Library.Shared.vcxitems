@@ -15,6 +15,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Entity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Sector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\World.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.cpp" />
@@ -38,6 +40,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Entity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Sector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\World.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.h" />

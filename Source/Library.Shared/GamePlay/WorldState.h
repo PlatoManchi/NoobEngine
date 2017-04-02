@@ -1,4 +1,6 @@
 #pragma once
+#include "GamePlay/GameClock.h"
+#include "GamePlay/GameTime.h"
 
 namespace NoobEngine
 {
@@ -12,7 +14,7 @@ namespace NoobEngine
 		class Entity;
 		class Action;
 
-		class WorldState
+		class WorldState final
 		{
 		public:
 			/**
@@ -24,6 +26,11 @@ namespace NoobEngine
 				@brief Default destructor.
 			*/
 			~WorldState();
+
+			/**
+				Update the time states
+			*/
+			void Update();
 
 			/**
 				Pointer to current world that is being processed.
@@ -44,6 +51,17 @@ namespace NoobEngine
 				Pointer to current action that is being processed.
 			*/
 			Action* mCurrentAction;
+
+			/**
+				The timer that calculate time elapsed and time since game started.
+			*/
+			GameTime mGameTime;
+		private:
+			/**
+				The game clock used by world state to keep track of time.
+			*/
+			GameClock mGameClock;
+
 		};
 	}
 }

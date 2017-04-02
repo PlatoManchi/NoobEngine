@@ -1,6 +1,13 @@
 <world key="HelloWorld">
 	
+	<table key="Settings">
+		<float key="ResolutionX" value="1920"/>
+		<float key="ResolutionY" value="1080"/>
+	</table>
+	
 	<sector key="Sector1">
+	
+		<int key="TotalEnemyCount" value="50"/>
 	
 		<entity key="Player">
 			<string key="Name" value = "Plato"/> 
@@ -31,6 +38,7 @@
 		</entity>
 		
 		<entity key="FooEntitySample" class="FooEntity">
+			<int key="Life" value = "3"/>
 		</entity>
 		
 	</sector>

@@ -15,4 +15,13 @@ namespace SupportingClasses
 	{
 		Entity::Populate();
 	}
+
+	void FooEntity::Update(NoobEngine::GamePlay::WorldState& pWorldState)
+	{
+		Entity::Update(pWorldState);
+
+		// increment the life count
+		int lifeCount = (operator[]("Life")).Get<int>();
+		(operator[]("Life")).Set(lifeCount + 1);
+	}
 }

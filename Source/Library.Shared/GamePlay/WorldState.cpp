@@ -5,12 +5,18 @@ namespace NoobEngine
 {
 	namespace GamePlay
 	{
-		WorldState::WorldState()
+		WorldState::WorldState() :
+			mGameTime(), mGameClock()
 		{
 		}
 
 		WorldState::~WorldState()
 		{
+		}
+
+		void WorldState::Update()
+		{
+			mGameClock.UpdateGameTime(mGameTime);
 		}
 	}
 }

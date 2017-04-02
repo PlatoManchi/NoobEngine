@@ -11,6 +11,7 @@
 #include "Parsers/WorldSharedData.h"
 #include "Parsers/WorldParseHelper.h"
 #include "Parsers/XmlParseMaster.h"
+#include "GamePlay/WorldState.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace NoobEngine::GamePlay;
@@ -227,12 +228,18 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(&worldSharedData.GetRootNode() == &worldSharedData.GetCurrentNode());
 
 			World* world = reinterpret_cast<World*>(&worldSharedData.GetRootNode());
+
+			Scope* settingsScope = (*world)["Settings"].Get<Scope*>();
+
+			Assert::AreEqual(1920.0f, (*settingsScope)["ResolutionX"].Get<float>());
+			Assert::AreEqual(1080.0f, (*settingsScope)["ResolutionY"].Get<float>());
+
 			Datum& sectors = world->Sectors();
 			Sector* sector1 = reinterpret_cast<Sector*>(sectors.Get<Scope*>());
 
 			Assert::AreEqual(1U, sectors.Size());
 			Assert::AreEqual(std::string("Sector1"), (*sector1)["key"].Get<std::string>() );
-
+			Assert::AreEqual(50, (*sector1)["TotalEnemyCount"].Get<int>());
 			
 			Datum& entities = sector1->Entities();
 
@@ -269,6 +276,14 @@ namespace UnitTestLibraryDesktop
 			// testing for foo entity
 			Entity* fooEntity = reinterpret_cast<Entity*>(entities.Get<Scope*>(1));
 			Assert::IsTrue(fooEntity->Is(FooEntity::TypeIdClass()));
+
+			Assert::AreEqual(3, (*fooEntity)["Life"].Get<int>());
+
+			// calling update
+			WorldState worldState;
+			world->Update(worldState);
+
+			Assert::AreEqual(4, (*fooEntity)["Life"].Get<int>());
 
 			delete &worldSharedData.GetRootNode();
 		}

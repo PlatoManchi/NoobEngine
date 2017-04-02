@@ -64,7 +64,12 @@ namespace NoobEngine
 				if (mHasValidRoot && !sharedData->mRoot)
 				{
 					// create new world if the root is valid
-					sharedData->mRoot = new GamePlay::World();
+					GamePlay::World* world = new GamePlay::World();
+					sharedData->mRoot = world;
+					if (pAttributes.ContainsKey(sKeyAttribute))
+					{
+						world->SetName(pAttributes[sKeyAttribute]);
+					}
 					sharedData->mCurrentRoot = sharedData->mRoot;
 				}
 
@@ -115,115 +120,115 @@ namespace NoobEngine
 
 						return true;
 					}
-
-					if (mIsValidEntity || mIsValidSector)
-					{
-						// test if the grammar is proper
-						if (pAttributes.ContainsKey(sKeyAttribute) && pAttributes.ContainsKey(sValueAttribute))
-						{
-							// process int element
-							if (Utils::StrNCaseCmp(pElement, sIntTag))
-							{
-								if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
-								{
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].PushBack(stoi(pAttributes[sValueAttribute]));
-								}
-								else
-								{
-									sharedData->mArrayIndex = 0;
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]] = stoi(pAttributes[sValueAttribute]);
-								}
-
-								// if successfully parsed
-								return true;
-							}
-
-							// process float element
-							else if (Utils::StrNCaseCmp(pElement, sFloatTag))
-							{
-								if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
-								{
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].PushBack(stof(pAttributes[sValueAttribute]));
-								}
-								else
-								{
-									sharedData->mArrayIndex = 0;
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]] = stof(pAttributes[sValueAttribute]);
-								}
-
-
-								// if successfully parsed
-								return true;
-							}
-
-							// process string element
-							else if (Utils::StrNCaseCmp(pElement, sStringTag))
-							{
-								if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
-								{
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].PushBack(pAttributes[sValueAttribute]);
-								}
-								else
-								{
-									sharedData->mArrayIndex = 0;
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]] = pAttributes[sValueAttribute];
-								}
-
-								return true;
-							}
-
-							// process vector element
-							else if (Utils::StrNCaseCmp(pElement, sVec4Tag))
-							{
-								sharedData->GetCurrentNode()[pAttributes["key"]].SetType(Runtime::DatumType::VECTOR_4);
-								if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
-								{
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute], sharedData->mArrayIndex++);
-								}
-								else
-								{
-									sharedData->mArrayIndex = 0;
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute]);
-								}
-
-
-								return true;
-							}
-
-							// process matrix element
-							else if (Utils::StrNCaseCmp(pElement, sMat4x4Tag))
-							{
-								sharedData->GetCurrentNode()[pAttributes["key"]].SetType(Runtime::DatumType::MATRIX_4x4);
-								if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
-								{
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute], sharedData->mArrayIndex++);
-								}
-								else
-								{
-									sharedData->mArrayIndex = 0;
-									sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute]);
-								}
-								return true;
-							}
-						} // end of grammar check
-
-						// table will have only name as key
-						if (Utils::StrNCaseCmp(pElement, sTableTag) && pAttributes.ContainsKey(sKeyAttribute))
-						{
-							sharedData->mIsPrototypeTable = pAttributes.ContainsKey("ref");
-							if (!sharedData->mIsPrototypeTable)
-							{
-								Runtime::Scope& childTable = sharedData->GetCurrentNode().AppendScope(pAttributes[sKeyAttribute]);
-								sharedData->mCurrentRoot = &childTable;
-
-								return true;
-							}
-
-							return false;
-						} // end of grammar check for table
-
-					}
 				}
+			}
+
+			if (mHasValidRoot || mIsValidEntity || mIsValidSector)
+			{
+				// test if the grammar is proper
+				if (pAttributes.ContainsKey(sKeyAttribute) && pAttributes.ContainsKey(sValueAttribute))
+				{
+					// process int element
+					if (Utils::StrNCaseCmp(pElement, sIntTag))
+					{
+						if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
+						{
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].PushBack(stoi(pAttributes[sValueAttribute]));
+						}
+						else
+						{
+							sharedData->mArrayIndex = 0;
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]] = stoi(pAttributes[sValueAttribute]);
+						}
+
+						// if successfully parsed
+						return true;
+					}
+
+					// process float element
+					else if (Utils::StrNCaseCmp(pElement, sFloatTag))
+					{
+						if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
+						{
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].PushBack(stof(pAttributes[sValueAttribute]));
+						}
+						else
+						{
+							sharedData->mArrayIndex = 0;
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]] = stof(pAttributes[sValueAttribute]);
+						}
+
+
+						// if successfully parsed
+						return true;
+					}
+
+					// process string element
+					else if (Utils::StrNCaseCmp(pElement, sStringTag))
+					{
+						if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
+						{
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].PushBack(pAttributes[sValueAttribute]);
+						}
+						else
+						{
+							sharedData->mArrayIndex = 0;
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]] = pAttributes[sValueAttribute];
+						}
+
+						return true;
+					}
+
+					// process vector element
+					else if (Utils::StrNCaseCmp(pElement, sVec4Tag))
+					{
+						sharedData->GetCurrentNode()[pAttributes["key"]].SetType(Runtime::DatumType::VECTOR_4);
+						if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
+						{
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute], sharedData->mArrayIndex++);
+						}
+						else
+						{
+							sharedData->mArrayIndex = 0;
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute]);
+						}
+
+
+						return true;
+					}
+
+					// process matrix element
+					else if (Utils::StrNCaseCmp(pElement, sMat4x4Tag))
+					{
+						sharedData->GetCurrentNode()[pAttributes["key"]].SetType(Runtime::DatumType::MATRIX_4x4);
+						if (pAttributes.ContainsKey("type") && Utils::StrNCaseCmp(pAttributes["type"], "array"))
+						{
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute], sharedData->mArrayIndex++);
+						}
+						else
+						{
+							sharedData->mArrayIndex = 0;
+							sharedData->GetCurrentNode()[pAttributes[sKeyAttribute]].SetFromString(pAttributes[sValueAttribute]);
+						}
+						return true;
+					}
+				} // end of grammar check
+
+				  // table will have only name as key
+				if (Utils::StrNCaseCmp(pElement, sTableTag) && pAttributes.ContainsKey(sKeyAttribute))
+				{
+					sharedData->mIsPrototypeTable = pAttributes.ContainsKey("ref");
+					if (!sharedData->mIsPrototypeTable)
+					{
+						Runtime::Scope& childTable = sharedData->GetCurrentNode().AppendScope(pAttributes[sKeyAttribute]);
+						sharedData->mCurrentRoot = &childTable;
+
+						return true;
+					}
+
+					return false;
+				} // end of grammar check for table
+
 			}
 			
 			return false;
