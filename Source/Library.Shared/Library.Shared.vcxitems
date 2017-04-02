@@ -19,6 +19,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\World.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\WorldParseHelper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\WorldSharedData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperTable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\XmlParseMaster.cpp" />
@@ -41,6 +43,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Generic\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\WorldParseHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\WorldSharedData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperConstruction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseHelperTable.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\XmlParseMaster.h" />

@@ -1,16 +1,36 @@
-<world name="HelloWorld">
+<world key="HelloWorld">
 	
-	<sector name="Sector1">
+	<sector key="Sector1">
 	
-		<entity name="Player">
+		<entity key="Player">
 			<string key="Name" value = "Plato"/> 
 			<int key="Life" value = "3"/> 
 			<float key="Health" value = "100.0"/>
 			<vec4 key="Pos" value="{0, 0, 0, 0}"/>
 			<mat4x4 key="Transform" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"/>
+			
+			<int key="ArrayInt" value ="1" type="array"/>
+			<int key="ArrayInt" value ="2" type="array"/>
+			<int key="ArrayInt" value ="3" type="array"/>
+			
+			<float key="ArrayFloat" value ="1" type="array"/>
+			<float key="ArrayFloat" value ="2" type="array"/>
+			<float key="ArrayFloat" value ="3" type="array"/>
+			
+			<string key="ArrayString" value = "String1" type="array"/>
+			<string key="ArrayString" value = "String2" type="array"/>
+			<string key="ArrayString" value = "String3" type="array"/>
+			
+			<vec4 key="ArrayVec4" value="{0, 0, 0, 0}" type="array"/>
+			<vec4 key="ArrayVec4" value="{1, 2, 3, 4}" type="array"/>
+			<vec4 key="ArrayVec4" value="{5, 6, 7, 8}" type="array"/>
+			
+			<mat4x4 key="ArrayMat4x4" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}" type = "array"/>
+			<mat4x4 key="ArrayMat4x4" value="{{0, 0, 0, 0}, {1, 2, 3, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}}" type = "array"/>
+			<mat4x4 key="ArrayMat4x4" value="{{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 2, 3, 4}, {0, 0, 0, 0}}" type = "array"/>
 		</entity>
 		
-		<entity name="FooEntitySample" class="FooEntity">
+		<entity key="FooEntitySample" class="FooEntity">
 		</entity>
 		
 	</sector>

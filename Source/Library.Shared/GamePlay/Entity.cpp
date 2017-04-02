@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Entity.h"
 #include "Sector.h"
+#include "Parsers/WorldParseHelper.h"
 
 namespace NoobEngine
 {
@@ -51,7 +52,7 @@ namespace NoobEngine
 		{
 			Attribute::Populate();
 
-			AppendPrescribedAttribute("name").SetStorage(&mName, 1);
+			AppendPrescribedAttribute(Parsers::WorldParseHelper::sKeyAttribute).SetStorage(&mName, 1);
 		}
 	}
 }

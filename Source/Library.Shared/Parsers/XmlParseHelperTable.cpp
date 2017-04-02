@@ -55,11 +55,7 @@ namespace NoobEngine
 
 			if (mXmlParseMaster->GetSharedData())
 			{
-				if (mXmlParseMaster->GetSharedData()->Is(XmlTableParser::TypeIdClass()))
-				{
-
-				}
-				else
+				if (!mXmlParseMaster->GetSharedData()->Is(XmlTableParser::TypeIdClass()))
 				{
 					throw std::exception("Invalid SharedData.");
 				}

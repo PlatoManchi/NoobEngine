@@ -12,6 +12,7 @@ namespace NoobEngine
 			RTTI_DECLARATIONS(XmlSharedData, XmlParseHelperTable::XmlTableParser)
 
 			friend class XmlParseHelperConstruction;
+			friend class WorldParseHelper;
 		public:
 			/**
 				@brief Default constructor.

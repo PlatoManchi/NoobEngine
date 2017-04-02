@@ -8,6 +8,10 @@
 #include "SupportingClasses/ProductFoo.h"
 #include "SupportingClasses/FooEntity.h"
 
+#include "Parsers/WorldSharedData.h"
+#include "Parsers/WorldParseHelper.h"
+#include "Parsers/XmlParseMaster.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace NoobEngine::GamePlay;
 using namespace NoobEngine::Generic;
@@ -200,7 +204,73 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(&newSector == &newFooEntity.GetParentSector());
 
 			Assert::AreEqual(std::string("Plato"), (*entities.Get<Scope*>(0))["name"].Get<std::string>());
+		}
 
+		TEST_METHOD(WorldGrammarXMLParseTest)
+		{
+			EntityFactory factory;
+			FooEntityFactory fooFactory;
+
+			const char* xmlGrammar = "Resources/WorldXmlGrammar.xml";
+
+			NoobEngine::Parsers::WorldSharedData worldSharedData;
+			NoobEngine::Parsers::WorldParseHelper worldParseHelper;
+
+			// parser
+			NoobEngine::Parsers::XmlParseMaster parser;
+			parser.SetSharedData(worldSharedData);
+			parser.AddHelper(worldParseHelper);
+
+			parser.ParseFromFile(xmlGrammar);
+
+			// check if parsing happened properly
+			Assert::IsTrue(&worldSharedData.GetRootNode() == &worldSharedData.GetCurrentNode());
+
+			World* world = reinterpret_cast<World*>(&worldSharedData.GetRootNode());
+			Datum& sectors = world->Sectors();
+			Sector* sector1 = reinterpret_cast<Sector*>(sectors.Get<Scope*>());
+
+			Assert::AreEqual(1U, sectors.Size());
+			Assert::AreEqual(std::string("Sector1"), (*sector1)["key"].Get<std::string>() );
+
+			
+			Datum& entities = sector1->Entities();
+
+			Assert::AreEqual(2U, entities.Size());
+			
+			Entity* player = reinterpret_cast<Entity*>(entities.Get<Scope*>(0));
+			Assert::AreEqual(std::string("Player"), (*player)["key"].Get<std::string>());
+			Assert::AreEqual(std::string("Plato"), (*player)["Name"].Get<std::string>());
+			Assert::AreEqual(3, (*player)["Life"].Get<int>());
+			Assert::AreEqual(100.0f, (*player)["Health"].Get<float>());
+			Assert::IsTrue(glm::vec4() == (*player)["Pos"].Get<glm::vec4>());
+			Assert::IsTrue(glm::mat4x4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) == (*player)["Transform"].Get<glm::mat4x4>());
+
+			Assert::AreEqual(1, (*player)["ArrayInt"].Get<int>(0));
+			Assert::AreEqual(2, (*player)["ArrayInt"].Get<int>(1));
+			Assert::AreEqual(3, (*player)["ArrayInt"].Get<int>(2));
+
+			Assert::AreEqual(1.0f, (*player)["ArrayFloat"].Get<float>(0));
+			Assert::AreEqual(2.0f, (*player)["ArrayFloat"].Get<float>(1));
+			Assert::AreEqual(3.0f, (*player)["ArrayFloat"].Get<float>(2));
+
+			Assert::AreEqual(std::string("String1"), (*player)["ArrayString"].Get<std::string>(0));
+			Assert::AreEqual(std::string("String2"), (*player)["ArrayString"].Get<std::string>(1));
+			Assert::AreEqual(std::string("String3"), (*player)["ArrayString"].Get<std::string>(2));
+
+			Assert::IsTrue(glm::vec4(0, 0, 0, 0) == (*player)["ArrayVec4"].Get<glm::vec4>(0));
+			Assert::IsTrue(glm::vec4(1, 2, 3, 4) == (*player)["ArrayVec4"].Get<glm::vec4>(1));
+			Assert::IsTrue(glm::vec4(5, 6, 7, 8) == (*player)["ArrayVec4"].Get<glm::vec4>(2));
+
+			Assert::IsTrue(glm::mat4x4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) == (*player)["ArrayMat4x4"].Get<glm::mat4x4>(0));
+			Assert::IsTrue(glm::mat4x4(0, 0, 0, 0, 1, 2, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0) == (*player)["ArrayMat4x4"].Get<glm::mat4x4>(1));
+			Assert::IsTrue(glm::mat4x4(0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 0, 0, 0, 0) == (*player)["ArrayMat4x4"].Get<glm::mat4x4>(2));
+
+			// testing for foo entity
+			Entity* fooEntity = reinterpret_cast<Entity*>(entities.Get<Scope*>(1));
+			Assert::IsTrue(fooEntity->Is(FooEntity::TypeIdClass()));
+
+			delete &worldSharedData.GetRootNode();
 		}
 	private:
 		static _CrtMemState sStartMemState;

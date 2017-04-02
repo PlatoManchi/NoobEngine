@@ -10,13 +10,14 @@ namespace NoobEngine
 			RTTI_DECLARATIONS(WorldSharedData, XmlSharedData)
 
 		public:
+			
 			/**
-			@brief Default constructor
+				@brief Default constructor
 			*/
 			WorldSharedData();
 
 			/**
-			@brief Default destructor
+				@brief Default destructor
 			*/
 			virtual ~WorldSharedData();
 

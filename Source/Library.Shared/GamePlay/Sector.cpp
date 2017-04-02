@@ -2,6 +2,7 @@
 #include "Sector.h"
 #include "World.h"
 #include "Entity.h"
+#include "Parsers/WorldParseHelper.h"
 
 namespace NoobEngine
 {
@@ -69,7 +70,7 @@ namespace NoobEngine
 		{
 			Attribute::Populate();
 
-			AppendPrescribedAttribute("name").SetStorage(&mName, 1);
+			AppendPrescribedAttribute(Parsers::WorldParseHelper::sKeyAttribute).SetStorage(&mName, 1);
 			AppendPrescribedAttribute(sEntitiesKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
