@@ -3,6 +3,7 @@
 #include "Sector.h"
 #include "Parsers/WorldParseHelper.h"
 
+
 namespace NoobEngine
 {
 	namespace GamePlay
@@ -29,6 +30,21 @@ namespace NoobEngine
 			mName = pName;
 		}
 
+		Runtime::Datum& Entity::Actions()
+		{
+			return Append(Action::sActionKey);
+		}
+
+		Action& Entity::CreateAction(const std::string& pActionType, const std::string& pActionName)
+		{
+			Action* newAction = Generic::Factory<Action>::Create(pActionType);
+			newAction->SetName(pActionName);
+
+			newAction->SetParent(*this);
+
+			return *newAction;
+		}
+
 		Sector& Entity::GetParentSector() const
 		{
 			return *mParent;
@@ -43,9 +59,17 @@ namespace NoobEngine
 			}
 		}
 
-		void Entity::Update(WorldState& pGameState)
+		void Entity::Update(WorldState& pWorldState)
 		{
-			pGameState;
+			Runtime::Datum& actionsList = Actions();
+
+			for (uint32_t i = 0; i < actionsList.Size(); i++)
+			{
+				Action* action = reinterpret_cast<Action*>(actionsList.Get<Action*>(i));
+				pWorldState.mCurrentAction = action;
+
+				action->Update(pWorldState);
+			}
 		}
 
 		void Entity::Populate()
@@ -53,6 +77,7 @@ namespace NoobEngine
 			Attribute::Populate();
 
 			AppendPrescribedAttribute(Parsers::WorldParseHelper::sKeyAttribute).SetStorage(&mName, 1);
+			AppendPrescribedAttribute(Action::sActionKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
 }

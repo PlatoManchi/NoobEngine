@@ -3,6 +3,7 @@
 #include "Runtime/Attribute.h"
 #include "WorldState.h"
 #include "Generic/Factory.h"
+#include "Action.h"
 
 namespace NoobEngine
 {
@@ -51,6 +52,18 @@ namespace NoobEngine
 				@param[in] pName Constant reference to the string that needs to be set as name for this entity.
 			*/
 			void SetName(const std::string& pName);
+
+			/**
+				@brief Return a reference to datum that contains all the actions that his entity has.
+				@return Reference to datum
+			*/
+			Runtime::Datum& Actions();
+
+			/**
+				@brief Create a new action, adopt it into this entity and return the reference to the action that is created.
+				@return Reference to action that is created.
+			*/
+			Action& CreateAction(const std::string& pActionType, const std::string& pActionName);
 
 			/**
 				@brief Get the sector that this entity belongs to or attached to.
