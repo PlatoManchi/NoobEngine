@@ -56,12 +56,12 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(nullptr != newEntity);
 
 			Assert::AreEqual(std::string(""), newEntity->Name());
-			Assert::AreEqual(std::string(""), (*newEntity)["name"].Get<std::string>());
+			Assert::AreEqual(std::string(""), (*newEntity)["key"].Get<std::string>());
 
 			newEntity->SetName(entityName);
 
 			Assert::AreEqual(entityName, newEntity->Name());
-			Assert::AreEqual(entityName, (*newEntity)["name"].Get<std::string>());
+			Assert::AreEqual(entityName, (*newEntity)["key"].Get<std::string>());
 
 			// RTTI testing
 			Assert::IsTrue(newEntity->Is(Entity::TypeName()));
@@ -93,12 +93,12 @@ namespace UnitTestLibraryDesktop
 			Sector newSector;
 
 			Assert::AreEqual(std::string(""), newSector.Name());
-			Assert::AreEqual(std::string(""), newSector["name"].Get<std::string>());
+			Assert::AreEqual(std::string(""), newSector["key"].Get<std::string>());
 
 			newSector.SetName(sectorName);
 
 			Assert::AreEqual(sectorName, newSector.Name());
-			Assert::AreEqual(sectorName, newSector["name"].Get<std::string>());
+			Assert::AreEqual(sectorName, newSector["key"].Get<std::string>());
 
 			Datum& entities = newSector.Entities();
 
@@ -118,8 +118,8 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(&newSector == &newEntity.GetParentSector());
 			Assert::IsTrue(&newSector == &newFooEntity.GetParentSector());
 
-			Assert::AreEqual(std::string("Plato"), (*entities.Get<Scope*>(0))["name"].Get<std::string>());
-			Assert::AreEqual(std::string("FooPlato"), (*entities.Get<Scope*>(1))["name"].Get<std::string>());
+			Assert::AreEqual(std::string("Plato"), (*entities.Get<Scope*>(0))["key"].Get<std::string>());
+			Assert::AreEqual(std::string("FooPlato"), (*entities.Get<Scope*>(1))["key"].Get<std::string>());
 
 			// RTTI test
 			Assert::IsTrue(newEntity.Is(Entity::TypeName()));
@@ -166,12 +166,12 @@ namespace UnitTestLibraryDesktop
 			World newWorld;
 
 			Assert::AreEqual(std::string(""), newWorld.Name());
-			Assert::AreEqual(std::string(""), newWorld["name"].Get<std::string>());
+			Assert::AreEqual(std::string(""), newWorld["key"].Get<std::string>());
 
 			newWorld.SetName(worldName);
 
 			Assert::AreEqual(worldName, newWorld.Name());
-			Assert::AreEqual(worldName, newWorld["name"].Get<std::string>());
+			Assert::AreEqual(worldName, newWorld["key"].Get<std::string>());
 
 			Datum& sectors = newWorld.Sectors();
 
@@ -183,7 +183,7 @@ namespace UnitTestLibraryDesktop
 
 			Assert::AreEqual(1U, sectors.Size());
 			Assert::IsTrue(&newWorld == &newSector.GetParentWorld());
-			Assert::AreEqual(sectorName, (*sectors.Get<Scope*>(0))["name"].Get<std::string>());
+			Assert::AreEqual(sectorName, (*sectors.Get<Scope*>(0))["key"].Get<std::string>());
 
 
 			Datum& entities = newSector.Entities();
@@ -204,7 +204,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(&newSector == &newEntity.GetParentSector());
 			Assert::IsTrue(&newSector == &newFooEntity.GetParentSector());
 
-			Assert::AreEqual(std::string("Plato"), (*entities.Get<Scope*>(0))["name"].Get<std::string>());
+			Assert::AreEqual(std::string("Plato"), (*entities.Get<Scope*>(0))["key"].Get<std::string>());
 		}
 
 		TEST_METHOD(WorldGrammarXMLParseTest)
