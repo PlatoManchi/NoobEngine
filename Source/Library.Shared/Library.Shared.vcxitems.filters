@@ -73,6 +73,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.cpp">
       <Filter>GamePlay</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Action.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\ActionParseHelper.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">
@@ -140,6 +149,15 @@
       <Filter>GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Action.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\ActionParseHelper.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.h">
       <Filter>GamePlay</Filter>
     </ClInclude>
   </ItemGroup>

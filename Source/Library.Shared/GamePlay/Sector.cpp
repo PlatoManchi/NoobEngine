@@ -72,6 +72,9 @@ namespace NoobEngine
 
 				entity->Update(pWorldState);
 			}
+
+			// reset
+			pWorldState.mCurrentEntity = nullptr;
 		}
 
 		void Sector::Populate()

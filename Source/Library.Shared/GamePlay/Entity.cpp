@@ -70,6 +70,9 @@ namespace NoobEngine
 
 				action->Update(pWorldState);
 			}
+
+			// reset
+			pWorldState.mCurrentAction = nullptr;
 		}
 
 		void Entity::Populate()

@@ -14,12 +14,15 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Action.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Sector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\World.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\ActionParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\WorldParseHelper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\WorldSharedData.cpp" />
@@ -39,6 +42,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Hashmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Action.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.h" />
@@ -46,6 +51,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\World.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\WorldState.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Generic\Factory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\ActionParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\IXmlParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\WorldParseHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\WorldSharedData.h" />

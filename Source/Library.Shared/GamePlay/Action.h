@@ -6,7 +6,7 @@ namespace NoobEngine
 {
 	namespace GamePlay
 	{
-		class Action abstract : public Runtime::Attribute
+		class Action : public Runtime::Attribute
 		{
 		public:
 			static const std::string sActionKey;
@@ -52,6 +52,10 @@ namespace NoobEngine
 			*/
 			virtual void Update(WorldState& pWorldState) = 0;
 
+			/**
+				@brief Populate all prescribed attributes to attributed
+			*/
+			void Populate();
 		protected:
 			/**
 				Holds the name of this action

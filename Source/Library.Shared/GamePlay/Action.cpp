@@ -13,6 +13,7 @@ namespace NoobEngine
 		Action::Action() :
 			Attribute(), mParent(nullptr)
 		{
+			Populate();
 		}
 
 		Action::~Action()
@@ -45,6 +46,11 @@ namespace NoobEngine
 				pParent.Adopt(*this, Action::sActionKey);
 				mParent = &pParent;
 			}
+		}
+
+		void Action::Populate()
+		{
+			Attribute::Populate();
 		}
 	}
 }

@@ -63,6 +63,9 @@ namespace NoobEngine
 
 				sector->Update(pWorldState);
 			}
+
+			// reset
+			pWorldState.mCurrentSector = nullptr;
 		}
 
 		void World::Populate()
