@@ -21,7 +21,7 @@ namespace NoobEngine
 		const std::string WorldParseHelper::sWorldTag = "world";
 		const std::string WorldParseHelper::sSectorTag = "sector";
 		const std::string WorldParseHelper::sEntityTag = "entity";
-		const std::string WorldParseHelper::sNameAttribute = "name";
+		
 		const std::string WorldParseHelper::sEntityClassAttribute = "class";
 
 		WorldParseHelper::WorldParseHelper() :
@@ -33,7 +33,7 @@ namespace NoobEngine
 		{
 		}
 
-		void WorldParseHelper::Initialize(XmlParseMaster* pXmlParseMaster)
+		void WorldParseHelper::Initialize(XmlParseMaster& pXmlParseMaster)
 		{
 			IXmlParseHelper::Initialize(pXmlParseMaster);
 

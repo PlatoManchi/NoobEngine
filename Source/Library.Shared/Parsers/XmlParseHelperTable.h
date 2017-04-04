@@ -106,7 +106,7 @@ namespace NoobEngine
 				@param[in] pXmlParseMaster The XmlParseMaster that this helper is attached to.
 				@exception std::exception Throws exception if the SharedData that the XmlParseMaster has SharedData that is not of type XmlTableParser.
 			*/
-			virtual void Initialize(XmlParseMaster* pXmlParseMaster) override;
+			virtual void Initialize(XmlParseMaster& pXmlParseMaster) override;
 
 			/**
 				@brief Called every time a start element tag is hit in the XML.

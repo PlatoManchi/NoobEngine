@@ -24,7 +24,7 @@ namespace NoobEngine
 			static const std::string sWorldTag;
 			static const std::string sSectorTag;
 			static const std::string sEntityTag;
-			static const std::string sNameAttribute;
+			
 			static const std::string sEntityClassAttribute;
 
 			/**
@@ -41,7 +41,7 @@ namespace NoobEngine
 				@brief Initialize this helper. This will get called just before each file is parsed.
 				@param[in] pXmlParseMaster The XmlParseMaster that this helper is attached to.
 			*/
-			virtual void Initialize(XmlParseMaster* pXmlParseMaster);
+			virtual void Initialize(XmlParseMaster& pXmlParseMaster) override;
 
 			/**
 				@brief Called every time a start element tag is hit in the XML.

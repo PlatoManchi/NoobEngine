@@ -19,11 +19,7 @@ namespace NoobEngine
 		{
 			RTTI_DECLARATIONS(World, Attribute)
 		public:
-			/**
-				Holds the key where all the sectors are stored.
-			*/
-			static const char* sSectorsKey;
-
+			
 			/**
 				@brief Default constructor.
 			*/
@@ -63,11 +59,25 @@ namespace NoobEngine
 			Runtime::Datum& Sectors();
 
 			/**
+				@brief Return a reference to datum that contains all the actions that his entity has.
+				@return Reference to datum
+			*/
+			Runtime::Datum& Actions();
+
+			/**
 				@brief Create an sector of type and child it to this world.
 				@param[in] pSectorName The name to be assigned to the sector.
 				@return Reference to the new sector that is created.
 			*/
 			Sector& CreateSector(const std::string& pSectorName);
+
+			/**
+				@brief Create a new action, adopt it into this world and return the reference to the action that is created.
+				@param[in] pActionType Type of action that needs to be created. This is usually the class name of the action.
+				@param[in] pActionName The name to be assigned to the action.
+				@return Reference to action that is created.
+			*/
+			Action& CreateAction(const std::string& pActionType, const std::string& pActionName);
 
 			/**
 				@brief Called every frame.

@@ -13,7 +13,7 @@ namespace NoobEngine
 		XmlParseHelperConstruction::~XmlParseHelperConstruction()
 		{ }
 
-		void XmlParseHelperConstruction::Initialize(XmlParseMaster* pXmlParseMaster)
+		void XmlParseHelperConstruction::Initialize(XmlParseMaster& pXmlParseMaster)
 		{
 			IXmlParseHelper::Initialize(pXmlParseMaster);
 

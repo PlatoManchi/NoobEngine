@@ -109,65 +109,89 @@ namespace NoobEngine
 			sAttributeList[this->TypeIdInstance()].PushBack(pKey);
 		}
 #pragma region AddInternalAttribute
-		void Attribute::AddInternalAttribute(const std::string& pKey, int32_t pInitialValue)
+		Datum& Attribute::AddInternalAttribute(const std::string& pKey, int32_t pInitialValue)
 		{
-			AppendAuxiliaryAttribute(pKey) = pInitialValue;
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum = pInitialValue;
+			return auxDatum;
 		}
 
-		void Attribute::AddInternalAttribute(const std::string& pKey, float pInitialValue)
+		Datum& Attribute::AddInternalAttribute(const std::string& pKey, float pInitialValue)
 		{
-			AppendAuxiliaryAttribute(pKey) = pInitialValue;
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum = pInitialValue;
+			return auxDatum;
 		}
 
-		void Attribute::AddInternalAttribute(const std::string& pKey, std::string& pInitialValue)
+		Datum& Attribute::AddInternalAttribute(const std::string& pKey, std::string& pInitialValue)
 		{
-			AppendAuxiliaryAttribute(pKey) = pInitialValue;
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum = pInitialValue;
+			return auxDatum;
 		}
 
-		void Attribute::AddInternalAttribute(const std::string& pKey, glm::vec4& pInitialValue)
+		Datum& Attribute::AddInternalAttribute(const std::string& pKey, glm::vec4& pInitialValue)
 		{
-			AppendAuxiliaryAttribute(pKey) = pInitialValue;
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum = pInitialValue;
+			return auxDatum;
 		}
 
-		void Attribute::AddInternalAttribute(const std::string& pKey, glm::mat4x4& pInitialValue)
+		Datum& Attribute::AddInternalAttribute(const std::string& pKey, glm::mat4x4& pInitialValue)
 		{
-			AppendAuxiliaryAttribute(pKey) = pInitialValue;
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum = pInitialValue;
+			return auxDatum;
 		}
 
-		void Attribute::AddInternalAttribute(const std::string& pKey, RTTI* pInitialValue)
+		Datum& Attribute::AddInternalAttribute(const std::string& pKey, RTTI* pInitialValue)
 		{
-			AppendAuxiliaryAttribute(pKey) = pInitialValue;
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum = pInitialValue;
+			return auxDatum;
 		}
 #pragma endregion
 #pragma region AddExternalAttribute
-		void Attribute::AddExternalAttribute(const std::string& pKey, int32_t* pValue, uint32_t pSize)
+		Datum& Attribute::AddExternalAttribute(const std::string& pKey, int32_t* pValue, uint32_t pSize)
 		{
-			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum.SetStorage(pValue, pSize);
+			return auxDatum;
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, float* pValue, uint32_t pSize)
+		Datum& Attribute::AddExternalAttribute(const std::string& pKey, float* pValue, uint32_t pSize)
 		{
-			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum.SetStorage(pValue, pSize);
+			return auxDatum;
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, std::string* pValue, uint32_t pSize)
+		Datum& Attribute::AddExternalAttribute(const std::string& pKey, std::string* pValue, uint32_t pSize)
 		{
-			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum.SetStorage(pValue, pSize);
+			return auxDatum;
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, glm::vec4* pValue, uint32_t pSize)
+		Datum& Attribute::AddExternalAttribute(const std::string& pKey, glm::vec4* pValue, uint32_t pSize)
 		{
-			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum.SetStorage(pValue, pSize);
+			return auxDatum;
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, glm::mat4x4* pValue, uint32_t pSize)
+		Datum& Attribute::AddExternalAttribute(const std::string& pKey, glm::mat4x4* pValue, uint32_t pSize)
 		{
-			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum.SetStorage(pValue, pSize);
+			return auxDatum;
 		}
 
-		void Attribute::AddExternalAttribute(const std::string& pKey, RTTI** pValue, uint32_t pSize)
+		Datum& Attribute::AddExternalAttribute(const std::string& pKey, RTTI** pValue, uint32_t pSize)
 		{
-			AppendAuxiliaryAttribute(pKey).SetStorage(pValue, pSize);
+			Datum& auxDatum = AppendAuxiliaryAttribute(pKey);
+			auxDatum.SetStorage(pValue, pSize);
+			return auxDatum;
 		}
 #pragma endregion
 		Datum& Attribute::AppendPrescribedAttribute(const std::string& pKey)

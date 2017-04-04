@@ -6,7 +6,7 @@ namespace NoobEngine
 {
 	namespace GamePlay
 	{
-		const std::string ActionList::sActionListKey = "actionlistkey";
+		const std::string ActionList::sActionListKey = "ActionListKey";
 
 		ActionList::ActionList() :
 			Action()
@@ -22,7 +22,7 @@ namespace NoobEngine
 		{
 			Runtime::Datum& actions = Append(sActionListKey);
 
-			for (int i = 0; i < actions.Size(); i++)
+			for (uint32_t i = 0; i < actions.Size(); i++)
 			{
 				Action* action = reinterpret_cast<Action*>(actions.Get<Scope*>(i));
 				action->Update(pWorldState);

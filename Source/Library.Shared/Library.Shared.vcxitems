@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Action.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionListIf.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Action.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionListIf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameClock.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\GameTime.h" />

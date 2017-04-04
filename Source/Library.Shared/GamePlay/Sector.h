@@ -12,6 +12,7 @@ namespace NoobEngine
 		*/
 		class Entity;
 		class World;
+		class Action;
 		
 		/**
 			Copy semantics for sector is removed.
@@ -23,7 +24,7 @@ namespace NoobEngine
 			/**
 				Holds the key where all the sectors are stored.
 			*/
-			static const char* sEntitiesKey;
+			static const char* sSectorsKey;
 
 			/**
 				@brief Default constructor.
@@ -64,12 +65,26 @@ namespace NoobEngine
 			Runtime::Datum& Entities();
 
 			/**
+				@brief Return a reference to datum that contains all the actions that his entity has.
+				@return Reference to datum
+			*/
+			Runtime::Datum& Actions();
+
+			/**
 				@brief Create an entity of type and child it to this sector.
 				@param[in] pEntityType Type of entity that needs to be created. This is usually the class name of the entity.
 				@param[in] pEntityName The name to be assigned to the entity.
 				@return Reference to the new entity that is created.
 			*/
 			Entity& CreateEntity(const std::string& pEntityType, const std::string& pEntityName);
+
+			/**
+				@brief Create a new action, adopt it into this sector and return the reference to the action that is created.
+				@param[in] pActionType Type of action that needs to be created. This is usually the class name of the action.
+				@param[in] pActionName The name to be assigned to the action.
+				@return Reference to action that is created.
+			*/
+			Action& CreateAction(const std::string& pActionType, const std::string& pActionName);
 
 			/**
 				@brief Get the world that this sector is adopted to.

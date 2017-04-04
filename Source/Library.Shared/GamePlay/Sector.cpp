@@ -10,7 +10,7 @@ namespace NoobEngine
 	{
 		RTTI_DEFINITIONS(GamePlay::Sector)
 
-		const char* Sector::sEntitiesKey = "Entities";
+		const char* Sector::sSectorsKey = "Sectors";
 
 		Sector::Sector() :
 			Attribute(), mParent(nullptr), mName("")
@@ -34,7 +34,12 @@ namespace NoobEngine
 
 		Runtime::Datum& Sector::Entities()
 		{
-			return Append(sEntitiesKey);
+			return Append(Entity::sEntitiesKey);
+		}
+
+		Runtime::Datum & Sector::Actions()
+		{
+			return Append(Action::sActionKey);
 		}
 
 		Entity& Sector::CreateEntity(const std::string& pEntityType, const std::string& pEntityName)
@@ -47,6 +52,16 @@ namespace NoobEngine
 			return *newEntity;
 		}
 
+		Action& Sector::CreateAction(const std::string& pActionType, const std::string& pActionName)
+		{
+			Action* newAction = Generic::Factory<Action>::Create(pActionType);
+			newAction->SetName(pActionName);
+
+			newAction->SetParent(*this);
+
+			return *newAction;
+		}
+
 		World& Sector::GetParentWorld() const
 		{
 			return *mParent;
@@ -56,15 +71,28 @@ namespace NoobEngine
 		{
 			if (mParent != &pWorld)
 			{
-				pWorld.Adopt(*this, World::sSectorsKey);
+				pWorld.Adopt(*this, Sector::sSectorsKey);
 				mParent = &pWorld;
 			}
 		}
 
 		void Sector::Update(WorldState& pWorldState)
 		{
-			Runtime::Datum& entitiesList = Entities();
+			// update all actions in sector
+			Runtime::Datum& actionsList = Actions();
+			for (uint32_t i = 0; i < actionsList.Size(); i++)
+			{
+				Action* action = reinterpret_cast<Action*>(actionsList.Get<Action*>(i));
+				pWorldState.mCurrentAction = action;
 
+				action->Update(pWorldState);
+			}
+
+			// reset
+			pWorldState.mCurrentAction = nullptr;
+
+			// updating all entities in the sector
+			Runtime::Datum& entitiesList = Entities();
 			for (uint32_t i = 0; i < entitiesList.Size(); i++)
 			{
 				Entity* entity = reinterpret_cast<Entity*>(entitiesList.Get<Scope*>(i));
@@ -82,7 +110,8 @@ namespace NoobEngine
 			Attribute::Populate();
 
 			AppendPrescribedAttribute(Parsers::WorldParseHelper::sKeyAttribute).SetStorage(&mName, 1);
-			AppendPrescribedAttribute(sEntitiesKey).SetType(Runtime::DatumType::TABLE);
+			AppendPrescribedAttribute(Entity::sEntitiesKey).SetType(Runtime::DatumType::TABLE);
+			AppendPrescribedAttribute(Action::sActionKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
 }

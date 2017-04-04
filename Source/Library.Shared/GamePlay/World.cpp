@@ -2,14 +2,14 @@
 #include "World.h"
 #include "Sector.h"
 #include "Parsers/WorldParseHelper.h"
+#include "Action.h"
+#include "Generic/Factory.h"
 
 namespace NoobEngine
 {
 	namespace GamePlay
 	{
 		RTTI_DEFINITIONS(GamePlay::World)
-
-		const char* World::sSectorsKey = "Sectors";
 
 		World::World() :
 			Attribute(), mName("")
@@ -33,7 +33,12 @@ namespace NoobEngine
 
 		Runtime::Datum& World::Sectors()
 		{
-			return Append(sSectorsKey);
+			return Append(Sector::sSectorsKey);
+		}
+
+		Runtime::Datum& World::Actions()
+		{
+			return Append(Action::sActionKey);
 		}
 
 		Sector& World::CreateSector(const std::string& pSectorName)
@@ -46,6 +51,16 @@ namespace NoobEngine
 			return *newSector;
 		}
 
+		Action& World::CreateAction(const std::string& pActionType, const std::string& pActionName)
+		{
+			Action* newAction = Generic::Factory<Action>::Create(pActionType);
+			newAction->SetName(pActionName);
+
+			newAction->SetParent(*this);
+
+			return *newAction;
+		}
+
 		void World::Update(WorldState& pWorldState)
 		{
 			Runtime::Datum& sectorsList = Sectors();
@@ -56,6 +71,20 @@ namespace NoobEngine
 
 			pWorldState.Update();
 
+			// update all actions in world
+			Runtime::Datum& actionsList = Actions();
+			for (uint32_t i = 0; i < actionsList.Size(); i++)
+			{
+				Action* action = reinterpret_cast<Action*>(actionsList.Get<Action*>(i));
+				pWorldState.mCurrentAction = action;
+
+				action->Update(pWorldState);
+			}
+
+			// reset
+			pWorldState.mCurrentAction = nullptr;
+
+			// update all sectors in world
 			for (uint32_t i = 0; i < sectorsList.Size(); i++)
 			{
 				Sector* sector = reinterpret_cast<Sector*>(sectorsList.Get<Scope*>(i));
@@ -73,7 +102,8 @@ namespace NoobEngine
 			Attribute::Populate();
 
 			AppendPrescribedAttribute(Parsers::WorldParseHelper::sKeyAttribute).SetStorage(&mName, 1);
-			AppendPrescribedAttribute(sSectorsKey).SetType(Runtime::DatumType::TABLE);
+			AppendPrescribedAttribute(Sector::sSectorsKey).SetType(Runtime::DatumType::TABLE);
+			AppendPrescribedAttribute(Action::sActionKey).SetType(Runtime::DatumType::TABLE);
 		}
 	}
 }

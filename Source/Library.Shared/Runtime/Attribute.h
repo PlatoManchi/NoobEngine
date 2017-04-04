@@ -95,85 +95,97 @@ namespace NoobEngine
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
+				@return Reference to the datum
 			*/
-			void AddInternalAttribute(const std::string& pKey, int32_t pInitialValue);
+			Datum& AddInternalAttribute(const std::string& pKey, int32_t pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
+				@return Reference to the datum
 			*/
-			void AddInternalAttribute(const std::string& pKey, float pInitialValue);
+			Datum& AddInternalAttribute(const std::string& pKey, float pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
+				@return Reference to the datum
 			*/
-			void AddInternalAttribute(const std::string& pKey, std::string& pInitialValue);
+			Datum& AddInternalAttribute(const std::string& pKey, std::string& pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
+				@return Reference to the datum
 			*/
-			void AddInternalAttribute(const std::string& pKey, glm::vec4& pInitialValue);
+			Datum& AddInternalAttribute(const std::string& pKey, glm::vec4& pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
+				@return Reference to the datum
 			*/
-			void AddInternalAttribute(const std::string& pKey, glm::mat4x4& pInitialValue);
+			Datum& AddInternalAttribute(const std::string& pKey, glm::mat4x4& pInitialValue);
 
 			/**
 				@brief Add the attribute as internal attribute and initialize that value with the value sent.
 				@param pKey String that holds that value of key.
 				@param pInitialValue The initial value of the attribute.
+				@return Reference to the datum
 			*/
-			void AddInternalAttribute(const std::string& pKey, RTTI* pInitialValue);
+			Datum& AddInternalAttribute(const std::string& pKey, RTTI* pInitialValue);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
+				@return Reference to the datum
 			*/
-			void AddExternalAttribute(const std::string& pKey, int32_t* pValue, uint32_t pSize = 1);
+			Datum& AddExternalAttribute(const std::string& pKey, int32_t* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
+				@return Reference to the datum
 			*/
-			void AddExternalAttribute(const std::string& pKey, float* pValue, uint32_t pSize = 1);
+			Datum& AddExternalAttribute(const std::string& pKey, float* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
+				@return Reference to the datum
 			*/
-			void AddExternalAttribute(const std::string& pKey, std::string* pValue, uint32_t pSize = 1);
+			Datum& AddExternalAttribute(const std::string& pKey, std::string* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
+				@return Reference to the datum
 			*/
-			void AddExternalAttribute(const std::string& pKey, glm::vec4* pValue, uint32_t pSize = 1);
+			Datum& AddExternalAttribute(const std::string& pKey, glm::vec4* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
+				@return Reference to the datum
 			*/
-			void AddExternalAttribute(const std::string& pKey, glm::mat4x4* pValue, uint32_t pSize = 1);
+			Datum& AddExternalAttribute(const std::string& pKey, glm::mat4x4* pValue, uint32_t pSize = 1);
 
 			/**
 				@brief Add the attribute as external attribute.
 				@param pKey String that holds that value of key.
 				@param pValue The value to hold.
+				@return Reference to the datum
 			*/
-			void AddExternalAttribute(const std::string& pKey, RTTI** pValue, uint32_t pSize = 1);
+			Datum& AddExternalAttribute(const std::string& pKey, RTTI** pValue, uint32_t pSize = 1);
 
 		protected:
 			/**

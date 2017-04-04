@@ -125,7 +125,7 @@ namespace NoobEngine
 
 			for (IXmlParseHelper* helper : mHelperList)
 			{
-				helper->Initialize(this);
+				helper->Initialize(*this);
 			}
 
 			size_t size = strlen(pXmlString);

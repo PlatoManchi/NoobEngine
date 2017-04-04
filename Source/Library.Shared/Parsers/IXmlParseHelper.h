@@ -19,7 +19,7 @@ namespace NoobEngine
 				@brief Initialize this helper. This will get called just before each file is parsed.
 				@param[in] pXmlParseMaster The XmlParseMaster that this helper is attached to.
 			*/
-			virtual void Initialize(XmlParseMaster* pXmlParseMaster);
+			virtual void Initialize(XmlParseMaster& pXmlParseMaster);
 
 			/**
 				@brief Called everytime a start element tag is hit in the XML.

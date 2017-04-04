@@ -9,7 +9,7 @@ namespace NoobEngine
 		class Action : public Runtime::Attribute
 		{
 		public:
-			static const std::string sActionKey;
+			static const char* sActionKey;
 
 			/**
 				@brief Default constructor.
@@ -44,7 +44,21 @@ namespace NoobEngine
 				@details The pParent has to be of type World or Sector or Entity.
 				@param[in] pParent The attributed that is supposed to the parent of this action.
 			*/
-			void SetParent(Attribute& pParent);
+			void SetParent(Entity& pParent);
+
+			/**
+				@brief Set the parent of this action
+				@details The pParent has to be of type World or Sector or Entity.
+				@param[in] pParent The attributed that is supposed to the parent of this action.
+			*/
+
+			void SetParent(Sector& pParent);
+			/**
+				@brief Set the parent of this action
+				@details The pParent has to be of type World or Sector or Entity.
+				@param[in] pParent The attributed that is supposed to the parent of this action.
+			*/
+			void SetParent(World& pParent);
 
 			/**
 				@brief Called every frame.
@@ -66,6 +80,13 @@ namespace NoobEngine
 				Holds the pointer to the parent scope
 			*/
 			Attribute* mParent;
+
+			/**
+				@brief Set the parent of this action
+				@details The pParent has to be of type World or Sector or Entity.
+				@param[in] pParent The attributed that is supposed to the parent of this action.
+			*/
+			void SetParent(Attribute* pParent);
 		};
 	}
 }

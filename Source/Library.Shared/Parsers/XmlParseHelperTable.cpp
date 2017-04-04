@@ -49,7 +49,7 @@ namespace NoobEngine
 		{
 		}
 
-		void XmlParseHelperTable::Initialize(XmlParseMaster* pXmlParseMaster)
+		void XmlParseHelperTable::Initialize(XmlParseMaster& pXmlParseMaster)
 		{
 			IXmlParseHelper::Initialize(pXmlParseMaster);
 

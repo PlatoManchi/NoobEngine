@@ -22,7 +22,7 @@ namespace SupportingClasses
 		/**
 			Overridden Initialize function from IXmlParseHelper
 		*/
-		virtual void Initialize(NoobEngine::Parsers::XmlParseMaster* pXmlParseMaster) override;
+		virtual void Initialize(NoobEngine::Parsers::XmlParseMaster& pXmlParseMaster) override;
 
 		/**
 			Overridden StartElementHandler function from IXmlParseHelper to handle the starting of the start of element

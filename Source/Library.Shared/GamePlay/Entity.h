@@ -22,6 +22,11 @@ namespace NoobEngine
 			RTTI_DECLARATIONS(Entity, Attribute)
 		public:
 			/**
+				Holds the key where all the sectors are stored.
+			*/
+			static const char* sEntitiesKey;
+
+			/**
 				@brief Default constructor
 			*/
 			Entity();
@@ -61,6 +66,8 @@ namespace NoobEngine
 
 			/**
 				@brief Create a new action, adopt it into this entity and return the reference to the action that is created.
+				@param[in] pActionType Type of action that needs to be created. This is usually the class name of the action.
+				@param[in] pActionName The name to be assigned to the action.
 				@return Reference to action that is created.
 			*/
 			Action& CreateAction(const std::string& pActionType, const std::string& pActionName);
@@ -103,6 +110,11 @@ namespace NoobEngine
 				The parent sector that this entity belongs to.
 			*/
 			Sector* mParent;
+
+			/**
+				Caching datums so that we don't spend much time on look ups.
+			*/
+			Runtime::Datum* mActionDatum;
 		};
 #define ConcreteEntityFactory(ConcreteType)		\
 		ConcreteFactory(Entity, ConcreteType)	\

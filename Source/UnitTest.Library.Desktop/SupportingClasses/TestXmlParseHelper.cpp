@@ -11,7 +11,7 @@ namespace SupportingClasses
 
 	}
 
-	void TestXmlParseHelper::Initialize(NoobEngine::Parsers::XmlParseMaster* pXmlParseMaster)
+	void TestXmlParseHelper::Initialize(NoobEngine::Parsers::XmlParseMaster& pXmlParseMaster)
 	{
 		IXmlParseHelper::Initialize(pXmlParseMaster);
 
