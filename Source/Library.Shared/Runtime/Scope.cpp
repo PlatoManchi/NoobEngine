@@ -71,12 +71,19 @@ namespace NoobEngine
 		Datum* Scope::Search(const std::string& pKey, Scope** pScope) const
 		{
 			//  initializing the output param
-			*pScope = nullptr;
+			if (pScope)
+			{
+				*pScope = nullptr;
+			}
+			
 
 			Datum* findInScope = Find(pKey);
 			if(findInScope)
 			{
-				*pScope = const_cast<Scope*>(this);
+				if (pScope)
+				{
+					*pScope = const_cast<Scope*>(this);
+				}
 			}
 			else
 			{

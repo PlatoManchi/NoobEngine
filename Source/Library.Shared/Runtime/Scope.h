@@ -54,7 +54,7 @@ namespace NoobEngine
 			 * @return Datum pointer that points to the datum if key is found, if not found nullptr.
 			 * @see Find()
 			 */
-			Datum* Search(const std::string& pKey, Scope** pScope) const;
+			Datum* Search(const std::string& pKey, Scope** pScope = nullptr) const;
 
 			/**
 			 * @brief If the key exists it will return the reference associated to the datum that key is pointing to or else creates a default datum is created and inserted.
