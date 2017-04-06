@@ -9,6 +9,8 @@ namespace NoobEngine
 		{
 			RTTI_DECLARATIONS(WorldSharedData, XmlSharedData)
 
+			friend class WorldParseHelper;
+			friend class ActionParseHelper;
 		public:
 			
 			/**

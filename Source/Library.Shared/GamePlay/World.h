@@ -2,6 +2,7 @@
 #include "Runtime/Attribute.h"
 #include "Runtime/Datum.h"
 #include "WorldState.h"
+#include "Container/Vector.h"
 
 namespace NoobEngine
 {
@@ -89,11 +90,30 @@ namespace NoobEngine
 				@brief Populate all the prescribed attributes of world.
 			*/
 			void Populate();
+
+			/**
+				@brief Set the action for garbage collection.
+				@details The object will be destroyed at the end of update.
+				@param[in] pActionToDestroy Reference to the Action object that needs to be destroyed.
+			*/
+			void DestroyAction(Action& pActionToDestroy);
+
+			/**
+				@brief Search for the datum in the path given considering the world as root
+				@param[in] pDatumPath Const string reference that holds the path to resolve
+				@return Pointer to the datum after resolving path. If the path is invalid returns nullptr.
+			*/
+			Runtime::Datum* ResolveDatum(std::string pDatumPath);
 		private:
 			/**
 				Holds the name of this world.
 			*/
 			std::string mName;
+
+			/**
+				Contains list of all actions that should be destroyed.
+			*/
+			Container::Vector<Action*> mGarbageQueue;
 		};
 	}
 }

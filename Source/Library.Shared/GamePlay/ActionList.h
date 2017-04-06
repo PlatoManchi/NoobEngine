@@ -8,6 +8,7 @@ namespace NoobEngine
 	{
 		class ActionList : public Action
 		{
+			RTTI_DECLARATIONS(ActionList, Action)
 		public:
 			static const std::string sActionListKey;
 
@@ -31,6 +32,14 @@ namespace NoobEngine
 				@brief Populate all prescribed attributes to attributed
 			*/
 			void Populate();
+
+			/**
+				@brief Create a new action, adopt it into this entity and return the reference to the action that is created.
+				@param[in] pActionType Type of action that needs to be created. This is usually the class name of the action.
+				@param[in] pActionName The name to be assigned to the action.
+				@return Reference to action that is created.
+			*/
+			Action& CreateAction(const std::string& pActionType, const std::string& pActionName);
 		};
 		
 		ActionFactory(ActionList)

@@ -6,6 +6,8 @@ namespace NoobEngine
 {
 	namespace GamePlay
 	{
+		RTTI_DEFINITIONS(ActionList)
+
 		const std::string ActionList::sActionListKey = "ActionListKey";
 
 		ActionList::ActionList() :
@@ -34,6 +36,16 @@ namespace NoobEngine
 			Action::Populate();
 
 			AppendPrescribedAttribute(sActionListKey).SetType(Runtime::DatumType::TABLE);
+		}
+
+		Action& ActionList::CreateAction(const std::string& pActionType, const std::string& pActionName)
+		{
+			Action* newAction = Generic::Factory<Action>::Create(pActionType);
+			newAction->SetName(pActionName);
+
+			newAction->SetParent(*this);
+
+			return *newAction;
 		}
 	}
 }

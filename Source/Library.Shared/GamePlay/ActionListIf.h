@@ -7,6 +7,9 @@ namespace NoobEngine
 	{
 		class ActionListIf final : public ActionList
 		{
+			RTTI_DECLARATIONS(ActionListIf, ActionList)
+
+			friend class Parsers::ActionParseHelper;
 		public:
 			static const char* sConditionKey;
 			static const char* sThenActionKey;
@@ -26,7 +29,7 @@ namespace NoobEngine
 				@brief Called every frame.
 				@param[in] pWorldState Reference to the world state of current game.
 			*/
-			virtual void Update(WorldState& pWorldState) override;
+			void Update(WorldState& pWorldState) override;
 
 			/**
 				@brief Sets the condition value.
@@ -69,12 +72,18 @@ namespace NoobEngine
 			*/
 			void Populate();
 
+			std::string mConditionKey;
+
 			/**
 				Caching the datums so as to avoid lookups
 			*/
 			Runtime::Datum* mConditionDatum;
 			Runtime::Datum* mThenDatum;
 			Runtime::Datum* mElseDatum;
+
+			Runtime::Datum mValueDatum;
 		};
+
+		ActionFactory(ActionListIf)
 	}
 }

@@ -1,0 +1,12 @@
+<world key="HelloWorld">
+	<sector key="Level1">
+	
+		<entity key="Player">
+			<int key="LifeCount" value="3"/>
+			
+			<decrement key="decrementSample" value="Level1.Player.LifeCount"/>
+			
+		</entity>
+		
+	</sector>
+</world>

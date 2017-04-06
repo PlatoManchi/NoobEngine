@@ -18,6 +18,32 @@ namespace NoobEngine
 		{
 		public:
 			/**
+			Pointer to current world that is being processed.
+			*/
+			World* mCurrentWorld;
+
+			/**
+			Pointer to current sector that is being processed.
+			*/
+			Sector* mCurrentSector;
+
+			/**
+			Pointer to current entity that is being processed.
+			*/
+			Entity* mCurrentEntity;
+
+			/**
+			Pointer to current action that is being processed.
+			*/
+			Action* mCurrentAction;
+
+			/**
+			The timer that calculate time elapsed and time since game started.
+			*/
+			GameTime mGameTime;
+
+
+			/**
 				@brief Default constructor.
 			*/
 			WorldState();
@@ -32,30 +58,6 @@ namespace NoobEngine
 			*/
 			void Update();
 
-			/**
-				Pointer to current world that is being processed.
-			*/
-			World* mCurrentWorld;
-
-			/**
-				Pointer to current sector that is being processed.
-			*/
-			Sector* mCurrentSector;
-
-			/**
-				Pointer to current entity that is being processed.
-			*/
-			Entity* mCurrentEntity;
-
-			/**
-				Pointer to current action that is being processed.
-			*/
-			Action* mCurrentAction;
-
-			/**
-				The timer that calculate time elapsed and time since game started.
-			*/
-			GameTime mGameTime;
 		private:
 			/**
 				The game clock used by world state to keep track of time.

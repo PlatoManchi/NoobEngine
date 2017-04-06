@@ -233,6 +233,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SupportingClasses\ActionPlayerAlive.h" />
+    <ClInclude Include="SupportingClasses\ActionPlayerDead.h" />
+    <ClInclude Include="SupportingClasses\ActionTest.h" />
     <ClInclude Include="SupportingClasses\FooEntity.h" />
     <ClInclude Include="SupportingClasses\IProduct.h" />
     <ClInclude Include="SupportingClasses\NonRTTIProduct.h" />
@@ -244,6 +247,10 @@
     <ClInclude Include="SupportingClasses\TestXmlParseHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionTests.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="AttributeTest.cpp">
       <SubType>
       </SubType>
@@ -275,6 +282,9 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="SListTest.cpp" />
+    <ClCompile Include="SupportingClasses\ActionPlayerAlive.cpp" />
+    <ClCompile Include="SupportingClasses\ActionPlayerDead.cpp" />
+    <ClCompile Include="SupportingClasses\ActionTest.cpp" />
     <ClCompile Include="SupportingClasses\FooEntity.cpp" />
     <ClCompile Include="SupportingClasses\NonRTTIProduct.cpp" />
     <ClCompile Include="SupportingClasses\ProductFoo.cpp" />

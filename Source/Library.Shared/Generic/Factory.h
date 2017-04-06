@@ -34,7 +34,7 @@ namespace NoobEngine
 				@param[in] pName String contains the name of the class.
 				@return Pointer to the object.
 			*/
-			static T* Create(std::string pName);
+			static T* Create(std::string pTypeName);
 
 			/**
 				@brief Return the begin iterator of the hashmap

@@ -67,7 +67,7 @@ namespace NoobEngine
 			Runtime::Datum& actionsList = Actions();
 			for (uint32_t i = 0; i < actionsList.Size(); i++)
 			{
-				Action* action = reinterpret_cast<Action*>(actionsList.Get<Action*>(i));
+				Action* action = reinterpret_cast<Action*>(actionsList.Get<Scope*>(i));
 				pWorldState.mCurrentAction = action;
 
 				action->Update(pWorldState);

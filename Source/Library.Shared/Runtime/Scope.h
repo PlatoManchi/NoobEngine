@@ -157,6 +157,21 @@ namespace NoobEngine
 			 */
 			bool operator!=(const Scope& pOther) const;
 
+
+			/**
+			* @brief Orphan this scope from its parents.
+			*/
+			void Orphan();
+
+			/**
+				@brief begin iterator
+			*/
+			Container::Hashmap<std::string, Datum>::Iterator begin();
+
+			/**
+				@brief end iterator
+			*/
+			Container::Hashmap<std::string, Datum>::Iterator end();
 		private:
 			/**
 			 * Holds the pointer to the parent.
@@ -178,10 +193,6 @@ namespace NoobEngine
 			 */
 			void Clear();
 
-			/**
-			 * @brief Orphan this scope from its parents.
-			 */
-			void Orphan();
 		};
 	}
 }

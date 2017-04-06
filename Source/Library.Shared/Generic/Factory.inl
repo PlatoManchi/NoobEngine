@@ -19,11 +19,11 @@ namespace NoobEngine
 		}
 
 		template<class T>
-		T* Factory<T>::Create(std::string pName)
+		T* Factory<T>::Create(std::string pTypeName)
 		{
-			if (mFactories.ContainsKey(pName))
+			if (mFactories.ContainsKey(pTypeName))
 			{
-				return mFactories[pName]->Create();
+				return mFactories[pTypeName]->Create();
 			}
 			return nullptr;
 		}

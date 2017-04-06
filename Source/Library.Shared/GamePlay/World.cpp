@@ -95,6 +95,15 @@ namespace NoobEngine
 
 			// reset
 			pWorldState.mCurrentSector = nullptr;
+
+			// doing garbage collection
+			for (Action* action : mGarbageQueue)
+			{
+				action->Orphan();
+				delete action;
+			}
+			// clearing garbage list
+			mGarbageQueue.Clear();
 		}
 
 		void World::Populate()
@@ -104,6 +113,74 @@ namespace NoobEngine
 			AppendPrescribedAttribute(Parsers::WorldParseHelper::sKeyAttribute).SetStorage(&mName, 1);
 			AppendPrescribedAttribute(Sector::sSectorsKey).SetType(Runtime::DatumType::TABLE);
 			AppendPrescribedAttribute(Action::sActionKey).SetType(Runtime::DatumType::TABLE);
+		}
+
+		void World::DestroyAction(Action& pActionToDestroy)
+		{
+			mGarbageQueue.PushBack(&pActionToDestroy);
+		}
+
+		Runtime::Datum* World::ResolveDatum(std::string pDatumPath)
+		{
+			char* tokens;
+			tokens = strtok(const_cast<char*>(pDatumPath.c_str()), ".");
+			Runtime::Scope* currentScope = this;
+			Runtime::Datum* result = nullptr;
+			bool isCurentLevelFound = true;
+
+			while (tokens != nullptr && isCurentLevelFound)
+			{
+				isCurentLevelFound = false;
+				if (currentScope)
+				{
+					for (std::pair<std::string, Runtime::Datum>& element : *currentScope)
+					{
+						// search through every datum int he scope
+						Runtime::Datum& searchingDatum = element.second;
+						if (searchingDatum.Type() == Runtime::DatumType::TABLE)
+						{
+							for (uint32_t i = 0; i < searchingDatum.Size(); ++i)
+							{
+								// check every table in the datum
+								Runtime::Scope* scope = searchingDatum.Get<Scope*>(i);
+								if (scope->Is(Attribute::TypeIdClass()))
+								{
+									Runtime::Attribute* attrib = reinterpret_cast<Runtime::Attribute*>(scope);
+
+									if (attrib->IsAttribute(Parsers::WorldParseHelper::sKeyAttribute))
+									{
+										if ((*attrib)[Parsers::WorldParseHelper::sKeyAttribute].Get<std::string>() == tokens)
+										{
+											currentScope = scope;
+											isCurentLevelFound = true;
+											result = &searchingDatum;
+											break;
+										}
+									}
+
+								}
+							}
+						}
+						else
+						{
+							// check if this datum is the one wanted
+							if (element.first == tokens)
+							{
+								isCurentLevelFound = true;
+								result = &searchingDatum;
+								break;
+							}
+						}
+
+						if (isCurentLevelFound) break;
+					}
+				}
+
+				// getting next token
+				tokens = strtok(nullptr, ".");
+			}
+
+			return isCurentLevelFound ? result : nullptr;
 		}
 	}
 }

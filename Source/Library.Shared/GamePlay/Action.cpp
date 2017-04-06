@@ -3,13 +3,16 @@
 #include "World.h"
 #include "Sector.h"
 #include "Entity.h"
+#include "ActionList.h"
 
 namespace NoobEngine
 {
 	namespace GamePlay
 	{
-		const char* Action::sActionKey = "action";
+		RTTI_DEFINITIONS(Action)
 
+		const char* Action::sActionKey = "action";
+		const char* Action::sKeyAttribute = "key";
 		Action::Action() :
 			Attribute(), mParent(nullptr)
 		{
@@ -37,6 +40,11 @@ namespace NoobEngine
 			return *mParent;
 		}
 
+		void Action::SetParent(ActionList& pParent)
+		{
+			SetParent(&pParent);
+		}
+
 		void Action::SetParent(Entity& pParent)
 		{
 			SetParent(&pParent);
@@ -54,7 +62,7 @@ namespace NoobEngine
 
 		void Action::SetParent(Attribute* pParent)
 		{
-			assert(pParent->Is(World::TypeIdClass()) || pParent->Is(Sector::TypeIdClass()) || pParent->Is(Entity::TypeIdClass()));
+			assert(pParent->Is(World::TypeIdClass()) || pParent->Is(Sector::TypeIdClass()) || pParent->Is(Entity::TypeIdClass()) || pParent->Is(ActionList::TypeIdClass()) );
 
 			if (mParent != pParent)
 			{
@@ -66,6 +74,8 @@ namespace NoobEngine
 		void Action::Populate()
 		{
 			Attribute::Populate();
+
+			AppendPrescribedAttribute(sKeyAttribute).SetStorage(&mName, 1);
 		}
 	}
 }

@@ -15,6 +15,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Action.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionCreateAction.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionDecrement.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionListIf.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Entity.cpp" />
@@ -44,6 +47,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\Vector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Action.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionCreateAction.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionDecrement.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionList.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionListIf.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Entity.h" />

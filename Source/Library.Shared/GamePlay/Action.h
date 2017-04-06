@@ -1,16 +1,23 @@
 #pragma once
 #include "Runtime/Attribute.h"
 #include "WorldState.h"
+#include "Parsers/ActionParseHelper.h"
 
 namespace NoobEngine
 {
 	namespace GamePlay
 	{
+		class ActionList;
+
 		class Action : public Runtime::Attribute
 		{
+			RTTI_DECLARATIONS(Action, Attribute)
+
+			friend class Parsers::ActionParseHelper;
+			friend class ActionListIf;
 		public:
 			static const char* sActionKey;
-
+			static const char* sKeyAttribute;
 			/**
 				@brief Default constructor.
 			*/
@@ -41,21 +48,28 @@ namespace NoobEngine
 
 			/**
 				@brief Set the parent of this action
-				@details The pParent has to be of type World or Sector or Entity.
+				@details The pParent has to be of type World or Sector or Entity or ActionList.
+				@param[in] pParent The attributed that is supposed to the parent of this action.
+			*/
+			void SetParent(ActionList& pParent);
+
+			/**
+				@brief Set the parent of this action
+				@details The pParent has to be of type World or Sector or Entity or ActionList.
 				@param[in] pParent The attributed that is supposed to the parent of this action.
 			*/
 			void SetParent(Entity& pParent);
 
 			/**
 				@brief Set the parent of this action
-				@details The pParent has to be of type World or Sector or Entity.
+				@details The pParent has to be of type World or Sector or Entity or ActionList.
 				@param[in] pParent The attributed that is supposed to the parent of this action.
 			*/
 
 			void SetParent(Sector& pParent);
 			/**
 				@brief Set the parent of this action
-				@details The pParent has to be of type World or Sector or Entity.
+				@details The pParent has to be of type World or Sector or Entity or ActionList.
 				@param[in] pParent The attributed that is supposed to the parent of this action.
 			*/
 			void SetParent(World& pParent);

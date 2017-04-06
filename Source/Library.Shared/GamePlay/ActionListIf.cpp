@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "ActionListIf.h"
+#include "World.h"
 
 namespace NoobEngine
 {
 	namespace GamePlay
 	{
+		RTTI_DEFINITIONS(ActionListIf)
+
 		const char* ActionListIf::sConditionKey = "condition";
 		const char* ActionListIf::sThenActionKey = "then";
 		const char* ActionListIf::sElseActionKey = "else";
@@ -21,13 +24,32 @@ namespace NoobEngine
 
 		void ActionListIf::Update(WorldState& pWorldState)
 		{
-			if (GetCondition())
+			if (!mConditionDatum)
 			{
-				GetThenAction()->Update(pWorldState);
+				//mConditionDatum = Search(mConditionKey);
+				mConditionDatum = pWorldState.mCurrentWorld->ResolveDatum(mConditionKey);
+
+				if (mConditionDatum)
+				{
+					if (mValueDatum.Type() == Runtime::DatumType::UNASSIGNED)
+					{
+						mValueDatum.SetType(mConditionDatum->Type());
+						std::string valueStr = operator[](Parsers::ActionParseHelper::sValueAttribute).Get<std::string>();
+						mValueDatum.SetFromString(valueStr);
+					}
+				}
 			}
-			else
+			
+			if (mConditionDatum)
 			{
-				GetElseAction()->Update(pWorldState);
+				if (*mConditionDatum == mValueDatum)
+				{
+					GetThenAction()->Update(pWorldState);
+				}
+				else
+				{
+					GetElseAction()->Update(pWorldState);
+				}
 			}
 		}
 
@@ -43,7 +65,8 @@ namespace NoobEngine
 
 		void ActionListIf::SetThenAction(Action& pAction)
 		{
-			*mThenDatum = &pAction;
+			Adopt(pAction, sThenActionKey);
+			pAction.mParent = this;
 		}
 
 		Action* ActionListIf::GetThenAction()
@@ -57,7 +80,8 @@ namespace NoobEngine
 
 		void ActionListIf::SetElseAction(Action& pAction)
 		{
-			*mElseDatum = &pAction;
+			Adopt(pAction, sElseActionKey);
+			pAction.mParent = this;
 		}
 
 		Action* ActionListIf::GetElseAction()
@@ -72,8 +96,6 @@ namespace NoobEngine
 		void ActionListIf::Populate()
 		{
 			ActionList::Populate();
-
-			mConditionDatum = &AddInternalAttribute(sConditionKey, 0);
 			
 			mThenDatum = &AppendPrescribedAttribute(sThenActionKey);
 			mThenDatum->SetType(Runtime::DatumType::TABLE);

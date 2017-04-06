@@ -1,0 +1,16 @@
+<world key="HelloWorld">
+	<sector key="Level1">
+	
+		<entity key="Player">
+			<int key="LifeCount" value="3"/>
+			<decrement key="decrementSample" value="Level1.Player.LifeCount"/>
+			
+			<if key="ifExample" condition="Level1.Player.LifeCount" value="0">
+				<then class="ActionPlayerDead"/>
+				<else class="ActionPlayerAlive"/>
+			</if>
+			
+		</entity>
+		
+	</sector>
+</world>

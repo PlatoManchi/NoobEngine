@@ -39,7 +39,7 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				//Assert::Fail(L"Memory Leaks!");
+				Assert::Fail(L"Memory Leaks!");
 			}
 		}
 		
@@ -228,6 +228,7 @@ namespace UnitTestLibraryDesktop
 			Assert::IsTrue(&worldSharedData.GetRootNode() == &worldSharedData.GetCurrentNode());
 
 			World* world = reinterpret_cast<World*>(&worldSharedData.GetRootNode());
+			//world = ((worldSharedData.GetRootNode()["worlds"]).Get<Scope*>())->As<World>();
 
 			Scope* settingsScope = (*world)["Settings"].Get<Scope*>();
 

@@ -33,6 +33,16 @@
     <ClCompile Include="SupportingClasses\FooEntity.cpp">
       <Filter>SupportingClasses</Filter>
     </ClCompile>
+    <ClCompile Include="SupportingClasses\ActionPlayerAlive.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportingClasses\ActionPlayerDead.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportingClasses\ActionTest.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -61,6 +71,15 @@
       <Filter>SupportingClasses</Filter>
     </ClInclude>
     <ClInclude Include="SupportingClasses\FooEntity.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\ActionPlayerAlive.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\ActionPlayerDead.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\ActionTest.h">
       <Filter>SupportingClasses</Filter>
     </ClInclude>
   </ItemGroup>

@@ -24,8 +24,10 @@ namespace NoobEngine
 		
 		const std::string WorldParseHelper::sEntityClassAttribute = "class";
 
+		const std::string WorldParseHelper::sWorldsKey = "worlds";
+
 		WorldParseHelper::WorldParseHelper() :
-			mHasValidRoot(false), mIsValidSector(false), mIsValidEntity(false), mIsTable(false)
+			IXmlParseHelper(), mHasValidRoot(false), mIsValidSector(false), mIsValidEntity(false), mIsTable(false)
 		{
 		}
 
@@ -64,13 +66,16 @@ namespace NoobEngine
 				if (mHasValidRoot && !sharedData->mRoot)
 				{
 					// create new world if the root is valid
+					
 					GamePlay::World* world = new GamePlay::World();
 					sharedData->mRoot = world;
+					sharedData->mRoot->Adopt(*world, sWorldsKey);
+					sharedData->mCurrentRoot = world;
+
 					if (pAttributes.ContainsKey(sKeyAttribute))
 					{
 						world->SetName(pAttributes[sKeyAttribute]);
 					}
-					sharedData->mCurrentRoot = sharedData->mRoot;
 				}
 
 				// this helper will process the xml only if the first element is names as 'root'

@@ -1,0 +1,23 @@
+<world key="HelloWorld">
+	<sector key="Level1">
+	
+		<entity key="Player">
+			<int key="LifeCount" value="3"/>
+			
+			<createaction  key="createActionKey" class="ActionTest" value="NewCreatedAction"/>
+			
+			<decrement key="decrementSample" value="Level1.Player.LifeCount"/>
+			
+			<if key="ifExample" condition="Level1.Player.LifeCount" value="0">
+				<then class="ActionPlayerDead"/>
+				<else class="ActionPlayerAlive"/>
+			</if>
+			
+			<action key="TmpAction" class="ActionTest"/>
+		
+			<destroyaction key="destroySample" value="ifExample"/>
+			
+		</entity>
+		
+	</sector>
+</world>

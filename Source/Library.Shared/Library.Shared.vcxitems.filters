@@ -85,6 +85,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionListIf.cpp">
       <Filter>GamePlay</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionDecrement.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionCreateAction.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">
@@ -164,6 +173,15 @@
       <Filter>GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionListIf.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionDecrement.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionCreateAction.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.h">
       <Filter>GamePlay</Filter>
     </ClInclude>
   </ItemGroup>

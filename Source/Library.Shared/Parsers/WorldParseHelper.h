@@ -27,6 +27,8 @@ namespace NoobEngine
 			
 			static const std::string sEntityClassAttribute;
 
+			static const std::string sWorldsKey;
+
 			/**
 				@brief Default constructor
 			*/
