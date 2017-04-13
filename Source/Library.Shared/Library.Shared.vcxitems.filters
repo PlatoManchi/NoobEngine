@@ -97,9 +97,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.cpp">
       <Filter>GamePlay</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Events\Event.cpp">
-      <Filter>Events</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventPublisher.cpp">
       <Filter>Events</Filter>
     </ClCompile>

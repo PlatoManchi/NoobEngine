@@ -63,7 +63,6 @@ namespace NoobEngine
 
 		void World::Update(WorldState& pWorldState)
 		{
-			Runtime::Datum& sectorsList = Sectors();
 			pWorldState.mCurrentWorld = this;
 			pWorldState.mCurrentSector = nullptr;
 			pWorldState.mCurrentEntity = nullptr;
@@ -73,9 +72,9 @@ namespace NoobEngine
 
 			// update all actions in world
 			Runtime::Datum& actionsList = Actions();
-			for (uint32_t i = 0; i < actionsList.Size(); i++)
+			for (uint32_t i = 0U; i < actionsList.Size(); ++i)
 			{
-				Action* action = reinterpret_cast<Action*>(actionsList.Get<Action*>(i));
+				Action* action = reinterpret_cast<Action*>(actionsList.Get<Scope*>(i));
 				pWorldState.mCurrentAction = action;
 
 				action->Update(pWorldState);
@@ -85,7 +84,8 @@ namespace NoobEngine
 			pWorldState.mCurrentAction = nullptr;
 
 			// update all sectors in world
-			for (uint32_t i = 0; i < sectorsList.Size(); i++)
+			Runtime::Datum& sectorsList = Sectors();
+			for (uint32_t i = 0; i < sectorsList.Size(); ++i)
 			{
 				Sector* sector = reinterpret_cast<Sector*>(sectorsList.Get<Scope*>(i));
 				pWorldState.mCurrentSector = sector;

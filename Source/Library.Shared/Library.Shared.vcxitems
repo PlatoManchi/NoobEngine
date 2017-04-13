@@ -14,7 +14,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Events\Event.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventPublisher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventSubscriber.cpp" />

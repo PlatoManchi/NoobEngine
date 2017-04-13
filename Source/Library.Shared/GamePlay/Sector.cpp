@@ -3,7 +3,7 @@
 #include "World.h"
 #include "Entity.h"
 #include "Parsers/WorldParseHelper.h"
-
+#include "ActionListIf.h"
 namespace NoobEngine
 {
 	namespace GamePlay
@@ -80,9 +80,9 @@ namespace NoobEngine
 		{
 			// update all actions in sector
 			Runtime::Datum& actionsList = Actions();
-			for (uint32_t i = 0; i < actionsList.Size(); i++)
+			for (uint32_t i = 0; i < actionsList.Size(); ++i)
 			{
-				Action* action = reinterpret_cast<Action*>(actionsList.Get<Action*>(i));
+				Action* action = static_cast<Action*>(actionsList.Get<Scope*>(i));
 				pWorldState.mCurrentAction = action;
 
 				action->Update(pWorldState);
@@ -93,7 +93,7 @@ namespace NoobEngine
 
 			// updating all entities in the sector
 			Runtime::Datum& entitiesList = Entities();
-			for (uint32_t i = 0; i < entitiesList.Size(); i++)
+			for (uint32_t i = 0; i < entitiesList.Size(); ++i)
 			{
 				Entity* entity = reinterpret_cast<Entity*>(entitiesList.Get<Scope*>(i));
 				pWorldState.mCurrentEntity = entity;
