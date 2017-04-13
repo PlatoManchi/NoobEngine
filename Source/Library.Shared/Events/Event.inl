@@ -13,7 +13,7 @@ namespace NoobEngine
 
 		template<typename T>
 		Event<T>::Event(T& pPayload) :
-			mPayload(pPayload)
+			EventPublisher(sSubscriberList), mPayload(pPayload)
 		{
 		}
 

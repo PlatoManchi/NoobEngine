@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EventPublisher.h"
+#include "EventSubscriber.h"
 
 namespace NoobEngine
 {
@@ -7,16 +8,15 @@ namespace NoobEngine
 	{
 		RTTI_DEFINITIONS(EventPublisher)
 
-		EventPublisher::EventPublisher(const Container::Vector<std::shared_ptr<EventSubscriber>>& pSubscribers) :
-			mSubscriberList(pSubscribers), mIsExpired(false)
+		EventPublisher::EventPublisher(Container::Vector<std::shared_ptr<EventSubscriber>>& pSubscribers) :
+			mSubscriberList(&pSubscribers), mIsExpired(false)
 		{
 		}
 
 
-		EventPublisher::EventPublisher(EventPublisher& pOther)
+		EventPublisher::EventPublisher(EventPublisher& pOther) : 
+			mSubscriberList(pOther.mSubscriberList), mIsExpired(pOther.mIsExpired)
 		{
-			mSubscriberList = pOther.mSubscriberList;
-			mIsExpired = pOther.mIsExpired;
 		}
 
 		EventPublisher& EventPublisher::operator=(EventPublisher& pOther)
@@ -30,18 +30,19 @@ namespace NoobEngine
 		}
 
 		EventPublisher::EventPublisher(EventPublisher&& pOther) :
-			RTTI(std::move(pOther))
+			RTTI(std::move(pOther)), mSubscriberList(pOther.mSubscriberList), mIsExpired(pOther.mIsExpired)
 		{
-			mSubscriberList = std::move(pOther.mSubscriberList);
-			mIsExpired = pOther.mIsExpired;
+			pOther.mSubscriberList = nullptr;
 		}
 
 		EventPublisher& EventPublisher::operator=(EventPublisher&& pOther)
 		{
 			if (this != &pOther)
 			{
-				mSubscriberList = std::move(pOther.mSubscriberList);
+				mSubscriberList = pOther.mSubscriberList;
 				mIsExpired = pOther.mIsExpired;
+
+				pOther.mSubscriberList = nullptr;
 			}
 			return *this;
 		}
@@ -53,10 +54,15 @@ namespace NoobEngine
 
 		void EventPublisher::Deliver()
 		{
-			mIsExpired = true;
-			for (std::shared_ptr<EventSubscriber> subscriber : mSubscriberList)
+			if (!mSubscriberList)
 			{
-				subscriber->Notify();
+				throw std::exception("Invalid publisher.");
+			}
+
+			mIsExpired = true;
+			for (std::shared_ptr<EventSubscriber> subscriber : *mSubscriberList)
+			{
+				subscriber->Notify(*this);
 			}
 		}
 	}

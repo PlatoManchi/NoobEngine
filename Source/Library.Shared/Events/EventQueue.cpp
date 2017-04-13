@@ -17,7 +17,7 @@ namespace NoobEngine
 			Publisher tmpPublisher;
 			tmpPublisher.mPublisher = pEventPublisher;
 			tmpPublisher.mEnqueuedTime = pGameTime.CurrentTime();
-			tmpPublisher.mDelay = std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(pDelay * 1000.0f));
+			tmpPublisher.mDelay = std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(pDelay * 1000.0f));
 
 			mPublisherList.PushBack(tmpPublisher);
 		}
@@ -39,7 +39,8 @@ namespace NoobEngine
 				Publisher& publisher = mPublisherList[i];
 
 				// check if the event should be notified
-				if (publisher.mEnqueuedTime + publisher.mDelay >= currentTime)
+				std::chrono::high_resolution_clock::time_point notifyTime = publisher.mEnqueuedTime + publisher.mDelay;
+				if (currentTime >= notifyTime)
 				{
 					// notify subscribers only if the event is not expired
 					if (!publisher.mPublisher->IsExpired())
@@ -50,7 +51,7 @@ namespace NoobEngine
 					numOfExpiredEvents++;
 
 					// swap the expired event to end of the vector
-					Publisher& tmp = mPublisherList[mPublisherList.Size() - numOfExpiredEvents];
+					Publisher tmp = mPublisherList[mPublisherList.Size() - numOfExpiredEvents];
 					mPublisherList[mPublisherList.Size() - numOfExpiredEvents] = mPublisherList[i];
 					mPublisherList[i] = tmp;
 					

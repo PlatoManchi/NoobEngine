@@ -3,12 +3,15 @@
 #include "Runtime/RTTI.h"
 #include "GamePlay/GameTime.h"
 #include "Container/Vector.h"
-#include "EventSubscriber.h"
+//#include "EventSubscriber.h"
+
 
 namespace NoobEngine
 {
 	namespace Events
 	{
+		class EventSubscriber;
+
 		class EventPublisher abstract : public Runtime::RTTI
 		{
 			RTTI_DECLARATIONS(EventPublisher, RTTI)
@@ -17,7 +20,7 @@ namespace NoobEngine
 			/**
 				@brief Default constructor
 			*/
-			EventPublisher(const Container::Vector<std::shared_ptr<EventSubscriber>>& pSubscribers);
+			EventPublisher(Container::Vector<std::shared_ptr<EventSubscriber>>& pSubscribers);
 
 			/**
 				@brief Default Copy constructor
@@ -46,7 +49,16 @@ namespace NoobEngine
 			*/
 			void Deliver();
 		private:
-			Container::Vector<std::shared_ptr<EventSubscriber>> mSubscriberList;
+			/**
+				Pointer to vector that contains all the subscribers for this Publisher
+				Since this is a static vector from Event class, saving it as pointer is better than reference
+				because the move semantics can get problematic with reference.
+			*/
+			Container::Vector<std::shared_ptr<EventSubscriber>>* mSubscriberList;
+
+			/**
+				Is event expired.
+			*/
 			bool mIsExpired;
 		};
 	}

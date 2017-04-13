@@ -1,5 +1,6 @@
 #pragma once
 #include "Runtime/RTTI.h"
+#include "EventPublisher.h"
 
 namespace NoobEngine
 {
@@ -17,7 +18,7 @@ namespace NoobEngine
 				@brief This will be called when ever the event is fired.
 				@param[in] pEventPublisher Reference to EventPublisher that fired this event.
 			*/
-			virtual void Notify() = 0;
+			virtual void Notify(EventPublisher& pPublisher) = 0;
 		};
 	}
 }

@@ -7,6 +7,7 @@
 
 #include <SDKDDKVer.h>
 
+#include <chrono>
 // Headers for CppUnitTest
 #include "CppUnitTest.h"
 

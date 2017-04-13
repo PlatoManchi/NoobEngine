@@ -236,6 +236,8 @@
     <ClInclude Include="SupportingClasses\ActionPlayerAlive.h" />
     <ClInclude Include="SupportingClasses\ActionPlayerDead.h" />
     <ClInclude Include="SupportingClasses\ActionTest.h" />
+    <ClInclude Include="SupportingClasses\EventMessageOne.h" />
+    <ClInclude Include="SupportingClasses\EventMessageTwo.h" />
     <ClInclude Include="SupportingClasses\FooEntity.h" />
     <ClInclude Include="SupportingClasses\IProduct.h" />
     <ClInclude Include="SupportingClasses\NonRTTIProduct.h" />
@@ -260,6 +262,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EntityTest.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EventTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
