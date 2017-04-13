@@ -46,6 +46,7 @@ namespace NoobEngine
 
 			/**
 				@brief Call notify on all the subscribers.
+				@exception std::exception If the mSubscriberList is null.
 			*/
 			void Deliver();
 		private:
