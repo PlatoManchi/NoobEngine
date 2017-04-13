@@ -49,13 +49,13 @@ namespace NoobEngine
 				@brief Subscribe the subscriber to this event.
 				@param[in] pSubscriber The subscriber that is subscribing for this event.
 			*/
-			static void Subscribe(EventSubscriber& pSubscriber);
+			static void Subscribe(std::shared_ptr<EventSubscriber> pSubscriber);
 
 			/**
 				@brief Unsubscribe the subscriber form this event.
 				@param[in] pSubscriber The subscriber to unsubscribe from this event.
 			*/
-			static void Unsubscribe(EventSubscriber& pSubscriber);
+			static void Unsubscribe(std::shared_ptr<EventSubscriber> pSubscriber);
 
 			/**
 				@brief Unsubscribe all subscribers from event of this type.

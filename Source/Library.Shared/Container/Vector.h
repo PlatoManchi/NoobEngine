@@ -40,6 +40,13 @@ namespace NoobEngine
 				Iterator(const Iterator& pIterator);
 				
 				/**
+					@brief Constructor for creating new iterator.
+					@param pOwnerVector Constant pointer to the list that owns the iterator.
+					@param pIndex Index of the element this iterator is pointing to.
+				*/
+				Iterator(const Vector<T>* pOwnerVector, uint32_t pIndex);
+
+				/**
 					@brief Assign the rhs value to lhs iterator.
 					@param pOther Iterator to create copy of.
 					@return Iterator reference.
@@ -107,13 +114,6 @@ namespace NoobEngine
 					@see operator*()
 				*/
 				const T& operator*() const;
-
-				/**
-					@brief Constructor for creating new iterator.
-					@param pOwnerVector Constant pointer to the list that owns the iterator.
-					@param pIndex Index of the element this iterator is pointing to.
-				*/
-				Iterator(const Vector<T>* pOwnerVector, uint32_t pIndex);
 
 			private:
 

@@ -196,7 +196,7 @@ namespace NoobEngine
 		}
 
 		template<typename T>
-		typename Vector<T>::Iterator Vector<T>::Find(const T & pObject) const
+		typename Vector<T>::Iterator Vector<T>::Find(const T& pObject) const
 		{
 			for (typename Vector<T>::Iterator itr = begin(); itr != end(); ++itr)
 			{

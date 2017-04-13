@@ -68,11 +68,6 @@ namespace NoobEngine
 				List that holds all the publishers.
 			*/
 			Container::Vector<Publisher> mPublisherList;
-
-			/**
-				List of publishers to remove from queue at end of the update.
-			*/
-			Container::Vector<Publisher> mGarbagePublisherList;
 		};
 	}
 }
