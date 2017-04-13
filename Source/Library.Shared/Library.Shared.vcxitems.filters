@@ -19,6 +19,9 @@
     <Filter Include="GamePlay">
       <UniqueIdentifier>{be78f18b-98dd-44e8-a456-37bdf66b0151}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{f5013f03-7da0-466d-ad8a-e48b66aa370a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
@@ -93,6 +96,18 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.cpp">
       <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\Event.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventPublisher.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventQueue.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventSubscriber.cpp">
+      <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +199,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionDestroyAction.h">
       <Filter>GamePlay</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventPublisher.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventQueue.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventSubscriber.h">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Container\SList.inl">
@@ -200,6 +227,9 @@
     </None>
     <None Include="$(MSBuildThisFileDirectory)Generic\Factory.inl">
       <Filter>Generic</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Events\Event.inl">
+      <Filter>Events</Filter>
     </None>
   </ItemGroup>
 </Project>
