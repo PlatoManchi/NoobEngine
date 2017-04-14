@@ -74,7 +74,7 @@ namespace NoobEngine
 			Runtime::Datum& actionsList = Actions();
 			for (uint32_t i = 0U; i < actionsList.Size(); ++i)
 			{
-				Action* action = reinterpret_cast<Action*>(actionsList.Get<Scope*>(i));
+				Action* action = static_cast<Action*>(actionsList.Get<Scope*>(i));
 				pWorldState.mCurrentAction = action;
 
 				action->Update(pWorldState);
@@ -87,7 +87,7 @@ namespace NoobEngine
 			Runtime::Datum& sectorsList = Sectors();
 			for (uint32_t i = 0; i < sectorsList.Size(); ++i)
 			{
-				Sector* sector = reinterpret_cast<Sector*>(sectorsList.Get<Scope*>(i));
+				Sector* sector = static_cast<Sector*>(sectorsList.Get<Scope*>(i));
 				pWorldState.mCurrentSector = sector;
 
 				sector->Update(pWorldState);
