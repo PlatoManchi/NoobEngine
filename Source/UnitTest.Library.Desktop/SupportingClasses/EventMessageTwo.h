@@ -5,8 +5,6 @@ namespace SupportingClasses
 {
 	class EventMessageTwo : public NoobEngine::Events::EventSubscriber
 	{
-		RTTI_DECLARATIONS(EventMessageTwo, NoobEngine::Events::EventSubscriber)
-
 	public:
 		bool mIsNotified;
 
@@ -26,6 +24,4 @@ namespace SupportingClasses
 			mIsNotified = false;
 		}
 	};
-
-	RTTI_DEFINITIONS(EventMessageTwo)
 }

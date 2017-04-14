@@ -6,7 +6,6 @@ namespace SupportingClasses
 {
 	class EventMessageOne : public NoobEngine::Events::EventSubscriber
 	{
-		RTTI_DECLARATIONS(EventMessageOne, NoobEngine::Events::EventSubscriber)
 	public:
 		int32_t mNotifiedCount;
 
@@ -27,5 +26,4 @@ namespace SupportingClasses
 		}
 	};
 
-	RTTI_DEFINITIONS(EventMessageOne)
 }

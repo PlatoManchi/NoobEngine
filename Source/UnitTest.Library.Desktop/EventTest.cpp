@@ -198,24 +198,6 @@ namespace UnitTestLibraryDesktop
 			Assert::AreEqual(true, eventQueue.IsEmpty());
 		}
 
-		TEST_METHOD(RTTITest)
-		{
-			// subscriber
-			EventMessageOne messageOne = EventMessageOne();
-			
-			Assert::IsTrue(messageOne.Is(EventSubscriber::TypeIdClass()));
-			Assert::IsTrue(messageOne.Is(EventSubscriber::TypeName()));
-			Assert::IsFalse(messageOne.Is(EventPublisher::TypeIdClass()));
-			Assert::IsFalse(messageOne.Is(EventPublisher::TypeName()));
-
-			int tmpInt = 0;
-			Event<int> publisherOne = Event<int>(tmpInt);
-			Assert::IsTrue(publisherOne.Is(EventPublisher::TypeIdClass()));
-			Assert::IsTrue(publisherOne.Is(EventPublisher::TypeName()));
-			Assert::IsFalse(publisherOne.Is(EventSubscriber::TypeIdClass()));
-			Assert::IsFalse(publisherOne.Is(EventSubscriber::TypeName()));
-		}
-
 		TEST_METHOD(CopySemantics)
 		{
 			// subscriber
@@ -223,16 +205,12 @@ namespace UnitTestLibraryDesktop
 			EventMessageOne messageOneCpy = messageOne;
 
 			Assert::AreEqual(messageOne.mNotifiedCount, messageOneCpy.mNotifiedCount);
-			Assert::AreEqual(messageOne.TypeIdClass(), messageOneCpy.TypeIdClass());
-			Assert::AreEqual(messageOne.TypeIdInstance(), messageOneCpy.TypeIdInstance());
-
+			
 			EventMessageOne messageOneCpy2;
 			messageOneCpy2 = messageOneCpy;
 
 			Assert::AreEqual(messageOneCpy2.mNotifiedCount, messageOneCpy.mNotifiedCount);
-			Assert::AreEqual(messageOneCpy2.TypeIdClass(), messageOneCpy.TypeIdClass());
-			Assert::AreEqual(messageOneCpy2.TypeIdInstance(), messageOneCpy.TypeIdInstance());
-
+			
 			int tmpInt = 10;
 			float tmpFloat = 1.0f;
 
