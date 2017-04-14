@@ -9,10 +9,8 @@ namespace NoobEngine
 		/**
 			Any class that wants to subscribe to events has to extend this interface.
 		*/
-		class EventSubscriber abstract : public Runtime::RTTI
+		class EventSubscriber abstract
 		{
-			RTTI_DECLARATIONS(EventSubscriber, RTTI)
-
 		public:
 			/**
 				@brief This will be called when ever the event is fired.

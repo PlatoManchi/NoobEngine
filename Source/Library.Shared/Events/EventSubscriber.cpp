@@ -5,6 +5,5 @@ namespace NoobEngine
 {
 	namespace Events
 	{
-		RTTI_DEFINITIONS(EventSubscriber)
 	}
 }
