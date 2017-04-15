@@ -379,7 +379,17 @@ namespace NoobEngine
 			return mData.begin();
 		}
 
+		Container::Hashmap<std::string, Datum>::Iterator Scope::begin() const
+		{
+			return mData.begin();
+		}
+
 		Container::Hashmap<std::string, Datum>::Iterator Scope::end()
+		{
+			return mData.end();
+		}
+
+		Container::Hashmap<std::string, Datum>::Iterator Scope::end() const
 		{
 			return mData.end();
 		}

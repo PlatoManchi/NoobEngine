@@ -169,9 +169,19 @@ namespace NoobEngine
 			Container::Hashmap<std::string, Datum>::Iterator begin();
 
 			/**
+				@brief begin iterator
+			*/
+			Container::Hashmap<std::string, Datum>::Iterator begin() const;
+
+			/**
 				@brief end iterator
 			*/
 			Container::Hashmap<std::string, Datum>::Iterator end();
+
+			/**
+				@brief end iterator
+			*/
+			Container::Hashmap<std::string, Datum>::Iterator end() const;
 		private:
 			/**
 			 * Holds the pointer to the parent.
