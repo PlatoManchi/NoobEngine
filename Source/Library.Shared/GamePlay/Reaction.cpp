@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Reaction.h"
+#include "GamePlay/World.h"
+#include "GamePlay/Sector.h"
+#include "GamePlay/Entity.h"
 
 namespace NoobEngine
 {
