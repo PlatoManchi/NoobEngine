@@ -104,11 +104,18 @@ namespace NoobEngine
 				@return Pointer to the datum after resolving path. If the path is invalid returns nullptr.
 			*/
 			Runtime::Datum* ResolveDatum(std::string pDatumPath);
+
+			WorldState* GetWorldState() const;
 		private:
 			/**
 				Holds the name of this world.
 			*/
 			std::string mName;
+
+			/**
+				Holds state of this world
+			*/
+			WorldState* mWorldState;
 
 			/**
 				Contains list of all actions that should be destroyed.

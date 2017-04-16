@@ -33,20 +33,17 @@ namespace UnitTestLibraryDesktop
 			if (_CrtMemDifference(&diffMemState, &sStartMemState, &endMemState))
 			{
 				_CrtMemDumpStatistics(&diffMemState);
-				//Assert::Fail(L"Memory Leaks!");
+				Assert::Fail(L"Memory Leaks!");
 			}
 		}
 
 		TEST_METHOD(DefaultConstructor)
 		{
-			// TODO: Your test code here
+			
 			EventQueue eventQueue;
 			GameTime gameTime;
 			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 			
-			//shared_ptr<EventPublisher> publisherOne = make_shared<Event<EventMessageOne>>();
-			//shared_ptr<EventPublisher> publisherTwo = make_shared<Event<EventMessageTwo>>();
-
 			Assert::AreEqual(0U, eventQueue.Size());
 			Assert::AreEqual(true, eventQueue.IsEmpty());
 

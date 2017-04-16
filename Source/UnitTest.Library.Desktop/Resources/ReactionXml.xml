@@ -1,0 +1,13 @@
+<world key="HelloWorld">
+
+	<sector key="Sector1">
+		
+		<entity key="Player">
+			<reaction key="samplereaction" subtype="reaction2">
+			</reaction>
+			<actionevent subtype="reaction2"/>
+		</entity>
+	
+	</sector>
+
+</world>

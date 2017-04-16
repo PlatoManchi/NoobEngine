@@ -106,6 +106,21 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventSubscriber.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\Reaction.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Events\EventMessageAttributed.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ReactionAttributed.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GamePlay\ActionEvent.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Parsers\ReactionParseHelper.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Container\SList.h">
@@ -207,6 +222,21 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventSubscriber.h">
       <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\Reaction.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Events\EventMessageAttributed.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ReactionAttributed.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GamePlay\ActionEvent.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Parsers\ReactionParseHelper.h">
+      <Filter>Parsers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -80,11 +80,13 @@ namespace NoobEngine
 			*/
 			virtual void Update(WorldState& pWorldState) = 0;
 
+			
+		protected:
 			/**
 				@brief Populate all prescribed attributes to attributed
 			*/
 			void Populate();
-		protected:
+
 			/**
 				Holds the name of this action
 			*/

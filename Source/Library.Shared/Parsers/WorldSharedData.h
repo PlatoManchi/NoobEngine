@@ -11,6 +11,7 @@ namespace NoobEngine
 
 			friend class WorldParseHelper;
 			friend class ActionParseHelper;
+			friend class ReactionParseHelper;
 		public:
 			
 			/**

@@ -12,7 +12,7 @@ namespace NoobEngine
 		RTTI_DEFINITIONS(GamePlay::World)
 
 		World::World() :
-			Attribute(), mName("")
+			Attribute(), mName(""), mWorldState(nullptr)
 		{
 			Populate();
 		}
@@ -63,6 +63,8 @@ namespace NoobEngine
 
 		void World::Update(WorldState& pWorldState)
 		{
+			mWorldState = &pWorldState;
+
 			pWorldState.mCurrentWorld = this;
 			pWorldState.mCurrentSector = nullptr;
 			pWorldState.mCurrentEntity = nullptr;
@@ -181,6 +183,10 @@ namespace NoobEngine
 			}
 
 			return isCurentLevelFound ? result : nullptr;
+		}
+		WorldState * World::GetWorldState() const
+		{
+			return mWorldState;
 		}
 	}
 }

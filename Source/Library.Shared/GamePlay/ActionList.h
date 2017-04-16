@@ -28,10 +28,6 @@ namespace NoobEngine
 			*/
 			virtual void Update(WorldState& pWorldState) override;
 
-			/**
-				@brief Populate all prescribed attributes to attributed
-			*/
-			void Populate();
 
 			/**
 				@brief Create a new action, adopt it into this entity and return the reference to the action that is created.
@@ -40,6 +36,12 @@ namespace NoobEngine
 				@return Reference to action that is created.
 			*/
 			Action& CreateAction(const std::string& pActionType, const std::string& pActionName);
+
+		protected:
+			/**
+				@brief Populate all prescribed attributes to attributed
+			*/
+			void Populate();
 		};
 		
 		ActionFactory(ActionList)
