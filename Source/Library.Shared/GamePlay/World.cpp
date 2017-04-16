@@ -71,6 +71,7 @@ namespace NoobEngine
 			pWorldState.mCurrentAction = nullptr;
 
 			pWorldState.Update();
+			mEventQueue.Update(pWorldState.mGameTime);
 
 			// update all actions in world
 			Runtime::Datum& actionsList = Actions();
@@ -187,6 +188,11 @@ namespace NoobEngine
 		WorldState * World::GetWorldState() const
 		{
 			return mWorldState;
+		}
+
+		Events::EventQueue& World::GetEventQueue()
+		{
+			return mEventQueue;
 		}
 	}
 }

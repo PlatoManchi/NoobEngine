@@ -21,6 +21,29 @@ namespace NoobEngine
 			*/
 			virtual void Update(WorldState& pWorldState);
 
+			/**
+				@brief Return the string that holds the subtype.
+				@return String
+			*/
+			std::string GetSubtype() const;
+
+			/**
+				@brief Set the subtype of the ActionEvent.
+				@param[in] pSubtype String that holds the subtype value
+			*/
+			void SetSubtype(const std::string& pSubtype);
+
+			/**
+				@brief Return the delay of the ActionEvent
+				@return float
+			*/
+			float GetDelay() const;
+
+			/**
+				@brief Set the delay for ActionEvent
+				@param[in] pDelay float that holds the delay.
+			*/
+			void SetDelay(float pDelay);
 		protected:
 			/**
 				@brief Populate all the prescribed attributes.

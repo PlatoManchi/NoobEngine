@@ -3,6 +3,7 @@
 #include "Runtime/Datum.h"
 #include "WorldState.h"
 #include "Container/Vector.h"
+#include "Events/EventQueue.h"
 
 namespace NoobEngine
 {
@@ -105,7 +106,17 @@ namespace NoobEngine
 			*/
 			Runtime::Datum* ResolveDatum(std::string pDatumPath);
 
+			/**
+				@brief Returns the pointer to world state.
+				@return Pointer that points to world state.
+			*/
 			WorldState* GetWorldState() const;
+
+			/**
+				@brief Return the event queue.
+				@return reference to EventQueue.
+			*/
+			Events::EventQueue& GetEventQueue();
 		private:
 			/**
 				Holds the name of this world.
@@ -116,6 +127,11 @@ namespace NoobEngine
 				Holds state of this world
 			*/
 			WorldState* mWorldState;
+
+			/**
+				EventQueue object that will take care of all events.
+			*/
+			Events::EventQueue mEventQueue;
 
 			/**
 				Contains list of all actions that should be destroyed.

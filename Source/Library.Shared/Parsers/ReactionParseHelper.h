@@ -15,6 +15,7 @@ namespace NoobEngine
 			static const std::string sReactionTag;
 			static const std::string sKeyAttribute;
 			static const std::string sSubtypeAttribute;
+			static const std::string sDelayAttribute;
 
 			/**
 				@brief Default constructor
@@ -50,6 +51,17 @@ namespace NoobEngine
 				@return IXmlParseHelper pointer that points to the new cloned parse helper.
 			*/
 			virtual IXmlParseHelper* Clone() const override;
+
+		private:
+			/**
+				if ActionEvent
+			*/
+			bool mIsValidActionEvent;
+
+			/**
+				if Reaction
+			*/
+			bool mIsValidReaction;
 		};
 	}
 }

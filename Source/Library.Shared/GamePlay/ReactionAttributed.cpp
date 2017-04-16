@@ -46,6 +46,16 @@ namespace NoobEngine
 			}
 		}
 
+		std::string ReactionAttributed::GetSubtype() const
+		{
+			return mSubtype;
+		}
+
+		void ReactionAttributed::SetSubtype(const std::string& pSubtype)
+		{
+			mSubtype = pSubtype;
+		}
+
 		void ReactionAttributed::Populate()
 		{
 			Reaction::Populate();

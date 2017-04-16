@@ -2,6 +2,7 @@
 #include "Runtime/Attribute.h"
 #include "WorldState.h"
 #include "Parsers/ActionParseHelper.h"
+#include "Parsers/ReactionParseHelper.h"
 
 namespace NoobEngine
 {
@@ -14,6 +15,7 @@ namespace NoobEngine
 			RTTI_DECLARATIONS(Action, Attribute)
 
 			friend class Parsers::ActionParseHelper;
+			friend class Parsers::ReactionParseHelper;
 			friend class ActionListIf;
 		public:
 			static const char* sActionKey;

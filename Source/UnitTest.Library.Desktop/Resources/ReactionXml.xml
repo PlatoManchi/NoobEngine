@@ -3,9 +3,15 @@
 	<sector key="Sector1">
 		
 		<entity key="Player">
+			<float key="Health" value = "100"/>
+			
 			<reaction key="samplereaction" subtype="reaction2">
+				<decrement key="decrementSample" value="Sector1.Player.Health"/>
 			</reaction>
-			<actionevent subtype="reaction2"/>
+			
+			<actionevent key="actioneventsample" subtype="reaction2" delay="10">
+				<float key="damage" value="10"/>
+			</actionevent>
 		</entity>
 	
 	</sector>

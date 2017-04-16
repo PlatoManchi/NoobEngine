@@ -44,6 +44,7 @@
     </ClCompile>
     <ClCompile Include="ActionTests.cpp" />
     <ClCompile Include="EventTest.cpp" />
+    <ClCompile Include="ReactionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

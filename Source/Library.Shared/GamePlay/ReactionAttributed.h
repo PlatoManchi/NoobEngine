@@ -27,6 +27,19 @@ namespace NoobEngine
 				@param pPublisher The publisher that fired this event.
 			*/
 			virtual void Notify(Events::EventPublisher& pPublisher) override;
+
+			/**
+				@brief Return the string that holds the subtype.
+				@return String
+			*/
+			std::string GetSubtype() const;
+
+			/**
+				@brief Set the subtype of the ActionEvent.
+				@param[in] pSubtype String that holds the subtype value
+			*/
+			void SetSubtype(const std::string& pSubtype);
+
 		protected:
 			/**
 				@brief Populate all the prescribed attributed.

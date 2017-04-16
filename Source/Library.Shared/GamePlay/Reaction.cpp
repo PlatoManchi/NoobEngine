@@ -20,7 +20,7 @@ namespace NoobEngine
 
 		void Reaction::Notify(Events::EventPublisher& pPublisher)
 		{
-			EventSubscriber::Notify(pPublisher);
+			pPublisher;
 		}
 
 		void Reaction::Populate()
