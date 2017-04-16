@@ -30,6 +30,8 @@ namespace NoobEngine
 				@return Pointer to SharedData that is a clone of this SharedData object.
 			*/
 			virtual SharedData* Clone() const override;
+		protected:
+			bool mIsActionList;
 		};
 	}
 }

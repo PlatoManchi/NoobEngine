@@ -70,7 +70,7 @@ namespace NoobEngine
 			pWorldState.mCurrentEntity = nullptr;
 			pWorldState.mCurrentAction = nullptr;
 
-			pWorldState.Update();
+			//pWorldState.Update();
 			mEventQueue.Update(pWorldState.mGameTime);
 
 			// update all actions in world

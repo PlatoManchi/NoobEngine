@@ -111,11 +111,24 @@ namespace UnitTestLibraryDesktop
 			Entity* player = static_cast<Entity*>((*sector)[Entity::sEntitiesKey].Get<NoobEngine::Runtime::Scope*>());
 
 			float health = (*player)["Health"].Get<float>();
-
 			Assert::AreEqual(100.0f, health);
 
-			Assert::IsTrue(player->IsAttribute("action"));
-			Assert::IsFalse(player->IsAttribute("reaction"));
+			// calling update
+			WorldState worldState;
+			worldState.mCurrentWorld = world;
+
+			world->Update(worldState);
+
+			health = (*player)["Health"].Get<float>();
+			Assert::AreEqual(100.0f, health);
+
+			// adding 11 seconds
+			worldState.mGameTime.SetCurrentTime(worldState.mGameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(11000.0f)));
+			
+			world->Update(worldState);
+
+			health = (*player)["Health"].Get<float>();
+			Assert::AreEqual(100.0f, health);
 		}
 	private:
 		static _CrtMemState sStartMemState;

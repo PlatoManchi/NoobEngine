@@ -104,7 +104,7 @@ namespace NoobEngine
 				@details The pParent has to be of type World or Sector or Entity.
 				@param[in] pParent The attributed that is supposed to the parent of this action.
 			*/
-			void SetParent(Attribute* pParent);
+			virtual void SetParent(Attribute* pParent);
 		};
 	}
 }

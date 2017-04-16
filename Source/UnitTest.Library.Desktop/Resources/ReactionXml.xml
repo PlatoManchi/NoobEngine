@@ -6,7 +6,7 @@
 			<float key="Health" value = "100"/>
 			
 			<reaction key="samplereaction" subtype="reaction2">
-				<decrement key="decrementSample" value="Sector1.Player.Health"/>
+				<action class="ActionDecrement" key="decrementSample" value="Sector1.Player.Health"/>
 			</reaction>
 			
 			<actionevent key="actioneventsample" subtype="reaction2" delay="10">

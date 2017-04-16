@@ -73,6 +73,7 @@ namespace NoobEngine
 				{
 					mIsValidReaction = true;
 					Runtime::Attribute* currentAttrib = sharedData->GetCurrentNode().As<Runtime::Attribute>();
+					sharedData->mIsActionList = true;
 
 					if (currentAttrib)
 					{
@@ -105,6 +106,7 @@ namespace NoobEngine
 			else if (Utils::StrNCaseCmp(pElement, sReactionTag) && mIsValidReaction)
 			{
 				mIsValidReaction = false;
+				sharedData->mIsActionList = false;
 				sharedData->mCurrentRoot = sharedData->mCurrentRoot->GetParent();
 				return true;
 			}

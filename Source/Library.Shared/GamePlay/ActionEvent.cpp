@@ -18,6 +18,8 @@ namespace NoobEngine
 		void ActionEvent::Update(WorldState& pWorldState)
 		{
 			Events::EventMessageAttributed msgAttribute;
+			msgAttribute.SetSubtype(mSubtype);
+			msgAttribute.SetWorld(*pWorldState.mCurrentWorld);
 			for (std::pair<std::string, Runtime::Datum> element : *this)
 			{
 				if (IsAuxiliaryAttribute(element.first))

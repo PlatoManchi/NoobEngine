@@ -8,7 +8,7 @@ namespace NoobEngine
 		RTTI_DEFINITIONS(WorldSharedData)
 
 		WorldSharedData::WorldSharedData() :
-			XmlSharedData()
+			XmlSharedData(), mIsActionList(false)
 		{
 
 		}

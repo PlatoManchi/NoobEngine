@@ -8,6 +8,7 @@
 #include "GamePlay/ActionDecrement.h"
 #include "GamePlay/ActionCreateAction.h"
 #include "GamePlay/ActionDestroyAction.h"
+#include "GamePlay/ActionList.h"
 
 namespace NoobEngine
 {
@@ -80,16 +81,36 @@ namespace NoobEngine
 					Runtime::Attribute* currentAttrib = sharedData->GetCurrentNode().As<Runtime::Attribute>();
 					if (currentAttrib)
 					{
-						GamePlay::Action* action = Generic::Factory<GamePlay::Action>::Create(pAttributes[sClassAttribute]);
-						
-						action->SetParent(currentAttrib);
-
-						if (pAttributes.ContainsKey(sKeyAttribute))
+						if (!sharedData->mIsActionList)
 						{
-							action->SetName(pAttributes[sKeyAttribute]);
-						}
+							GamePlay::Action* action = Generic::Factory<GamePlay::Action>::Create(pAttributes[sClassAttribute]);
 
-						sharedData->mCurrentRoot = action;
+							action->SetParent(currentAttrib);
+
+							if (pAttributes.ContainsKey(sKeyAttribute))
+							{
+								action->SetName(pAttributes[sKeyAttribute]);
+							}
+
+							sharedData->mCurrentRoot = action;
+						}
+						else
+						{
+							// if action list
+							GamePlay::ActionList* parentAction = currentAttrib->As<GamePlay::ActionList>();
+							GamePlay::Action* childAction = &parentAction->CreateAction(pAttributes[sClassAttribute], pAttributes[sKeyAttribute]);
+							//GamePlay::ActionList* childAction = static_cast<GamePlay::ActionList*>(Generic::Factory<GamePlay::Action>::Create(pAttributes[sClassAttribute]));
+							childAction->SetName(pAttributes[sKeyAttribute]);
+
+							for (std::pair<std::string, std::string> pair : pAttributes)
+							{
+								if (!Utils::StrNCaseCmp(pair.first, sClassAttribute))
+								{
+									(*childAction)[pair.first] = pair.second;
+								}
+							}
+							childAction->SetParent(currentAttrib);
+						}
 					}
 					
 					return true;

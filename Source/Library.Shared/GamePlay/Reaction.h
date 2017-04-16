@@ -13,7 +13,10 @@ namespace NoobEngine
 		class Reaction abstract : public ActionList, public Events::EventSubscriber
 		{
 			RTTI_DECLARATIONS(Reaction, ActionList)
+
+			friend class Parsers::ReactionParseHelper;
 		public:
+			static const std::string sReactionKey;
 			/**
 				@brief Default constructor.
 			*/
@@ -35,6 +38,13 @@ namespace NoobEngine
 				@brief Populate prescribed attributed.
 			*/
 			void Populate();
+
+			/**
+				@brief Set the parent of this action
+				@details The pParent has to be of type World or Sector or Entity.
+				@param[in] pParent The attributed that is supposed to the parent of this action.
+			*/
+			virtual void SetParent(Attribute* pParent) override;
 		};
 	}
 }
