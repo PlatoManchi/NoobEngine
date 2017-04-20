@@ -316,7 +316,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="Resources\ActionCreateDestroyXml.xml" />
+    <Xml Include="Resources\ActionIfXml.xml" />
+    <Xml Include="Resources\DecrementActionXml.xml" />
+    <Xml Include="Resources\ReactionXml.xml" />
     <Xml Include="Resources\SampleXml.xml" />
+    <Xml Include="Resources\TableXmlGrammar.xml" />
+    <Xml Include="Resources\TotalACtionXML.xml" />
+    <Xml Include="Resources\WorldXmlGrammar.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

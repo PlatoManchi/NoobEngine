@@ -42,7 +42,13 @@ namespace NoobEngine
 
 		void Action::SetParent(ActionList& pParent)
 		{
-			SetParent(&pParent);
+			assert(pParent->Is(ActionList::TypeIdClass()));
+
+			if (mParent != &pParent)
+			{
+				pParent.Adopt(*this, ActionList::sActionListKey);
+				mParent = static_cast<Attribute*>(&pParent);
+			}
 		}
 
 		void Action::SetParent(Entity& pParent)

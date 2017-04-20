@@ -103,5 +103,26 @@
     <Xml Include="Resources\SampleXml.xml">
       <Filter>Resources</Filter>
     </Xml>
+    <Xml Include="Resources\ActionCreateDestroyXml.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="Resources\ActionIfXml.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="Resources\DecrementActionXml.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="Resources\ReactionXml.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="Resources\TableXmlGrammar.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="Resources\TotalACtionXML.xml">
+      <Filter>Resources</Filter>
+    </Xml>
+    <Xml Include="Resources\WorldXmlGrammar.xml">
+      <Filter>Resources</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

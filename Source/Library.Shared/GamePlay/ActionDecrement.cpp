@@ -26,7 +26,13 @@ namespace NoobEngine
 			if (!mValueDatum)
 			{
 				//mValueDatum = Search(mValueKey);
+				//std::string valueKey = Append("value").Get<std::string>();
 				mValueDatum = pWorldState.mCurrentWorld->ResolveDatum(mValueKey);
+				if (!mValueDatum)
+				{
+					std::string valueKey = Append("value").Get<std::string>();
+					mValueDatum = pWorldState.mCurrentWorld->ResolveDatum(valueKey);
+				}
 			}
 
 			if (mValueDatum)

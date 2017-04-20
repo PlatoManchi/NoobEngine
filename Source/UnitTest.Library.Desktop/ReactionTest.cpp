@@ -22,6 +22,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace NoobEngine::GamePlay;
 using namespace NoobEngine::Parsers;
+using namespace NoobEngine::Events;
 //using namespace SupportingClasses;
 
 namespace UnitTestLibraryDesktop
@@ -74,14 +75,16 @@ namespace UnitTestLibraryDesktop
 			Sector* sector = static_cast<Sector*>((*world)[Sector::sSectorsKey].Get<NoobEngine::Runtime::Scope*>());
 			Entity* player = static_cast<Entity*>((*sector)[Entity::sEntitiesKey].Get<NoobEngine::Runtime::Scope*>());
 
-			float health = (*player)["Health"].Get<float>();
+			int32_t health = (*player)["He"].Get<int32_t>();
 
-			Assert::AreEqual(100.0f, health);
+			Assert::AreEqual(100, health);
 			
-			Assert::IsTrue(worldSharedData.GetRootNode() == worldSharedData.GetCurrentNode());
+			//Assert::IsTrue(&worldSharedData.GetRootNode() == &worldSharedData.GetCurrentNode());
 
 			Assert::IsTrue(player->IsAttribute("action"));
-			Assert::IsFalse(player->IsAttribute("reaction"));
+			Assert::IsTrue(player->IsAttribute("reaction"));
+
+			Event<EventMessageAttributed>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(UpdateNotifyTest)
@@ -110,8 +113,8 @@ namespace UnitTestLibraryDesktop
 			Sector* sector = static_cast<Sector*>((*world)[Sector::sSectorsKey].Get<NoobEngine::Runtime::Scope*>());
 			Entity* player = static_cast<Entity*>((*sector)[Entity::sEntitiesKey].Get<NoobEngine::Runtime::Scope*>());
 
-			float health = (*player)["Health"].Get<float>();
-			Assert::AreEqual(100.0f, health);
+			int32_t health = (*player)["He"].Get<int32_t>();
+			Assert::AreEqual(100, health);
 
 			// calling update
 			WorldState worldState;
@@ -119,16 +122,18 @@ namespace UnitTestLibraryDesktop
 
 			world->Update(worldState);
 
-			health = (*player)["Health"].Get<float>();
-			Assert::AreEqual(100.0f, health);
+			health = (*player)["He"].Get<int32_t>();
+			Assert::AreEqual(100, health);
 
 			// adding 11 seconds
 			worldState.mGameTime.SetCurrentTime(worldState.mGameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(11000.0f)));
 			
 			world->Update(worldState);
 
-			health = (*player)["Health"].Get<float>();
-			Assert::AreEqual(100.0f, health);
+			health = (*player)["He"].Get<int32_t>();
+			Assert::AreEqual(99, health);
+
+			Event<EventMessageAttributed>::UnsubscribeAll();
 		}
 	private:
 		static _CrtMemState sStartMemState;
