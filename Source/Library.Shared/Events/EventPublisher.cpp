@@ -15,7 +15,7 @@ namespace NoobEngine
 
 
 		EventPublisher::EventPublisher(EventPublisher& pOther) : 
-			mSubscriberList(pOther.mSubscriberList), mIsExpired(pOther.mIsExpired)
+			mSubscriberList(pOther.mSubscriberList), mIsExpired(pOther.mIsExpired), mMutex(pOther.mMutex)
 		{
 		}
 
@@ -25,6 +25,7 @@ namespace NoobEngine
 			{
 				mSubscriberList = pOther.mSubscriberList;
 				mIsExpired = pOther.mIsExpired;
+				mMutex = pOther.mMutex;
 			}
 			return *this;
 		}
@@ -42,8 +43,10 @@ namespace NoobEngine
 			{
 				mSubscriberList = pOther.mSubscriberList;
 				mIsExpired = pOther.mIsExpired;
+				mMutex = pOther.mMutex;
 
 				pOther.mSubscriberList = nullptr;
+				pOther.mMutex = nullptr;
 			}
 			return *this;
 		}
@@ -73,7 +76,6 @@ namespace NoobEngine
 
 			for (std::shared_ptr<EventSubscriber> subscriber : tmpSubscriberList)
 			{
-				//subscriber->Notify(*this);
 				futureList.emplace_back(std::async([&]() {
 					subscriber->Notify(*this);
 				}));
