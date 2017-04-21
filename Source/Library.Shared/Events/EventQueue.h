@@ -13,7 +13,16 @@ namespace NoobEngine
 			RTTI_DECLARATIONS(EventQueue, RTTI)
 
 		public:
+			/**
+				@brief Default constructor.
+			*/
 			EventQueue();
+
+			/**
+				Remove copy semantics to make EventQueue thread safe
+			*/
+			EventQueue(const EventQueue& pOther) = delete;
+			EventQueue& operator=(const EventQueue& pOther) = delete;
 
 			/**
 				@brief Push the event publisher into the list of publishers and save the enqueued time and delay.
@@ -68,6 +77,11 @@ namespace NoobEngine
 				List that holds all the publishers.
 			*/
 			Container::Vector<Publisher> mPublisherList;
+
+			/**
+				Mutex used for making EventQueue thread safe
+			*/
+			std::mutex mMutex;
 		};
 	}
 }
