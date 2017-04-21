@@ -20,7 +20,7 @@ namespace NoobEngine
 			/**
 				@brief Default constructor
 			*/
-			EventPublisher(Container::Vector<std::shared_ptr<EventSubscriber>>& pSubscribers);
+			EventPublisher(Container::Vector<std::shared_ptr<EventSubscriber>>& pSubscribers, std::mutex& pMutex);
 
 			/**
 				@brief Default Copy constructor
@@ -56,6 +56,11 @@ namespace NoobEngine
 				because the move semantics can get problematic with reference.
 			*/
 			Container::Vector<std::shared_ptr<EventSubscriber>>* mSubscriberList;
+
+			/**
+				Mutex used for making the EventPublisher thread safe
+			*/
+			std::mutex* mMutex;
 
 			/**
 				Is event expired.

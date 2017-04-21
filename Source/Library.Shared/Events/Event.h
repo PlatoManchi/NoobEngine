@@ -70,7 +70,15 @@ namespace NoobEngine
 
 		private:
 			T mPayload;
+			/**
+				Static list of subscribers to event of template type T
+			*/
 			static Container::Vector<std::shared_ptr<EventSubscriber>> sSubscriberList;
+
+			/**
+				Static mutex that is used to make the event of template type T thread safe.
+			*/
+			static std::mutex sMutex;
 		};
 	}
 }

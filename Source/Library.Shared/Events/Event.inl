@@ -11,8 +11,11 @@ namespace NoobEngine
 		Container::Vector<std::shared_ptr<EventSubscriber>> Event<T>::sSubscriberList;
 
 		template<typename T>
+		std::mutex Event<T>::sMutex;
+
+		template<typename T>
 		Event<T>::Event(T& pPayload) :
-			EventPublisher(sSubscriberList), mPayload(pPayload)
+			EventPublisher(sSubscriberList, sMutex), mPayload(pPayload)
 		{
 		}
 
@@ -59,6 +62,7 @@ namespace NoobEngine
 		{
 			if (pSubscriber != nullptr)
 			{
+				std::lock_guard<std::mutex> lock(sMutex);
 				sSubscriberList.PushBack(pSubscriber);
 			}
 		}
@@ -68,6 +72,7 @@ namespace NoobEngine
 		{
 			if (pSubscriber != nullptr)
 			{
+				std::lock_guard<std::mutex> lock(sMutex);
 				sSubscriberList.Remove(pSubscriber);
 			}
 		}
@@ -75,6 +80,7 @@ namespace NoobEngine
 		template<typename T>
 		void Event<T>::UnsubscribeAll()
 		{
+			std::lock_guard<std::mutex> lock(sMutex);
 			sSubscriberList.Clear();
 		}
 

@@ -89,6 +89,9 @@ namespace UnitTestLibraryDesktop
 
 			Assert::AreEqual(0U, eventQueue.Size());
 			Assert::AreEqual(true, eventQueue.IsEmpty());
+
+			Event<int>::UnsubscribeAll();
+			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(SendTest)
@@ -137,6 +140,9 @@ namespace UnitTestLibraryDesktop
 
 			Assert::AreEqual(0U, eventQueue.Size());
 			Assert::AreEqual(true, eventQueue.IsEmpty());
+
+			Event<int>::UnsubscribeAll();
+			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(UpdateTest)
@@ -193,6 +199,9 @@ namespace UnitTestLibraryDesktop
 
 			Assert::AreEqual(0U, eventQueue.Size());
 			Assert::AreEqual(true, eventQueue.IsEmpty());
+
+			Event<int>::UnsubscribeAll();
+			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(CopySemantics)
@@ -232,6 +241,9 @@ namespace UnitTestLibraryDesktop
 			publisherTwoCpy2 = publisherTwoCpy;
 			Assert::AreEqual(publisherTwoCpy2.IsExpired(), publisherTwoCpy.IsExpired());
 			Assert::AreEqual(publisherTwoCpy2.Message(), publisherTwoCpy.Message());
+
+			Event<int>::UnsubscribeAll();
+			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(MoveSemantics)
@@ -266,6 +278,9 @@ namespace UnitTestLibraryDesktop
 			publisherMove2.Deliver();
 
 			Assert::AreEqual(2, messageOne->mNotifiedCount);
+
+			Event<int>::UnsubscribeAll();
+			Event<float>::UnsubscribeAll();
 		}
 	private:
 		static _CrtMemState sStartMemState;
