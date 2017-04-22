@@ -42,7 +42,7 @@ namespace NoobEngine
 
 		void Action::SetParent(ActionList& pParent)
 		{
-			assert(pParent->Is(ActionList::TypeIdClass()));
+			assert(pParent.Is(ActionList::TypeIdClass()));
 
 			if (mParent != &pParent)
 			{

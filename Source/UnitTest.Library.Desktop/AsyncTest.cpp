@@ -45,330 +45,333 @@ namespace UnitTestLibraryDesktop
 
 		TEST_METHOD(NormalEventNotifyTest)
 		{
-			// normal event firing
-			// add event to eventqueue through subscriber
-			// clear eventqueue through subscribers
-			// add subscriber through subscriber
-			// remove subscriber through subscriber
-			// removeall subscriber through subscriber
+			for (uint32_t testIterations = 0u; testIterations < 1000u; ++testIterations)
+			{
+				EventQueue eventQueue;
+				GameTime gameTime;
+				gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 
-			EventQueue eventQueue;
-			GameTime gameTime;
-			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
+				shared_ptr<EventMessageOne> messageOne = make_shared<EventMessageOne>();
+				shared_ptr<EventMessageTwo> messageTwo = make_shared<EventMessageTwo>();
 
-			shared_ptr<EventMessageOne> messageOne = make_shared<EventMessageOne>();
-			shared_ptr<EventMessageTwo> messageTwo = make_shared<EventMessageTwo>();
-
-			int tmpInt = 0;
-			float tmpFloat = 1.0f;
+				int tmpInt = 0;
+				float tmpFloat = 1.0f;
 
 
-			shared_ptr<Event<int>> publisherOne = make_shared<Event<int>>(tmpInt);
-			shared_ptr<Event<float>> publisherTwo = make_shared<Event<float>>(tmpFloat);
+				shared_ptr<Event<int>> publisherOne = make_shared<Event<int>>(tmpInt);
+				shared_ptr<Event<float>> publisherTwo = make_shared<Event<float>>(tmpFloat);
 
-			Assert::AreEqual(0, messageOne->mNotifiedCount);
-			Assert::AreEqual(false, messageTwo->mIsNotified);
+				Assert::AreEqual(0, messageOne->mNotifiedCount);
+				Assert::AreEqual(false, messageTwo->mIsNotified);
 
-			Assert::AreEqual(0U, eventQueue.Size());
-			Assert::AreEqual(true, eventQueue.IsEmpty());
+				Assert::AreEqual(0U, eventQueue.Size());
+				Assert::AreEqual(true, eventQueue.IsEmpty());
 
-			eventQueue.Update(gameTime);
+				eventQueue.Update(gameTime);
 
-			Assert::AreEqual(0, messageOne->mNotifiedCount);
-			Assert::AreEqual(false, messageTwo->mIsNotified);
+				Assert::AreEqual(0, messageOne->mNotifiedCount);
+				Assert::AreEqual(false, messageTwo->mIsNotified);
 
-			// subscribing
-			publisherOne->Subscribe(messageOne);
-			publisherTwo->Subscribe(messageTwo);
+				// subscribing
+				publisherOne->Subscribe(messageOne);
+				publisherTwo->Subscribe(messageTwo);
 
-			// enqueing
-			eventQueue.Enqueue(publisherOne, gameTime, 1.0f);
-			eventQueue.Enqueue(publisherTwo, gameTime, 2.0f);
+				// enqueing
+				eventQueue.Enqueue(publisherOne, gameTime, 1.0f);
+				eventQueue.Enqueue(publisherTwo, gameTime, 2.0f);
 
-			// adding 1 second and running update
-			gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(1000.0f)));
-			eventQueue.Update(gameTime);
+				// adding 1 second and running update
+				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(1000.0f)));
+				eventQueue.Update(gameTime);
 
-			Assert::AreEqual(1, messageOne->mNotifiedCount);
-			Assert::AreEqual(false, messageTwo->mIsNotified);
+				Assert::AreEqual(1, messageOne->mNotifiedCount);
+				Assert::AreEqual(false, messageTwo->mIsNotified);
 
-			// adding 2 second and running update
-			gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(3000.0f)));
-			eventQueue.Update(gameTime);
+				// adding 2 second and running update
+				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(3000.0f)));
+				eventQueue.Update(gameTime);
 
-			Assert::AreEqual(1, messageOne->mNotifiedCount);
-			Assert::AreEqual(true, messageTwo->mIsNotified);
+				Assert::AreEqual(1, messageOne->mNotifiedCount);
+				Assert::AreEqual(true, messageTwo->mIsNotified);
 
 
-			eventQueue.Clear();
+				eventQueue.Clear();
 
-			Assert::AreEqual(0U, eventQueue.Size());
-			Assert::AreEqual(true, eventQueue.IsEmpty());
+				Assert::AreEqual(0U, eventQueue.Size());
+				Assert::AreEqual(true, eventQueue.IsEmpty());
 
-			Event<EventQueue*>::UnsubscribeAll();
-			Event<int>::UnsubscribeAll();
-			Event<float>::UnsubscribeAll();
+				Event<EventQueue*>::UnsubscribeAll();
+				Event<int>::UnsubscribeAll();
+				Event<float>::UnsubscribeAll();
+			}
 		}
 
 		TEST_METHOD(EnqueueEventThroughSubscriber)
 		{
 			// add event to EventQueue through subscriber
-
-			EventQueue* eventQueue = new EventQueue();
-			GameTime gameTime;
-			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
-
-			shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
-
-			shared_ptr<EnqueueEventSubscriber> subscriberEnqueueEvent = make_shared<EnqueueEventSubscriber>(&gameTime);
-
-			Assert::IsTrue(eventQueue->IsEmpty());
-
-			// subscribing the subscriber
-			Event<EventQueue*>::Subscribe(subscriberEnqueueEvent);
-
-			// enqueuing the events 10000 times
-			// when the event is enqueued, there is no telling when it will delivered and removed from the queue
-			for (uint32_t i = 0u; i < 100000u; ++i)
+			// running test 10000 times
+			for (uint32_t testIterations = 0u; testIterations < 1000u; ++testIterations)
 			{
-				// enqueuing
-				eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+				EventQueue* eventQueue = new EventQueue();
+				GameTime gameTime;
+				gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 
-				Assert::IsFalse(eventQueue->IsEmpty());
-				Assert::AreNotEqual(0u, eventQueue->Size());
+				shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
 
-				// adding 1 second and running update
-				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+				shared_ptr<EnqueueEventSubscriber> subscriberEnqueueEvent = make_shared<EnqueueEventSubscriber>(&gameTime);
 
-				// the data return by the function can be random
-				// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
-				// or even while threads are running
-				eventQueue->Size();
+				Assert::IsTrue(eventQueue->IsEmpty());
+
+				// subscribing the subscriber
+				Event<EventQueue*>::Subscribe(subscriberEnqueueEvent);
+
+				// enqueuing the events 10000 times
+				// when the event is enqueued, there is no telling when it will delivered and removed from the queue
+				for (uint32_t i = 0u; i < 500u; ++i)
+				{
+					// enqueuing
+					eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+
+					Assert::IsFalse(eventQueue->IsEmpty());
+					Assert::AreNotEqual(0u, eventQueue->Size());
+
+					// adding 1 second and running update
+					gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+
+					// the data return by the function can be random
+					// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
+					// or even while threads are running
+					eventQueue->Size();
+
+					// there is  no way of telling how the queue will look like at this point
+				}
 
 				eventQueue->Update(gameTime);
 
-				eventQueue->Size();
-				// there is  no way of telling how the queue will look like at this point
+				// since all .get is called on future the threads will be finished by the time execution reaches this point.
+				Assert::IsFalse(eventQueue->IsEmpty());
+				Assert::AreNotEqual(0U, eventQueue->Size());
+
+				delete eventQueue;
+
+				Event<EventQueue*>::UnsubscribeAll();
+				Event<int>::UnsubscribeAll();
+				Event<float>::UnsubscribeAll();
 			}
-			
-			// since all .get is called on future the threads will be finished by the time execution reaches this point.
-			Assert::IsTrue(eventQueue->IsEmpty());
-			Assert::AreEqual(0U, eventQueue->Size());
-
-			delete eventQueue;
-
-			Event<EventQueue*>::UnsubscribeAll();
-			Event<int>::UnsubscribeAll();
-			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(ClearEventQueueThroughSubscriber)
 		{
 			// clear EventQueue through subscriber
-
-			EventQueue* eventQueue = new EventQueue();
-			GameTime gameTime;
-			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
-
-			shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
-
-			shared_ptr<ClearQueueEventSubscriber> subscriberEnqueueEvent = make_shared<ClearQueueEventSubscriber>();
-
-			Assert::IsTrue(eventQueue->IsEmpty());
-
-			// subscribing the subscriber
-			Event<EventQueue*>::Subscribe(subscriberEnqueueEvent);
-
-			// enqueuing the events 10000 times
-			// when the event is enqueued, there is no telling when it will delivered and removed from the queue
-			for (uint32_t i = 0u; i < 100000u; ++i)
+			// running test 10000 times
+			for (uint32_t testIterations = 0u; testIterations < 500u; ++testIterations)
 			{
-				// enqueuing
-				eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+				EventQueue* eventQueue = new EventQueue();
+				GameTime gameTime;
+				gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 
-				Assert::IsFalse(eventQueue->IsEmpty());
-				Assert::AreNotEqual(0u, eventQueue->Size());
+				shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
 
-				// adding 1 second and running update
-				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+				shared_ptr<ClearQueueEventSubscriber> subscriberEnqueueEvent = make_shared<ClearQueueEventSubscriber>();
 
-				// the data return by the function can be random
-				// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
-				// or even while threads are running
-				eventQueue->Size();
+				Assert::IsTrue(eventQueue->IsEmpty());
+
+				// subscribing the subscriber
+				Event<EventQueue*>::Subscribe(subscriberEnqueueEvent);
+
+				// enqueuing the events 10000 times
+				// when the event is enqueued, there is no telling when it will delivered and removed from the queue
+				for (uint32_t i = 0u; i < 500u; ++i)
+				{
+					// enqueuing
+					eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+
+					Assert::IsFalse(eventQueue->IsEmpty());
+					Assert::AreNotEqual(0u, eventQueue->Size());
+
+					// adding 1 second and running update
+					gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+
+					// the data return by the function can be random
+					// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
+					// or even while threads are running
+					eventQueue->Size();
+
+
+				}
 
 				eventQueue->Update(gameTime);
 
+				// since all .get is called on future the threads will be finished by the time execution reaches this point.
 				Assert::IsTrue(eventQueue->IsEmpty());
 				Assert::AreEqual(0U, eventQueue->Size());
+
+				delete eventQueue;
+
+				Event<EventQueue*>::UnsubscribeAll();
+				Event<int>::UnsubscribeAll();
+				Event<float>::UnsubscribeAll();
 			}
-
-			// since all .get is called on future the threads will be finished by the time execution reaches this point.
-			Assert::IsTrue(eventQueue->IsEmpty());
-			Assert::AreEqual(0U, eventQueue->Size());
-
-			delete eventQueue;
-
-			Event<EventQueue*>::UnsubscribeAll();
-			Event<int>::UnsubscribeAll();
-			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(SubscribeThroughSubscriber)
 		{
 			// add subscriber through subscriber
-			
-			EventQueue* eventQueue = new EventQueue();
-			GameTime gameTime;
-			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
-
-			shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
-
-			shared_ptr<AddSubscriber> subscribeThroughSubscriber = make_shared<AddSubscriber>();
-
-			Assert::IsTrue(eventQueue->IsEmpty());
-
-			// subscribing the subscriber
-			Event<EventQueue*>::Subscribe(subscribeThroughSubscriber);
-
-			// enqueuing the events 10000 times
-			// when the event is enqueued, there is no telling when it will delivered and removed from the queue
-			for (uint32_t i = 0u; i < 100000u; ++i)
+			// running test 10000 times
+			for (uint32_t testIterations = 0u; testIterations < 500u; ++testIterations)
 			{
-				// enqueuing
-				eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+				EventQueue* eventQueue = new EventQueue();
+				GameTime gameTime;
+				gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 
-				Assert::IsFalse(eventQueue->IsEmpty());
-				Assert::AreNotEqual(0u, eventQueue->Size());
+				shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
 
-				// adding 1 second and running update
-				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+				shared_ptr<AddSubscriber> subscribeThroughSubscriber = make_shared<AddSubscriber>();
 
-				// the data return by the function can be random
-				// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
-				// or even while threads are running
-				eventQueue->Size();
+				Assert::IsTrue(eventQueue->IsEmpty());
+
+				// subscribing the subscriber
+				Event<EventQueue*>::Subscribe(subscribeThroughSubscriber);
+
+				// enqueuing the events 10000 times
+				// when the event is enqueued, there is no telling when it will delivered and removed from the queue
+				for (uint32_t i = 0u; i < 100u; ++i)
+				{
+					// enqueuing
+					eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+
+					Assert::IsFalse(eventQueue->IsEmpty());
+					Assert::AreNotEqual(0u, eventQueue->Size());
+
+					// adding 1 second and running update
+					gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+
+					// the data return by the function can be random
+					// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
+					// or even while threads are running
+					eventQueue->Size();
+
+				}
 
 				eventQueue->Update(gameTime);
 
+				// since all .get is called on future the threads will be finished by the time execution reaches this point.
 				Assert::IsTrue(eventQueue->IsEmpty());
 				Assert::AreEqual(0U, eventQueue->Size());
+
+				delete eventQueue;
+
+				Event<EventQueue*>::UnsubscribeAll();
+				Event<int>::UnsubscribeAll();
+				Event<float>::UnsubscribeAll();
 			}
-
-			// since all .get is called on future the threads will be finished by the time execution reaches this point.
-			Assert::IsTrue(eventQueue->IsEmpty());
-			Assert::AreEqual(0U, eventQueue->Size());
-
-			delete eventQueue;
-
-			Event<EventQueue*>::UnsubscribeAll();
-			Event<int>::UnsubscribeAll();
-			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(UnSubscribeThroughSubscriber)
 		{
 			// add subscriber through subscriber
-
-			EventQueue* eventQueue = new EventQueue();
-			GameTime gameTime;
-			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
-
-			shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
-
-			shared_ptr<RemoveSubscriber> subscribeThroughSubscriber = make_shared<RemoveSubscriber>();
-			subscribeThroughSubscriber->SetThisSharedPtr(subscribeThroughSubscriber);
-
-			Assert::IsTrue(eventQueue->IsEmpty());
-
-			// subscribing the subscriber
-			Event<EventQueue*>::Subscribe(subscribeThroughSubscriber);
-
-			// enqueuing the events 10000 times
-			// when the event is enqueued, there is no telling when it will delivered and removed from the queue
-			for (uint32_t i = 0u; i < 100000u; ++i)
+			for (uint32_t testIterations = 0u; testIterations < 500u; ++testIterations)
 			{
-				// enqueuing
-				eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+				EventQueue* eventQueue = new EventQueue();
+				GameTime gameTime;
+				gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 
-				Assert::IsFalse(eventQueue->IsEmpty());
-				Assert::AreNotEqual(0u, eventQueue->Size());
+				shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
 
-				// adding 1 second and running update
-				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+				shared_ptr<RemoveSubscriber> subscribeThroughSubscriber = make_shared<RemoveSubscriber>();
+				subscribeThroughSubscriber->SetThisSharedPtr(subscribeThroughSubscriber);
 
-				// the data return by the function can be random
-				// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
-				// or even while threads are running
-				eventQueue->Size();
+				Assert::IsTrue(eventQueue->IsEmpty());
+
+				// subscribing the subscriber
+				Event<EventQueue*>::Subscribe(subscribeThroughSubscriber);
+
+				// enqueuing the events 10000 times
+				// when the event is enqueued, there is no telling when it will delivered and removed from the queue
+				for (uint32_t i = 0u; i < 100u; ++i)
+				{
+					// enqueuing
+					eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+
+					Assert::IsFalse(eventQueue->IsEmpty());
+					Assert::AreNotEqual(0u, eventQueue->Size());
+
+					// adding 1 second and running update
+					gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+
+					// the data return by the function can be random
+					// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
+					// or even while threads are running
+					eventQueue->Size();
+
+				}
 
 				eventQueue->Update(gameTime);
 
+				// since all .get is called on future the threads will be finished by the time execution reaches this point.
 				Assert::IsTrue(eventQueue->IsEmpty());
 				Assert::AreEqual(0U, eventQueue->Size());
+
+				delete eventQueue;
+
+				Event<EventQueue*>::UnsubscribeAll();
+				Event<int>::UnsubscribeAll();
+				Event<float>::UnsubscribeAll();
 			}
-
-			// since all .get is called on future the threads will be finished by the time execution reaches this point.
-			Assert::IsTrue(eventQueue->IsEmpty());
-			Assert::AreEqual(0U, eventQueue->Size());
-
-			delete eventQueue;
-
-			Event<EventQueue*>::UnsubscribeAll();
-			Event<int>::UnsubscribeAll();
-			Event<float>::UnsubscribeAll();
 		}
 
 		TEST_METHOD(UnSubscribeAllThroughSubscriber)
 		{
 			// add subscriber through subscriber
-
-			EventQueue* eventQueue = new EventQueue();
-			GameTime gameTime;
-			gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
-
-			shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
-
-			shared_ptr<UnsubscriberAllSubscriber> subscribeThroughSubscriber = make_shared<UnsubscriberAllSubscriber>();
-			
-			Assert::IsTrue(eventQueue->IsEmpty());
-
-			// subscribing the subscriber
-			Event<EventQueue*>::Subscribe(subscribeThroughSubscriber);
-
-			// enqueuing the events 10000 times
-			// when the event is enqueued, there is no telling when it will delivered and removed from the queue
-			for (uint32_t i = 0u; i < 100000u; ++i)
+			for (uint32_t testIterations = 0u; testIterations < 500u; ++testIterations)
 			{
-				// enqueuing
-				eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+				EventQueue* eventQueue = new EventQueue();
+				GameTime gameTime;
+				gameTime.SetCurrentTime(std::chrono::high_resolution_clock::now());
 
-				Assert::IsFalse(eventQueue->IsEmpty());
-				Assert::AreNotEqual(0u, eventQueue->Size());
+				shared_ptr<Event<EventQueue*>> publisherEvent = make_shared<Event<EventQueue*>>(eventQueue);
 
-				// adding 1 second and running update
-				gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+				shared_ptr<UnsubscriberAllSubscriber> subscribeThroughSubscriber = make_shared<UnsubscriberAllSubscriber>();
 
-				// the data return by the function can be random
-				// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
-				// or even while threads are running
-				eventQueue->Size();
+				Assert::IsTrue(eventQueue->IsEmpty());
+
+				// subscribing the subscriber
+				Event<EventQueue*>::Subscribe(subscribeThroughSubscriber);
+
+				// enqueuing the events 10000 times
+				// when the event is enqueued, there is no telling when it will delivered and removed from the queue
+				for (uint32_t i = 0u; i < 100u; ++i)
+				{
+					// enqueuing
+					eventQueue->Enqueue(publisherEvent, gameTime, 1.0f);
+
+					Assert::IsFalse(eventQueue->IsEmpty());
+					Assert::AreNotEqual(0u, eventQueue->Size());
+
+					// adding 1 second and running update
+					gameTime.SetCurrentTime(gameTime.CurrentTime() + std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<float>(5000.0f)));
+
+					// the data return by the function can be random
+					// calling this function jsut to show that the funcitons are thread safe and can be called while spawning threads
+					// or even while threads are running
+					eventQueue->Size();
+
+					
+				}
 
 				eventQueue->Update(gameTime);
 
+
+				// since all .get is called on future the threads will be finished by the time execution reaches this point.
 				Assert::IsTrue(eventQueue->IsEmpty());
 				Assert::AreEqual(0U, eventQueue->Size());
+
+				delete eventQueue;
+
+				Event<EventQueue*>::UnsubscribeAll();
+				Event<int>::UnsubscribeAll();
+				Event<float>::UnsubscribeAll();
 			}
-
-			// since all .get is called on future the threads will be finished by the time execution reaches this point.
-			Assert::IsTrue(eventQueue->IsEmpty());
-			Assert::AreEqual(0U, eventQueue->Size());
-
-			delete eventQueue;
-
-			Event<EventQueue*>::UnsubscribeAll();
-			Event<int>::UnsubscribeAll();
-			Event<float>::UnsubscribeAll();
 		}
 
 	private:
