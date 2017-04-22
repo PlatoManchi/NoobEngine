@@ -76,6 +76,7 @@ namespace NoobEngine
 
 			for (std::shared_ptr<EventSubscriber> subscriber : tmpSubscriberList)
 			{
+				// invoking notify asynchronously
 				futureList.emplace_back(std::async([&]() {
 					subscriber->Notify(*this);
 				}));

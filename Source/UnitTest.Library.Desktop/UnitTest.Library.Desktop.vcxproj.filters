@@ -45,6 +45,10 @@
     <ClCompile Include="ActionTests.cpp" />
     <ClCompile Include="EventTest.cpp" />
     <ClCompile Include="ReactionTest.cpp" />
+    <ClCompile Include="AsyncTest.cpp" />
+    <ClCompile Include="SupportingClasses\EnqueueEventSubscriber.cpp">
+      <Filter>SupportingClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -88,6 +92,21 @@
       <Filter>SupportingClasses</Filter>
     </ClInclude>
     <ClInclude Include="SupportingClasses\EventMessageTwo.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\EnqueueEventSubscriber.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\ClearQueueEventSubscriber.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\AddSubscriber.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\RemoveSubscriber.h">
+      <Filter>SupportingClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportingClasses\UnsubscribeAllSubscriber.h">
       <Filter>SupportingClasses</Filter>
     </ClInclude>
   </ItemGroup>

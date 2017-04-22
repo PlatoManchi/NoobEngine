@@ -236,6 +236,9 @@
     <ClInclude Include="SupportingClasses\ActionPlayerAlive.h" />
     <ClInclude Include="SupportingClasses\ActionPlayerDead.h" />
     <ClInclude Include="SupportingClasses\ActionTest.h" />
+    <ClInclude Include="SupportingClasses\AddSubscriber.h" />
+    <ClInclude Include="SupportingClasses\ClearQueueEventSubscriber.h" />
+    <ClInclude Include="SupportingClasses\EnqueueEventSubscriber.h" />
     <ClInclude Include="SupportingClasses\EventMessageOne.h" />
     <ClInclude Include="SupportingClasses\EventMessageTwo.h" />
     <ClInclude Include="SupportingClasses\FooEntity.h" />
@@ -246,10 +249,16 @@
     <ClInclude Include="SupportingClasses\FactoryFooFactoryT.h" />
     <ClInclude Include="SupportingClasses\Foo.h" />
     <ClInclude Include="SupportingClasses\FooAttribute.h" />
+    <ClInclude Include="SupportingClasses\RemoveSubscriber.h" />
     <ClInclude Include="SupportingClasses\TestXmlParseHelper.h" />
+    <ClInclude Include="SupportingClasses\UnsubscribeAllSubscriber.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionTests.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="AsyncTest.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -295,6 +304,7 @@
     <ClCompile Include="SupportingClasses\ActionPlayerAlive.cpp" />
     <ClCompile Include="SupportingClasses\ActionPlayerDead.cpp" />
     <ClCompile Include="SupportingClasses\ActionTest.cpp" />
+    <ClCompile Include="SupportingClasses\EnqueueEventSubscriber.cpp" />
     <ClCompile Include="SupportingClasses\FooEntity.cpp" />
     <ClCompile Include="SupportingClasses\NonRTTIProduct.cpp" />
     <ClCompile Include="SupportingClasses\ProductFoo.cpp" />
